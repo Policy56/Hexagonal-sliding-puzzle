@@ -86,17 +86,9 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
 
   /// Build a randomized, solvable puzzle of the given size.
   Puzzle _generateHexagonPuzzle(int size, {bool shuffle = true}) {
-    final List<List<Position?>> correctPositions = <List<Position?>>[];
-    final List<List<Position?>> currentPositions = <List<Position?>>[];
-    final List<List<Position?>> tempCurrentPositions = <List<Position?>>[
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      []
-    ];
+    final List<Position?> correctPositions = <Position?>[];
+    final List<Position?> currentPositions = <Position?>[];
+    final List<Position?> tempCurrentPositions = <Position?>[];
     final whitespacePosition = Position(x: size, y: size);
 
     int depth = 3;
@@ -124,7 +116,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
                   
                 },
               );*/
-    List<List<Position?>> testTiles = [
+    /* List<List<Position?>> testTiles = [
       [
         null,
         null,
@@ -188,19 +180,52 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
         null,
         null
       ],
+    ];*/
+
+    List<Position> listPosition = [
+      const Position(x: 3, y: 0),
+      const Position(x: 4, y: 0),
+      const Position(x: 5, y: 0),
+      const Position(x: 6, y: 0),
+      const Position(x: 2, y: 1),
+      const Position(x: 3, y: 1),
+      const Position(x: 4, y: 1),
+      const Position(x: 5, y: 1),
+      const Position(x: 6, y: 1),
+      const Position(x: 1, y: 2),
+      const Position(x: 2, y: 2),
+      const Position(x: 3, y: 2),
+      const Position(x: 4, y: 2),
+      const Position(x: 5, y: 2),
+      const Position(x: 6, y: 2),
+      const Position(x: 0, y: 3),
+      const Position(x: 1, y: 3),
+      const Position(x: 2, y: 3),
+      const Position(x: 3, y: 3),
+      const Position(x: 4, y: 3),
+      const Position(x: 5, y: 3),
+      const Position(x: 6, y: 3),
+      const Position(x: 0, y: 4),
+      const Position(x: 1, y: 4),
+      const Position(x: 2, y: 4),
+      const Position(x: 3, y: 4),
+      const Position(x: 4, y: 4),
+      const Position(x: 5, y: 4),
+      const Position(x: 0, y: 5),
+      const Position(x: 1, y: 5),
+      const Position(x: 2, y: 5),
+      const Position(x: 3, y: 5),
+      const Position(x: 4, y: 5),
+      const Position(x: 0, y: 6),
+      const Position(x: 1, y: 6),
+      const Position(x: 2, y: 6),
+      const Position(x: 3, y: 6),
     ];
 
-    for (var x = 0; x < testTiles.length; x++) {
-      List<Position?> positions = testTiles[x];
+    for (var x = 0; x < listPosition.length; x++) {
+      Position positions = listPosition[x];
       correctPositions.add(positions);
-
-      if (positions != null) {
-        for (Position? itemPos in positions) {
-          if (itemPos != null) {
-            tempCurrentPositions[x].add(itemPos);
-          }
-        }
-      }
+      currentPositions.add(positions);
     }
 
     /*  for (var x = 0; x <= size; x++) {
@@ -220,72 +245,57 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       // Randomize only the current tile posistions.
       //S'occuper du shuffle ici + gestion du truc si null ..
       //TODO:shuffle ici
-      tempCurrentPositions.shuffle(random);
+      currentPositions.shuffle(random);
     }
-    /* currentPositions.addAll(tempCurrentPositions);
-    currentPositions.insertAll(
-        currentPositions.length, List.generate(10, (index) => [null]));
-        */
-    currentPositions.addAll(correctPositions);
 
-    var tiles = _getHexagonTileListFromPositions(
+    final tiles = _getHexagonTileListFromPositions(
       size,
       correctPositions,
       currentPositions,
     );
 
-    var puzzle = Puzzle(tiles: tiles);
-
-    if (shuffle) {
-      // Assign the tiles new current positions until the puzzle is solvable and
-      // zero tiles are in their correct position.
-      while (
-          !puzzle.isSolvable() /*|| puzzle.getNumberOfCorrectTiles() != 0*/) {
-        //CCL ON enleve la vérif CCL
-        currentPositions.shuffle(random);
-        tiles = _getHexagonTileListFromPositions(
-          size,
-          correctPositions,
-          currentPositions,
-        );
-        puzzle = Puzzle(tiles: tiles);
-      }
+    for (var k = 0; k < 12; k++) {
+      const itemTileVide = Tile(
+        value: -1,
+        correctPosition: Position(x: 0, y: 0),
+        currentPosition: Position(x: 0, y: 0),
+      );
+      tiles.add(itemTileVide);
     }
-
-    return puzzle;
+    return Puzzle(tiles: tiles);
   }
 
   /// Build a list of tiles - giving each tile their correct position and a
   /// current position.
   List<Tile> _getHexagonTileListFromPositions(
     int size,
-    List<List<Position?>> correctPositions,
-    List<List<Position?>> currentPositions,
+    List<Position?> correctPositions,
+    List<Position?> currentPositions,
   ) {
     final whitespacePosition = Position(x: size, y: size);
     var list = [
-      for (int i = 0; i <= size; i++)
-        for (int j = 0; j <= size; j++)
-          if (i == size / 2 && j == size / 2)
-            Tile(
-              value: 10 * i + j,
-              correctPosition: whitespacePosition,
-              currentPosition: const Position(x: 3, y: 3), //CCL
-              isWhitespace: true,
-            )
-          else if (correctPositions[i][j] != null &&
-              currentPositions[i][j] != null)
-            Tile(
-              value: 10 * i + j,
-              correctPosition: correctPositions[i][j]!, //CCL
-              currentPosition: currentPositions[i][j]!, //CCL
-            )
-          else
-            Tile(
-              value: -1,
-              correctPosition: const Position(x: 0, y: 0),
-              currentPosition: const Position(x: 0, y: 0),
-            )
+      for (int i = 0; i < correctPositions.length; i++)
+        //for (int j = 0; j <= size; j++)
+        if (currentPositions[i]!.x == size / 2 &&
+            currentPositions[i]!.y == size / 2 /*&& j == size / 2*/)
+          Tile(
+            value: i,
+            correctPosition: whitespacePosition,
+            currentPosition: const Position(x: 3, y: 3), //CCL
+            isWhitespace: true,
+          )
+        else if (correctPositions[i] != null && currentPositions[i] != null)
+          Tile(
+            value: i,
+            correctPosition: correctPositions[i]!, //CCL
+            currentPosition: currentPositions[i]!, //CCL
+          )
+        else
+          Tile(
+            value: -1,
+            correctPosition: const Position(x: 0, y: 0),
+            currentPosition: const Position(x: 0, y: 0),
+          )
     ];
     return list;
   }
