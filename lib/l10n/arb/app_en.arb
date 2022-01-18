@@ -1,6 +1,6 @@
 {
     "@@locale": "en",
-    "puzzleChallengeTitle": "Puzzle Challenge",
+    "puzzleChallengeTitle": "Hexagonal Slide Game",
     "@puzzleChallengeTitle": {
         "description": "Shown as the title of the puzzle"
     },

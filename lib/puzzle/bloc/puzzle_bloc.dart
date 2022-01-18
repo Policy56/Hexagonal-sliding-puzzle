@@ -89,7 +89,6 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     final List<Position?> correctPositions = <Position?>[];
     final List<Position?> currentPositions = <Position?>[];
     final List<Position?> tempCurrentPositions = <Position?>[];
-    final whitespacePosition = Position(x: size, y: size);
 
     int depth = 3;
 
@@ -201,7 +200,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       const Position(x: 0, y: 3),
       const Position(x: 1, y: 3),
       const Position(x: 2, y: 3),
-      const Position(x: 3, y: 3),
+      //const Position(x: 3, y: 3),
       const Position(x: 4, y: 3),
       const Position(x: 5, y: 3),
       const Position(x: 6, y: 3),
@@ -248,11 +247,20 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       currentPositions.shuffle(random);
     }
 
+    const itemWhitespace = Tile(
+      value: 18,
+      correctPosition: Position(x: 3, y: 3),
+      currentPosition: Position(x: 3, y: 3), //CCL
+      isWhitespace: true,
+    );
+
     final tiles = _getHexagonTileListFromPositions(
       size,
       correctPositions,
       currentPositions,
     );
+
+    tiles.add(itemWhitespace);
 
     for (var k = 0; k < 12; k++) {
       const itemTileVide = Tile(
@@ -272,29 +280,20 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     List<Position?> correctPositions,
     List<Position?> currentPositions,
   ) {
-    final whitespacePosition = Position(x: size, y: size);
+    //final whitespacePosition = Position(x: 3, y: 3);
     var list = [
       for (int i = 0; i < correctPositions.length; i++)
-        //for (int j = 0; j <= size; j++)
-        if (currentPositions[i]!.x == size / 2 &&
-            currentPositions[i]!.y == size / 2 /*&& j == size / 2*/)
+        if (correctPositions[i] != null && currentPositions[i] != null)
           Tile(
-            value: i,
-            correctPosition: whitespacePosition,
-            currentPosition: const Position(x: 3, y: 3), //CCL
-            isWhitespace: true,
-          )
-        else if (correctPositions[i] != null && currentPositions[i] != null)
-          Tile(
-            value: i,
+            value: i + 1,
             correctPosition: correctPositions[i]!, //CCL
             currentPosition: currentPositions[i]!, //CCL
           )
         else
-          Tile(
+          const Tile(
             value: -1,
-            correctPosition: const Position(x: 0, y: 0),
-            currentPosition: const Position(x: 0, y: 0),
+            correctPosition: Position(x: 0, y: 0),
+            currentPosition: Position(x: 0, y: 0),
           )
     ];
     return list;

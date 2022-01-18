@@ -4,6 +4,7 @@ import 'package:very_good_slide_puzzle/layout/layout.dart';
 import 'package:very_good_slide_puzzle/models/models.dart';
 import 'package:very_good_slide_puzzle/puzzle/puzzle.dart';
 import 'package:very_good_slide_puzzle/theme/theme.dart';
+import 'package:very_good_slide_puzzle/theme/themes/hexagonal_theme.dart';
 import 'package:very_good_slide_puzzle/timer/timer.dart';
 
 /// {@template puzzle_page}
@@ -21,7 +22,7 @@ class PuzzlePage extends StatelessWidget {
     return BlocProvider(
       create: (context) => ThemeBloc(
         themes: const [
-          SimpleTheme(),
+          HexagonalTheme(),
         ],
       ),
       child: const PuzzleView(),
