@@ -86,9 +86,9 @@ class _Puzzle extends StatelessWidget {
                 ),
                 child: Column(
                   children: const [
-                    _PuzzleHeader(
+                    /* _PuzzleHeader(
                       key: Key('puzzle_header'),
-                    ),
+                    ),*/ // TODO(CCL): Ici ajout du logo Flutter en haut -> Mettre logo auto
                     _PuzzleSections(
                       key: Key('puzzle_sections'),
                     ),

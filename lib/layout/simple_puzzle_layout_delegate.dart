@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_polygon/flutter_polygon.dart';
 import 'package:gap/gap.dart';
 import 'package:very_good_slide_puzzle/cmp/grid/help/coordinates.dart';
 import 'package:very_good_slide_puzzle/cmp/grid/hexagon_grid.dart';
