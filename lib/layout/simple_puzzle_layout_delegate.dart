@@ -276,11 +276,12 @@ class SimplePuzzleBoard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return _buildGrid(context, HexagonType.POINTY);
+    /*return Stack(
       children: [
         Positioned.fill(child: _buildGrid(context, HexagonType.POINTY))
       ],
-    );
+    );*/
     /*return GridView.count(
       padding: EdgeInsets.zero,
       shrinkWrap: true,
@@ -298,42 +299,42 @@ class SimplePuzzleBoard extends StatelessWidget {
       minScale: 0.2,
       maxScale: 4.0,
       child: HexagonGrid(
-          hexType: type,
-          depth: 3,
-          buildTile: (Coordinates coordinates) {
-            Widget returnItem;
-            do {
-              returnItem = tiles[cpt];
-              cpt++;
-            } while ((returnItem as PuzzleTile).tile.correctPosition.x == 0 &&
-                returnItem.tile.correctPosition.y == 0 &&
-                cpt < tiles.length);
+        hexType: type,
+        depth: 3,
+        buildTile: (Coordinates coordinates) {
+          Widget returnItem;
+          do {
+            returnItem = tiles[cpt];
+            cpt++;
+          } while ((returnItem as PuzzleTile).tile.correctPosition.x == 0 &&
+              returnItem.tile.correctPosition.y == 0 &&
+              cpt < tiles.length);
 
-            if (cpt >= tiles.length) {
-              print("2 $cpt");
-            }
-
-            return HexagonWidgetBuilder(
-              padding: 2,
-              cornerRadius: 15,
-              child: returnItem,
-            );
+          if (cpt >= tiles.length) {
+            //print("2 $cpt");
           }
-          /* buildTile: (Coordinates coordinates) => HexagonWidgetBuilder(
+
+          return HexagonWidgetBuilder(
+            padding: 2,
+            cornerRadius: 10,
+            child: returnItem,
+          );
+        },
+        /* buildTile: (Coordinates coordinates) => HexagonWidgetBuilder(
           padding: 2.0,
           cornerRadius: 8.0,
           child: Text(
               '${coordinates.q + 3}, ${coordinates.r + 3}  \n ${testTiles[coordinates.r + 3][coordinates.q + 3]!.x} ${testTiles[coordinates.r + 3][coordinates.q + 3]!.y}'),
           //Text('${coordinates.x}, ${coordinates.y}, ${coordinates.z}\n  ${coordinates.q}, ${coordinates.r}'),
         ),*/
-          ),
+      ),
     );
   }
 }
 
 abstract class _TileFontSize {
-  static double small = 36;
-  static double medium = 50;
+  static double small = 18;
+  static double medium = 25;
   static double large = 54;
 }
 
@@ -429,7 +430,9 @@ class SimplePuzzleTile extends StatelessWidget {
 @visibleForTesting
 class SimplePuzzleShuffleButton extends StatelessWidget {
   /// {@macro puzzle_shuffle_button}
-  const SimplePuzzleShuffleButton({Key? key}) : super(key: key);
+  const SimplePuzzleShuffleButton({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -446,7 +449,12 @@ class SimplePuzzleShuffleButton extends StatelessWidget {
             height: 17,
           ),
           const Gap(10),
-          Text(context.l10n.puzzleShuffle),
+          Text(
+            /*numberOfMoves == 0
+                ? context.l10n.puzzleStart
+                :*/
+            context.l10n.puzzleShuffle,
+          ),
         ],
       ),
     );

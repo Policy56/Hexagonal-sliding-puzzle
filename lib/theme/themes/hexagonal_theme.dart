@@ -15,7 +15,7 @@ class HexagonalTheme extends PuzzleTheme {
   String get name => 'Hexagonal';
 
   @override
-  bool get hasTimer => true;
+  bool get hasTimer => false;
 
   @override
   bool get hasCountdown => false;

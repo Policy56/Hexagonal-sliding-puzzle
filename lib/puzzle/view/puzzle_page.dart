@@ -41,8 +41,8 @@ class PuzzleView extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
 
-    /// Shuffle only if the current theme is Simple.
-    final shufflePuzzle = theme is SimpleTheme;
+    /// Shuffle only if the current theme is Hexagonal.
+    final shufflePuzzle = theme is HexagonalTheme;
 
     return Scaffold(
       backgroundColor: theme.backgroundColor,
