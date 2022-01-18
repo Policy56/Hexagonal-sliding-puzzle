@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_polygon/flutter_polygon.dart';
 import 'package:gap/gap.dart';
 import 'package:very_good_slide_puzzle/cmp/grid/help/coordinates.dart';
 import 'package:very_good_slide_puzzle/cmp/grid/hexagon_grid.dart';
@@ -99,7 +100,7 @@ class SimplePuzzleLayoutDelegate extends PuzzleLayoutDelegate {
         const ResponsiveGap(
           small: 32,
           medium: 48,
-          large: 96,
+          large: 60,
         ),
         ResponsiveLayoutBuilder(
           small: (_, __) => SizedBox.square(
@@ -129,7 +130,7 @@ class SimplePuzzleLayoutDelegate extends PuzzleLayoutDelegate {
           ),
         ),
         const ResponsiveGap(
-          large: 96,
+          large: 0,
         ),
       ],
     );
@@ -147,13 +148,13 @@ class SimplePuzzleLayoutDelegate extends PuzzleLayoutDelegate {
       medium: (_, __) => SimplePuzzleTile(
         key: Key('simple_puzzle_tile_${tile.value}_medium'),
         tile: tile,
-        tileFontSize: _TileFontSize.small, //CCL Change font
+        tileFontSize: _TileFontSize.medium, //CCL Change font
         state: state,
       ),
       large: (_, __) => SimplePuzzleTile(
         key: Key('simple_puzzle_tile_${tile.value}_large'),
         tile: tile,
-        tileFontSize: _TileFontSize.small, //CCL Change font
+        tileFontSize: _TileFontSize.large, //CCL Change font
         state: state,
       ),
     );
@@ -247,7 +248,7 @@ class SimplePuzzleTitle extends StatelessWidget {
 abstract class _BoardSize {
   static double small = 312;
   static double medium = 424;
-  static double large = 472;
+  static double large = 650;
 }
 
 /// {@template simple_puzzle_board}
@@ -275,7 +276,11 @@ class SimplePuzzleBoard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _buildGrid(context, HexagonType.POINTY);
+    return Stack(
+      children: [
+        Positioned.fill(child: _buildGrid(context, HexagonType.POINTY))
+      ],
+    );
     /*return GridView.count(
       padding: EdgeInsets.zero,
       shrinkWrap: true,
@@ -288,122 +293,40 @@ class SimplePuzzleBoard extends StatelessWidget {
   }
 
   Widget _buildGrid(BuildContext context, HexagonType type) {
-    List<List<Position?>> testTiles = [
-      [
-        null,
-        null,
-        null,
-        const Position(x: 3, y: 0),
-        const Position(x: 4, y: 0),
-        const Position(x: 5, y: 0),
-        const Position(x: 6, y: 0)
-      ],
-      [
-        null,
-        null,
-        const Position(x: 2, y: 1),
-        const Position(x: 3, y: 1),
-        const Position(x: 4, y: 1),
-        const Position(x: 5, y: 1),
-        const Position(x: 6, y: 1)
-      ],
-      [
-        null,
-        const Position(x: 1, y: 2),
-        const Position(x: 2, y: 2),
-        const Position(x: 3, y: 2),
-        const Position(x: 4, y: 2),
-        const Position(x: 5, y: 2),
-        const Position(x: 6, y: 2)
-      ],
-      [
-        const Position(x: 0, y: 3),
-        const Position(x: 1, y: 3),
-        const Position(x: 2, y: 3),
-        const Position(x: 3, y: 3),
-        const Position(x: 4, y: 3),
-        const Position(x: 5, y: 3),
-        const Position(x: 6, y: 3)
-      ],
-      [
-        const Position(x: 0, y: 4),
-        const Position(x: 1, y: 4),
-        const Position(x: 2, y: 4),
-        const Position(x: 3, y: 4),
-        const Position(x: 4, y: 4),
-        const Position(x: 5, y: 4),
-        null
-      ],
-      [
-        const Position(x: 0, y: 5),
-        const Position(x: 1, y: 5),
-        const Position(x: 2, y: 5),
-        const Position(x: 3, y: 5),
-        const Position(x: 4, y: 5),
-        null,
-        null
-      ],
-      [
-        const Position(x: 0, y: 6),
-        const Position(x: 1, y: 6),
-        const Position(x: 2, y: 6),
-        const Position(x: 3, y: 6),
-        null,
-        null,
-        null
-      ],
-    ];
     var cpt = 0;
     return InteractiveViewer(
       minScale: 0.2,
       maxScale: 4.0,
       child: HexagonGrid(
-        hexType: type,
-        //color: Colors.pink,
-        depth: 3,
-        /*  buildChild: (Coordinates coordinates) {
+          hexType: type,
+          depth: 3,
+          buildTile: (Coordinates coordinates) {
             Widget returnItem;
             do {
               returnItem = tiles[cpt];
               cpt++;
             } while ((returnItem as PuzzleTile).tile.correctPosition.x == 0 &&
                 returnItem.tile.correctPosition.y == 0 &&
-                cpt > tiles.length);
+                cpt < tiles.length);
 
             if (cpt >= tiles.length) {
-              print(cpt);
+              print("2 $cpt");
             }
 
-            return returnItem;
-          }*/
-        buildTile: (Coordinates coordinates) {
-          Widget returnItem;
-          do {
-            returnItem = tiles[cpt];
-            cpt++;
-          } while ((returnItem as PuzzleTile).tile.correctPosition.x == 0 &&
-              returnItem.tile.correctPosition.y == 0 &&
-              cpt < tiles.length);
-
-          if (cpt >= tiles.length) {
-            print("2 $cpt");
+            return HexagonWidgetBuilder(
+              padding: 2,
+              cornerRadius: 15,
+              child: returnItem,
+            );
           }
-
-          return HexagonWidgetBuilder(
-            padding: 2.0,
-            cornerRadius: 8.0,
-            child: returnItem,
-          );
-        }
-        /* buildTile: (Coordinates coordinates) => HexagonWidgetBuilder(
+          /* buildTile: (Coordinates coordinates) => HexagonWidgetBuilder(
           padding: 2.0,
           cornerRadius: 8.0,
           child: Text(
               '${coordinates.q + 3}, ${coordinates.r + 3}  \n ${testTiles[coordinates.r + 3][coordinates.q + 3]!.x} ${testTiles[coordinates.r + 3][coordinates.q + 3]!.y}'),
           //Text('${coordinates.x}, ${coordinates.y}, ${coordinates.z}\n  ${coordinates.q}, ${coordinates.r}'),
         ),*/
-        ,
-      ),
+          ),
     );
   }
 }
@@ -440,56 +363,62 @@ class SimplePuzzleTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
+    return Container(
+      width: 100,
+      height: 100,
+      child: TextButton(
+        style: TextButton.styleFrom(
+          primary: PuzzleColors.white,
+          textStyle: //PuzzleTextStyle.bodySmall,
+              PuzzleTextStyle.headline5.copyWith(
+            fontSize: tileFontSize,
+          ),
+          // shape: const PolygonBorder(sides: 6, borderRadius: 5),
+          //const PolygonBorder(sides: 6, borderRadius: 5),
 
-    return TextButton(
-      style: TextButton.styleFrom(
-        primary: PuzzleColors.white,
-        textStyle: PuzzleTextStyle.bodySmall,
-        /*PuzzleTextStyle.headline5.copyWith(
-          //CCL change font
-          fontSize: tileFontSize,
-        ),*/
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(12),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(12),
+            ),
+          ),
+        ).copyWith(
+          foregroundColor: MaterialStateProperty.all(
+            PuzzleColors.white,
+          ), //TODO(CCL) change couleur de text + hover
+          backgroundColor: MaterialStateProperty.resolveWith<Color?>(
+            (states) {
+              if (tile.value == state.lastTappedTile?.value) {
+                return theme.pressedColor;
+              } else if (states.contains(MaterialState.hovered)) {
+                return theme.hoverColor;
+              } else {
+                /*
+                  Color returnColor;
+                  if (state.puzzle.isTileMovable(tile)) {
+                    returnColor = Colors.green;
+                  } else {
+                    returnColor = Colors.red;
+                  }
+                  return returnColor;
+                  */
+                /*Color returnColor;
+                  if (state.puzzle.isTileCorrect(tile)) {
+                    returnColor = Colors.green;
+                  } else {
+                    returnColor = Colors.red;
+                  }
+                  return returnColor;*/
+                return theme.defaultColor;
+              }
+            },
           ),
         ),
-      ).copyWith(
-        foregroundColor: MaterialStateProperty.all(
-            PuzzleColors.black), //TODO(CCL) change couleur de text + hover
-        backgroundColor: MaterialStateProperty.resolveWith<Color?>(
-          (states) {
-            if (tile.value == state.lastTappedTile?.value) {
-              return theme.pressedColor;
-            } else if (states.contains(MaterialState.hovered)) {
-              return theme.hoverColor;
-            } else {
-              /*
-              Color returnColor;
-              if (state.puzzle.isTileMovable(tile)) {
-                returnColor = Colors.green;
-              } else {
-                returnColor = Colors.red;
-              }
-              return returnColor;
-              */
-              Color returnColor;
-              if (state.puzzle.isTileCorrect(tile)) {
-                returnColor = Colors.green;
-              } else {
-                returnColor = Colors.red;
-              }
-              return returnColor;
-              //return theme.defaultColor;
-            }
-          },
-        ),
+        onPressed: state.puzzleStatus == PuzzleStatus.incomplete
+            ? () => context.read<PuzzleBloc>().add(TileTapped(tile))
+            : null,
+        child: Text(tile.value.toString()),
+        //" ${tile.value} \n ${tile.currentPosition.x} - ${tile.currentPosition.y} "),
       ),
-      onPressed: state.puzzleStatus == PuzzleStatus.incomplete
-          ? () => context.read<PuzzleBloc>().add(TileTapped(tile))
-          : null,
-      child: Text(
-          " ${tile.value} \n ${tile.currentPosition.x} - ${tile.currentPosition.y} "),
     );
   }
 }

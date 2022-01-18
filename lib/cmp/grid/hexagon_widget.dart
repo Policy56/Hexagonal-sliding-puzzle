@@ -34,7 +34,7 @@ class HexagonWidget extends StatelessWidget {
     this.elevation = 0,
     this.inBounds = true,
     required this.type,
-  })   : assert(width != null || height != null),
+  })  : assert(width != null || height != null),
         assert(elevation >= 0),
         super(key: key);
 
@@ -138,6 +138,7 @@ class HexagonWidget extends StatelessWidget {
         inBounds: inBounds, borderRadius: cornerRadius);
 
     return Align(
+      //TODO(CCL):modif size ici
       child: Container(
         padding: EdgeInsets.all(padding),
         width: innerSize.width,
@@ -152,11 +153,15 @@ class HexagonWidget extends StatelessWidget {
             clipper: HexagonClipper(pathBuilder),
             child: OverflowBox(
               alignment: Alignment.center,
-              maxHeight: contentSize.height,
+              maxHeight: contentSize.height *
+                  2, //TODO(CCL): augmentation de la hauteurdu overflow
               maxWidth: contentSize.width,
-              child: Align(
-                alignment: Alignment.center,
-                child: child,
+              child: Container(
+                //color: Colors.orange,
+                child: Align(
+                  alignment: Alignment.center,
+                  child: child,
+                ),
               ),
             ),
           ),
