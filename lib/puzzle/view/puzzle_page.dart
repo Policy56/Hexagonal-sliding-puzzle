@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:very_good_slide_puzzle/layout/layout.dart';
-import 'package:very_good_slide_puzzle/models/models.dart';
-import 'package:very_good_slide_puzzle/puzzle/puzzle.dart';
-import 'package:very_good_slide_puzzle/theme/theme.dart';
-import 'package:very_good_slide_puzzle/theme/themes/hexagonal_theme.dart';
-import 'package:very_good_slide_puzzle/timer/timer.dart';
+import 'package:hexagonal_sliding_puzzle/layout/layout.dart';
+import 'package:hexagonal_sliding_puzzle/models/models.dart';
+import 'package:hexagonal_sliding_puzzle/puzzle/puzzle.dart';
+import 'package:hexagonal_sliding_puzzle/theme/theme.dart';
+import 'package:hexagonal_sliding_puzzle/theme/themes/hexagonal_theme.dart';
+import 'package:hexagonal_sliding_puzzle/timer/timer.dart';
 
 /// {@template puzzle_page}
 /// The root page of the puzzle UI.

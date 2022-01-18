@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:very_good_slide_puzzle/colors/colors.dart';
-import 'package:very_good_slide_puzzle/layout/layout.dart';
-import 'package:very_good_slide_puzzle/typography/typography.dart';
+import 'package:hexagonal_sliding_puzzle/colors/colors.dart';
+import 'package:hexagonal_sliding_puzzle/layout/layout.dart';
+import 'package:hexagonal_sliding_puzzle/typography/typography.dart';
 
 /// {@template puzzle_title}
 /// Displays the title of the puzzle in the given color.

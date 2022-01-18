@@ -5,8 +5,8 @@ import 'dart:async';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:very_good_slide_puzzle/models/models.dart';
-import 'package:very_good_slide_puzzle/timer/timer.dart';
+import 'package:hexagonal_sliding_puzzle/models/models.dart';
+import 'package:hexagonal_sliding_puzzle/timer/timer.dart';
 
 class MockTicker extends Mock implements Ticker {}
 

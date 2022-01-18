@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter_test/flutter_test.dart';
-import 'package:very_good_slide_puzzle/models/models.dart';
-import 'package:very_good_slide_puzzle/puzzle/puzzle.dart';
+import 'package:hexagonal_sliding_puzzle/models/models.dart';
+import 'package:hexagonal_sliding_puzzle/puzzle/puzzle.dart';
 
 void main() {
   final position = Position(x: 1, y: 1);

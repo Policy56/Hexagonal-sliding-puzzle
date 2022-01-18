@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:equatable/equatable.dart';
-import 'package:very_good_slide_puzzle/models/models.dart';
+import 'package:hexagonal_sliding_puzzle/models/models.dart';
 
 // A 3x3 puzzle board visualization:
 //

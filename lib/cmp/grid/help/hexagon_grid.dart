@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:very_good_slide_puzzle/cmp/grid/help/coordinates.dart';
-import 'package:very_good_slide_puzzle/cmp/grid/hexagon_type.dart';
-import 'package:very_good_slide_puzzle/cmp/grid/hexagon_widget.dart';
+import 'package:hexagonal_sliding_puzzle/cmp/grid/help/coordinates.dart';
+import 'package:hexagonal_sliding_puzzle/cmp/grid/hexagon_type.dart';
+import 'package:hexagonal_sliding_puzzle/cmp/grid/hexagon_widget.dart';
 
 class HexagonGrid extends StatelessWidget {
   ///Hexagon shaped grid of hexagons.

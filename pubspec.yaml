@@ -1,5 +1,5 @@
-name: very_good_slide_puzzle
-description: A Very Good Project created by Very Good CLI.
+name: hexagonal_sliding_puzzle
+description: A Hexagonal Sliding Puzzle for Flutter Challenge.
 version: 1.0.0+1
 publish_to: none
 
@@ -11,6 +11,7 @@ dependencies:
   bloc: ^8.0.1
   equatable: ^2.0.3
   fake_async: ^1.2.0
+  firebase_analytics: ^9.0.5
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.0

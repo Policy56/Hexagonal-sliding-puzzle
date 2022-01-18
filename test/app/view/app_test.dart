@@ -6,8 +6,8 @@
 // https://opensource.org/licenses/MIT.
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:very_good_slide_puzzle/app/app.dart';
-import 'package:very_good_slide_puzzle/puzzle/puzzle.dart';
+import 'package:hexagonal_sliding_puzzle/app/app.dart';
+import 'package:hexagonal_sliding_puzzle/puzzle/puzzle.dart';
 
 void main() {
   group('App', () {

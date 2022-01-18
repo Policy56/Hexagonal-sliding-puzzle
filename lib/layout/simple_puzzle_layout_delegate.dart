@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:very_good_slide_puzzle/cmp/grid/help/coordinates.dart';
-import 'package:very_good_slide_puzzle/cmp/grid/hexagon_grid.dart';
-import 'package:very_good_slide_puzzle/cmp/grid/hexagon_type.dart';
-import 'package:very_good_slide_puzzle/cmp/grid/hexagon_widget.dart';
-import 'package:very_good_slide_puzzle/colors/colors.dart';
-import 'package:very_good_slide_puzzle/l10n/l10n.dart';
-import 'package:very_good_slide_puzzle/layout/layout.dart';
-import 'package:very_good_slide_puzzle/models/models.dart';
-import 'package:very_good_slide_puzzle/puzzle/puzzle.dart';
-import 'package:very_good_slide_puzzle/theme/theme.dart';
-import 'package:very_good_slide_puzzle/typography/typography.dart';
+import 'package:hexagonal_sliding_puzzle/cmp/grid/help/coordinates.dart';
+import 'package:hexagonal_sliding_puzzle/cmp/grid/hexagon_grid.dart';
+import 'package:hexagonal_sliding_puzzle/cmp/grid/hexagon_type.dart';
+import 'package:hexagonal_sliding_puzzle/cmp/grid/hexagon_widget.dart';
+import 'package:hexagonal_sliding_puzzle/colors/colors.dart';
+import 'package:hexagonal_sliding_puzzle/l10n/l10n.dart';
+import 'package:hexagonal_sliding_puzzle/layout/layout.dart';
+import 'package:hexagonal_sliding_puzzle/models/models.dart';
+import 'package:hexagonal_sliding_puzzle/puzzle/puzzle.dart';
+import 'package:hexagonal_sliding_puzzle/theme/theme.dart';
+import 'package:hexagonal_sliding_puzzle/typography/typography.dart';
 
 /// {@template simple_puzzle_layout_delegate}
 /// A delegate for computing the layout of the puzzle UI

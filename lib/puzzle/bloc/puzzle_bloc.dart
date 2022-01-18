@@ -4,8 +4,8 @@ import 'dart:math';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:very_good_slide_puzzle/cmp/grid/help/coordinates.dart';
-import 'package:very_good_slide_puzzle/models/models.dart';
+import 'package:hexagonal_sliding_puzzle/cmp/grid/help/coordinates.dart';
+import 'package:hexagonal_sliding_puzzle/models/models.dart';
 
 part 'puzzle_event.dart';
 part 'puzzle_state.dart';

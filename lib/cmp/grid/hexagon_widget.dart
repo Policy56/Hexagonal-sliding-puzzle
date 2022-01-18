@@ -2,9 +2,9 @@ library hexagon;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:very_good_slide_puzzle/cmp/grid/hexagon_clipper.dart';
-import 'package:very_good_slide_puzzle/cmp/grid/hexagon_painter.dart';
-import 'package:very_good_slide_puzzle/cmp/grid/hexagon_path_builder.dart';
+import 'package:hexagonal_sliding_puzzle/cmp/grid/hexagon_clipper.dart';
+import 'package:hexagonal_sliding_puzzle/cmp/grid/hexagon_painter.dart';
+import 'package:hexagonal_sliding_puzzle/cmp/grid/hexagon_path_builder.dart';
 import 'hexagon_type.dart';
 
 class HexagonWidget extends StatelessWidget {

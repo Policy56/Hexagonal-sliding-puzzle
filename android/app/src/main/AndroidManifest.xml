@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.verygoodcore">
+    package="com.policy.hexagonalslidingpuzzle">
    <application
-        android:label="Slide Puzzle"
+        android:label="Hexagonal Sliding Puzzle"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
