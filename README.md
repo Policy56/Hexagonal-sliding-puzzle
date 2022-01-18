@@ -4,6 +4,7 @@
 
 ![coverage][coverage_badge]
 [![style: very good analysis][very_good_analysis_badge]][very_good_analysis_link]
+[![Deploy to Firebase Hosting on merge](https://github.com/Policy56/Hexagonal-sliding-puzzle/actions/workflows/firebase-hosting-merge.yml/badge.svg?branch=master)](https://github.com/Policy56/Hexagonal-sliding-puzzle/actions/workflows/firebase-hosting-merge.yml)
 [![License: MIT][license_badge]][license_link]
 
 A slide puzzle built for [Flutter Challenge](https://flutterhack.devpost.com/).
@@ -35,7 +36,7 @@ $ flutter test --coverage --test-randomize-ordering-seed random
 To view the generated coverage report you can use [lcov](https://github.com/linux-test-project/lcov).
 
 ```sh
-# Generate Coverage Report
+# Generate Coverage Reportsty
 $ genhtml coverage/lcov.info -o coverage/
 
 # Open Coverage Report
