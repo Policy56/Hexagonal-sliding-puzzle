@@ -35,7 +35,6 @@
 </head>
 
 <body>
-  <p id="load">Firebase SDK Loading&hellip;</p>
   <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-app.js"></script>
 
@@ -43,8 +42,8 @@
   <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-analytics.js"></script>
   
   <!-- Add Firebase products that you want to use -->
-  <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-firestore.js"></script>
+ <!-- <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-firestore.js"></script>-->
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
@@ -79,7 +78,7 @@
       // firebase.messaging().requestPermission().then(() => { });
       // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
       // firebase.analytics(); // call to activate
-      firebase.analytics().logEvent('tutorial_completed');
+      firebase.analytics().logEvent('level_start');
       // firebase.performance(); // call to activate
       //
       // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
@@ -97,10 +96,10 @@
           'remoteConfig',
           'performance',
         ].filter(feature => typeof app[feature] === 'function');
-        loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
+        console.log(`Firebase SDK loaded with ${features.join(', ')}`);
       } catch (e) {
         console.error(e);
-        loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
+        console.log(`Error loading the Firebase SDK, check the console.`);
       }
     });
   </script>
