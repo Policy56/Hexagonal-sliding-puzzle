@@ -49,7 +49,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDtqEUg2bA9QQ4jTrRhR_ED28I2fthg5I0',
-    appId: '1:607615760022:android:237c3a530e16b221a274b7',
+    appId: '1:607615760022:android:a6f095de6514b842a274b7',
     messagingSenderId: '607615760022',
     projectId: 'hexagonal-sliding-puzzle',
     storageBucket: 'hexagonal-sliding-puzzle.appspot.com',
@@ -61,7 +61,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '607615760022',
     projectId: 'hexagonal-sliding-puzzle',
     storageBucket: 'hexagonal-sliding-puzzle.appspot.com',
-    iosClientId: '607615760022-pboebos21nquf58g8q8e7k18njouh33v.apps.googleusercontent.com',
+    iosClientId:
+        '607615760022-pboebos21nquf58g8q8e7k18njouh33v.apps.googleusercontent.com',
     iosBundleId: 'com.policy.hexagonalslidingpuzzle',
   );
 }
