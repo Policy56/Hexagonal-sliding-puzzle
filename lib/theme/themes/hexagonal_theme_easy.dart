@@ -8,12 +8,12 @@ import 'package:hexagonal_sliding_puzzle/theme/themes/themes.dart';
 /// {@template simple_theme}
 /// The simple puzzle theme.
 /// {@endtemplate}
-class SimpleTheme extends PuzzleTheme {
+class HexagonalThemeEasy extends PuzzleTheme {
   /// {@macro simple_theme}
-  const SimpleTheme() : super();
+  const HexagonalThemeEasy() : super();
 
   @override
-  String get name => 'Simple';
+  String get name => 'Easy';
 
   @override
   bool get hasTimer => false;
@@ -22,16 +22,16 @@ class SimpleTheme extends PuzzleTheme {
   bool get hasCountdown => false;
 
   @override
-  Color get backgroundColor => PuzzleColors.white;
+  Color get backgroundColor => Colors.teal.shade400;
 
   @override
-  Color get defaultColor => PuzzleColors.primary5;
+  Color get defaultColor => const Color(0xFF00504C);
 
   @override
-  Color get hoverColor => PuzzleColors.primary3;
+  Color get hoverColor => darker(defaultColor, 20);
 
   @override
-  Color get pressedColor => PuzzleColors.primary7;
+  Color get pressedColor => lighter(defaultColor, 20);
 
   @override
   PuzzleLayoutDelegate get layoutDelegate => const SimplePuzzleLayoutDelegate();
@@ -52,10 +52,10 @@ class SimpleTheme extends PuzzleTheme {
       ];
 
   @override
-  Color get menuActiveColor => Colors.orange;
+  Color get menuActiveColor => darker(defaultColor, 30);
   @override
-  Color get menuInactiveColor => Colors.orange;
+  Color get menuInactiveColor => defaultColor;
 
   @override
-  Color get menuUnderlineColor => Colors.orange;
+  Color get menuUnderlineColor => defaultColor;
 }

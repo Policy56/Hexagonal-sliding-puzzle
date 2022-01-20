@@ -3,10 +3,27 @@
 part of 'theme_bloc.dart';
 
 class ThemeState extends Equatable {
-  const ThemeState({this.theme = const HexagonalTheme()});
+  const ThemeState({
+    required this.themes,
+    this.theme = const HexagonalThemeMedium(),
+  });
 
+  /// The list of all available themes.
+  final List<PuzzleTheme> themes;
+
+  /// Currently selected theme.
   final PuzzleTheme theme;
 
   @override
-  List<Object> get props => [theme];
+  List<Object> get props => [themes, theme];
+
+  ThemeState copyWith({
+    List<PuzzleTheme>? themes,
+    PuzzleTheme? theme,
+  }) {
+    return ThemeState(
+      themes: themes ?? this.themes,
+      theme: theme ?? this.theme,
+    );
+  }
 }

@@ -46,7 +46,7 @@ void main() {
       when(() => layoutDelegate.tileBuilder(any(), any()))
           .thenReturn(SizedBox());
 
-      when(layoutDelegate.whitespaceTileBuilder).thenReturn(SizedBox());
+      //when(layoutDelegate.whitespaceTileBuilder).thenReturn(SizedBox());
 
       when(() => theme.layoutDelegate).thenReturn(layoutDelegate);
       when(() => theme.backgroundColor).thenReturn(Colors.black);
@@ -218,7 +218,7 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      verify(layoutDelegate.whitespaceTileBuilder).called(1);
+      //verify(layoutDelegate.whitespaceTileBuilder).called(1);
     });
 
     testWidgets(

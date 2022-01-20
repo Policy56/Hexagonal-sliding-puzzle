@@ -341,7 +341,7 @@ void main() {
     group('whitespaceTileBuilder', () {
       testWidgets('renders SizedBox', (tester) async {
         await tester.pumpApp(
-          layoutDelegate.whitespaceTileBuilder(),
+          layoutDelegate.whitespaceTileBuilder(Colors.red),
           themeBloc: themeBloc,
         );
 
@@ -549,7 +549,7 @@ void main() {
         final puzzleBloc = MockPuzzleBloc();
 
         await tester.pumpApp(
-          SimplePuzzleShuffleButton(),
+          SimplePuzzleShuffleButton(state),
           themeBloc: themeBloc,
           puzzleBloc: puzzleBloc,
         );

@@ -2,14 +2,14 @@
 
 part of 'puzzle_bloc.dart';
 
-enum PuzzleStatus { incomplete, complete }
+enum PuzzleStatus { notStarted, incomplete, complete }
 
 enum TileMovementStatus { nothingTapped, cannotBeMoved, moved }
 
 class PuzzleState extends Equatable {
   const PuzzleState({
     this.puzzle = const Puzzle(tiles: []),
-    this.puzzleStatus = PuzzleStatus.incomplete,
+    this.puzzleStatus = PuzzleStatus.notStarted,
     this.tileMovementStatus = TileMovementStatus.nothingTapped,
     this.numberOfCorrectTiles = 0,
     this.numberOfMoves = 0,

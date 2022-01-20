@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
 import 'package:hexagonal_sliding_puzzle/colors/colors.dart';
 import 'package:hexagonal_sliding_puzzle/layout/layout.dart';
 import 'package:hexagonal_sliding_puzzle/theme/themes/themes.dart';
@@ -7,12 +8,12 @@ import 'package:hexagonal_sliding_puzzle/theme/themes/themes.dart';
 /// {@template simple_theme}
 /// The simple puzzle theme.
 /// {@endtemplate}
-class HexagonalTheme extends PuzzleTheme {
+class HexagonalThemeHard extends PuzzleTheme {
   /// {@macro simple_theme}
-  const HexagonalTheme() : super();
+  const HexagonalThemeHard() : super();
 
   @override
-  String get name => 'Hexagonal';
+  String get name => 'Hard';
 
   @override
   bool get hasTimer => false;
@@ -21,16 +22,16 @@ class HexagonalTheme extends PuzzleTheme {
   bool get hasCountdown => false;
 
   @override
-  Color get backgroundColor => PuzzleColors.white;
+  Color get backgroundColor => Colors.grey.shade800;
 
   @override
-  Color get defaultColor => PuzzleColors.primary5;
+  Color get defaultColor => Colors.red.shade700;
 
   @override
-  Color get hoverColor => PuzzleColors.primary3;
+  Color get hoverColor => darker(defaultColor, 20);
 
   @override
-  Color get pressedColor => PuzzleColors.primary7;
+  Color get pressedColor => lighter(defaultColor, 20);
 
   @override
   PuzzleLayoutDelegate get layoutDelegate => const SimplePuzzleLayoutDelegate();
@@ -45,5 +46,16 @@ class HexagonalTheme extends PuzzleTheme {
         hoverColor,
         pressedColor,
         layoutDelegate,
+        menuActiveColor,
+        menuInactiveColor,
+        menuUnderlineColor
       ];
+
+  @override
+  Color get menuActiveColor => lighter(defaultColor, 30);
+  @override
+  Color get menuInactiveColor => defaultColor;
+
+  @override
+  Color get menuUnderlineColor => defaultColor;
 }

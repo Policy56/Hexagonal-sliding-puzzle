@@ -16,6 +16,8 @@ class PuzzleName extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final name = context.select((ThemeBloc bloc) => bloc.state.theme).name;
+    final color =
+        context.select((ThemeBloc bloc) => bloc.state.theme).hoverColor;
 
     return ResponsiveLayoutBuilder(
       small: (context, child) => const SizedBox(),
@@ -23,7 +25,7 @@ class PuzzleName extends StatelessWidget {
       large: (context, child) => Text(
         name,
         style: PuzzleTextStyle.headline5.copyWith(
-          color: PuzzleColors.grey1,
+          color: color,
         ),
       ),
     );

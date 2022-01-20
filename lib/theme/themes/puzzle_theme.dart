@@ -37,6 +37,24 @@ abstract class PuzzleTheme extends Equatable {
   /// Used for the puzzle tile that was pressed.
   Color get pressedColor;
 
+  /// The active menu color.
+  ///
+  /// Applied to the text color of the currently active
+  /// theme in menu.
+  Color get menuActiveColor;
+
+  /// The underline menu color.
+  ///
+  /// Applied to the underline of the currently active
+  /// theme in menu, on a small layout.
+  Color get menuUnderlineColor;
+
+  /// The inactive menu color.
+  ///
+  /// Applied to the text color of the currently inactive
+  /// theme in menu.
+  Color get menuInactiveColor;
+
   /// The puzzle layout delegate of this theme.
   ///
   /// Used for building sections of the puzzle UI.

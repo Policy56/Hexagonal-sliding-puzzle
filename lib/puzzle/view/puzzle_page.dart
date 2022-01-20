@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:hexagonal_sliding_puzzle/layout/layout.dart';
 import 'package:hexagonal_sliding_puzzle/models/models.dart';
 import 'package:hexagonal_sliding_puzzle/puzzle/puzzle.dart';
 import 'package:hexagonal_sliding_puzzle/theme/theme.dart';
-import 'package:hexagonal_sliding_puzzle/theme/themes/hexagonal_theme.dart';
+import 'package:hexagonal_sliding_puzzle/theme/themes/hexagonal_theme_medium.dart';
 import 'package:hexagonal_sliding_puzzle/timer/timer.dart';
+import 'package:hexagonal_sliding_puzzle/typography/text_styles.dart';
 
 /// {@template puzzle_page}
 /// The root page of the puzzle UI.
@@ -19,12 +21,19 @@ class PuzzlePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ThemeBloc(
-        themes: const [
-          HexagonalTheme(),
-        ],
-      ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ThemeBloc(
+            initialThemes: [
+              //const SimpleTheme(),
+              const HexagonalThemeEasy(),
+              const HexagonalThemeMedium(),
+              const HexagonalThemeHard(),
+            ],
+          ),
+        ),
+      ],
       child: const PuzzleView(),
     );
   }
@@ -36,29 +45,41 @@ class PuzzlePage extends StatelessWidget {
 class PuzzleView extends StatelessWidget {
   /// {@macro puzzle_view}
   const PuzzleView({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
 
-    /// Shuffle only if the current theme is Hexagonal.
-    final shufflePuzzle = theme is HexagonalTheme;
+    /// Shuffle only if the current theme is Simple.
+    final shufflePuzzle = theme is SimpleTheme; //TODO(CCL): shuffle ici ?
 
     return Scaffold(
-      backgroundColor: theme.backgroundColor,
-      body: BlocProvider(
-        create: (context) => TimerBloc(
-          ticker: const Ticker(),
-        ),
-        child: BlocProvider(
-          create: (context) => PuzzleBloc(6) //MODIF CCL ICI DU NOMBRE
-            ..add(
-              PuzzleInitialized(
-                shufflePuzzle: shufflePuzzle,
+      body: AnimatedContainer(
+        duration: const Duration(milliseconds: 900),
+        decoration: BoxDecoration(color: theme.backgroundColor),
+        child: BlocListener<ThemeBloc, ThemeState>(
+          listener: (context, state) {
+            final theme = context.read<ThemeBloc>().state.theme;
+            context.read<ThemeBloc>().add(ThemeUpdated(theme: theme));
+          },
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => TimerBloc(
+                  ticker: const Ticker(),
+                ),
               ),
+              BlocProvider(
+                create: (context) => PuzzleBloc(4)
+                  ..add(
+                    PuzzleInitialized(
+                      shufflePuzzle: shufflePuzzle,
+                    ),
+                  ),
+              ),
+            ],
+            child: const _Puzzle(
+              key: Key('puzzle_view_puzzle'),
             ),
-          child: const _Puzzle(
-            key: Key('puzzle_view_puzzle'),
           ),
         ),
       ),
@@ -86,9 +107,9 @@ class _Puzzle extends StatelessWidget {
                 ),
                 child: Column(
                   children: const [
-                    /* _PuzzleHeader(
+                    _PuzzleHeader(
                       key: Key('puzzle_header'),
-                    ),*/ // TODO(CCL): Ici ajout du logo Flutter en haut -> Mettre logo auto
+                    ), // TODO(CCL): Ici ajout du logo Flutter en haut -> Mettre logo auto
                     _PuzzleSections(
                       key: Key('puzzle_sections'),
                     ),
@@ -111,16 +132,22 @@ class _PuzzleHeader extends StatelessWidget {
     return SizedBox(
       height: 96,
       child: ResponsiveLayoutBuilder(
-        small: (context, child) => const Center(
-          child: _PuzzleLogo(),
+        small: (context, child) => Stack(
+          children: [
+            const Align(
+              child: _PuzzleLogo(),
+            ),
+          ],
         ),
         medium: (context, child) => Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 50,
           ),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const [
               _PuzzleLogo(),
+              PuzzleMenu(),
             ],
           ),
         ),
@@ -129,8 +156,10 @@ class _PuzzleHeader extends StatelessWidget {
             horizontal: 50,
           ),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const [
               _PuzzleLogo(),
+              PuzzleMenu(),
             ],
           ),
         ),
@@ -261,7 +290,155 @@ class PuzzleTile extends StatelessWidget {
     final state = context.select((PuzzleBloc bloc) => bloc.state);
 
     return tile.isWhitespace
-        ? theme.layoutDelegate.whitespaceTileBuilder()
+        ? theme.layoutDelegate.whitespaceTileBuilder(theme.backgroundColor)
         : theme.layoutDelegate.tileBuilder(tile, state);
+  }
+}
+
+/// {@template puzzle_menu}
+/// Displays the menu of the puzzle.
+/// {@endtemplate}
+@visibleForTesting
+class PuzzleMenu extends StatelessWidget {
+  /// {@macro puzzle_menu}
+  const PuzzleMenu({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final themes = context.select((ThemeBloc bloc) => bloc.state.themes);
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        ...List.generate(
+          themes.length,
+          (index) => PuzzleMenuItem(
+            theme: themes[index],
+            themeIndex: index,
+          ),
+        ),
+        ResponsiveLayoutBuilder(
+          small: (_, child) => const SizedBox(),
+          medium: (_, child) => child!,
+          large: (_, child) => child!,
+          child: (currentSize) {
+            return Row(
+              children: const [
+                Gap(44),
+                /*AudioControl(
+                  key: audioControlKey,
+                )*/
+              ],
+            );
+          },
+        ),
+      ],
+    );
+  }
+}
+
+/// {@template puzzle_menu_item}
+/// Displays the menu item of the [PuzzleMenu].
+/// {@endtemplate}
+@visibleForTesting
+class PuzzleMenuItem extends StatelessWidget {
+  /// {@macro puzzle_menu_item}
+  const PuzzleMenuItem({
+    Key? key,
+    required this.theme,
+    required this.themeIndex,
+  }) : super(key: key);
+
+  /// The theme corresponding to this menu item.
+  final PuzzleTheme theme;
+
+  /// The index of [theme] in [ThemeState.themes].
+  final int themeIndex;
+
+  @override
+  Widget build(BuildContext context) {
+    final currentTheme = context.select((ThemeBloc bloc) => bloc.state.theme);
+    final isCurrentTheme = theme == currentTheme;
+
+    return ResponsiveLayoutBuilder(
+      small: (_, child) => Column(
+        children: [
+          Container(
+            width: 100,
+            height: 40,
+            decoration: isCurrentTheme
+                ? BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        width: 2,
+                        color: currentTheme.menuUnderlineColor,
+                      ),
+                    ),
+                  )
+                : null,
+            child: child,
+          ),
+        ],
+      ),
+      medium: (_, child) => child!,
+      large: (_, child) => child!,
+      child: (currentSize) {
+        final leftPadding =
+            themeIndex > 0 && currentSize != ResponsiveLayoutSize.small
+                ? 40.0
+                : 0.0;
+
+        return Padding(
+          padding: EdgeInsets.only(left: leftPadding),
+          child: Tooltip(
+            message: theme != currentTheme
+                ? "Changing the theme will reset your score" /*context.l10n.puzzleChangeTooltip*/ : '',
+            child: TextButton(
+              style: TextButton.styleFrom(
+                padding: EdgeInsets.zero,
+              ).copyWith(
+                overlayColor: MaterialStateProperty.all(Colors.transparent),
+              ),
+              onPressed: () {
+                // Ignore if this theme is already selected.
+                if (theme == currentTheme) {
+                  return;
+                }
+
+                // Update the currently selected theme.
+                context
+                    .read<ThemeBloc>()
+                    .add(ThemeChanged(themeIndex: themeIndex));
+
+                // Reset the timer of the currently running puzzle.
+                /*  context.read<TimerBloc>().add(const TimerReset());
+
+                // Stop the Dashatar countdown if it has been started.
+                context.read<PuzzleBloc>().add(
+                      const DashatarCountdownStopped(),
+                    );*/
+
+                // Initialize the puzzle board for the newly selected theme.
+                context.read<PuzzleBloc>().add(
+                      PuzzleInitialized(
+                        shufflePuzzle: theme
+                            is SimpleTheme, //TODO(CCL) : ici on dis si on shuffle le puzzle
+                      ),
+                    );
+              },
+              child: AnimatedDefaultTextStyle(
+                duration: const Duration(milliseconds: 400),
+                style: PuzzleTextStyle.headline5.copyWith(
+                  color: isCurrentTheme
+                      ? currentTheme.menuActiveColor
+                      : currentTheme.menuInactiveColor,
+                ),
+                child: Text(theme.name),
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 }

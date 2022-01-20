@@ -26,9 +26,13 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     Emitter<PuzzleState> emit,
   ) {
     final puzzle = _generateHexagonPuzzle(_size, shuffle: event.shufflePuzzle);
+
     emit(
       PuzzleState(
         puzzle: puzzle.sort(),
+        puzzleStatus: event.shufflePuzzle
+            ? PuzzleStatus.incomplete
+            : PuzzleStatus.notStarted,
         numberOfCorrectTiles: puzzle.getNumberOfCorrectTiles(),
       ),
     );
@@ -79,6 +83,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     emit(
       PuzzleState(
         puzzle: puzzle.sort(),
+        puzzleStatus: PuzzleStatus.incomplete,
         numberOfCorrectTiles: puzzle.getNumberOfCorrectTiles(),
       ),
     );
@@ -249,7 +254,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
 
     const itemWhitespace = Tile(
       value: 18,
-      correctPosition: Position(x: 3, y: 3),
+      correctPosition: Position(x: 3, y: 6),
       currentPosition: Position(x: 3, y: 3), //CCL
       isWhitespace: true,
     );

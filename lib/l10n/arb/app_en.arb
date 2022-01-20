@@ -12,7 +12,7 @@
     "@puzzleNumberOfTilesLeft": {
         "description": "Indicates how many puzzle tiles are not in their correct position"
     },
-    "puzzleStart": "Start",
+    "puzzleStart": "Start game",
     "@puzzleStart": {
         "description": "Shown on the button that start the puzzle"
     },
