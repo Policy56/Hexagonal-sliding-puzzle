@@ -444,6 +444,7 @@ void main() {
           SimplePuzzleTile(
             tile: tile,
             tileFontSize: tileFontSize,
+            boardSize: 100,
             state: state,
           ),
           themeBloc: themeBloc,
@@ -452,7 +453,8 @@ void main() {
 
         await tester.tap(find.byType(SimplePuzzleTile));
 
-        verify(() => puzzleBloc.add(TileTapped(tile))).called(1);
+        verify(() => puzzleBloc.add(TileTapped(tile, size: theme.size)))
+            .called(1);
       });
 
       testWidgets(
@@ -467,6 +469,7 @@ void main() {
           SimplePuzzleTile(
             tile: tile,
             tileFontSize: tileFontSize,
+            boardSize: 100,
             state: state,
           ),
           themeBloc: themeBloc,
@@ -475,7 +478,7 @@ void main() {
 
         await tester.tap(find.byType(SimplePuzzleTile));
 
-        verifyNever(() => puzzleBloc.add(TileTapped(tile)));
+        verifyNever(() => puzzleBloc.add(TileTapped(tile, size: theme.size)));
       });
 
       group('matches golden file', () {
@@ -490,6 +493,7 @@ void main() {
             SimplePuzzleTile(
               tile: tile,
               tileFontSize: tileFontSize,
+              boardSize: 100,
               state: state,
             ),
             themeBloc: themeBloc,
@@ -508,6 +512,7 @@ void main() {
             SimplePuzzleTile(
               tile: tile,
               tileFontSize: tileFontSize,
+              boardSize: 100,
               state: state,
             ),
             themeBloc: themeBloc,
@@ -524,6 +529,7 @@ void main() {
             SimplePuzzleTile(
               tile: tile,
               tileFontSize: tileFontSize,
+              boardSize: 100,
               state: state,
             ),
             themeBloc: themeBloc,
@@ -556,7 +562,7 @@ void main() {
 
         await tester.tap(find.byType(SimplePuzzleShuffleButton));
 
-        verify(() => puzzleBloc.add(PuzzleReset())).called(1);
+        verify(() => puzzleBloc.add(PuzzleReset(size: theme.size))).called(1);
       });
     });
 

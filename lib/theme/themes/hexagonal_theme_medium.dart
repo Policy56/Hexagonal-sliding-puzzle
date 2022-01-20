@@ -16,6 +16,9 @@ class HexagonalThemeMedium extends PuzzleTheme {
   String get name => 'Medium';
 
   @override
+  int get size => 7;
+
+  @override
   bool get hasTimer => false;
 
   @override

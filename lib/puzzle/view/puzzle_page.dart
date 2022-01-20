@@ -48,6 +48,7 @@ class PuzzleView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
+    final size = theme.size;
 
     /// Shuffle only if the current theme is Simple.
     final shufflePuzzle = theme is SimpleTheme; //TODO(CCL): shuffle ici ?
@@ -69,9 +70,10 @@ class PuzzleView extends StatelessWidget {
                 ),
               ),
               BlocProvider(
-                create: (context) => PuzzleBloc(4)
+                create: (context) => PuzzleBloc()
                   ..add(
                     PuzzleInitialized(
+                      size: size,
                       shufflePuzzle: shufflePuzzle,
                     ),
                   ),
@@ -421,6 +423,7 @@ class PuzzleMenuItem extends StatelessWidget {
                 // Initialize the puzzle board for the newly selected theme.
                 context.read<PuzzleBloc>().add(
                       PuzzleInitialized(
+                        size: theme.size,
                         shufflePuzzle: theme
                             is SimpleTheme, //TODO(CCL) : ici on dis si on shuffle le puzzle
                       ),

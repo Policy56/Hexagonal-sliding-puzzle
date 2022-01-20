@@ -16,6 +16,9 @@ class HexagonalThemeHard extends PuzzleTheme {
   String get name => 'Hard';
 
   @override
+  int get size => 9;
+
+  @override
   bool get hasTimer => false;
 
   @override

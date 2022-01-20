@@ -87,7 +87,7 @@ void main() {
   group('PuzzleBloc', () {
     test('initial state is PuzzleState', () {
       expect(
-        PuzzleBloc(4).state,
+        PuzzleBloc().state,
         PuzzleState(),
       );
     });
@@ -98,8 +98,9 @@ void main() {
       blocTest<PuzzleBloc, PuzzleState>(
         'emits solvable 3x3 puzzle, [incomplete], 0 correct tiles, and 0 moves '
         'when initialized with size 3 and shuffle equal to true',
-        build: () => PuzzleBloc(3, random: random),
-        act: (bloc) => bloc.add(PuzzleInitialized(shufflePuzzle: true)),
+        build: () => PuzzleBloc(random: random),
+        act: (bloc) =>
+            bloc.add(PuzzleInitialized(shufflePuzzle: true, size: 5)),
         expect: () => [PuzzleState(puzzle: puzzleSize3)],
         verify: (bloc) => expect(bloc.state.puzzle.isSolvable(), isTrue),
       );
@@ -107,8 +108,9 @@ void main() {
       blocTest<PuzzleBloc, PuzzleState>(
         'emits unshuffled 3x3 puzzle, 8 correct tiles, and 0 moves '
         'when initialized with size 3 and shuffle equal to false',
-        build: () => PuzzleBloc(3, random: random),
-        act: (bloc) => bloc.add(PuzzleInitialized(shufflePuzzle: false)),
+        build: () => PuzzleBloc(random: random),
+        act: (bloc) =>
+            bloc.add(PuzzleInitialized(shufflePuzzle: false, size: 5)),
         expect: () => [
           PuzzleState(
             puzzle: puzzleSize3Unshuffled,
@@ -193,12 +195,12 @@ void main() {
 
       blocTest<PuzzleBloc, PuzzleState>(
         'emits [moved] when one tile was able to move',
-        build: () => PuzzleBloc(size),
+        build: () => PuzzleBloc(),
         seed: () => PuzzleState(
           puzzle: puzzle,
           numberOfCorrectTiles: 7,
         ),
-        act: (bloc) => bloc.add(TileTapped(middleCenterTile)),
+        act: (bloc) => bloc.add(TileTapped(middleCenterTile, size: 5)),
         expect: () => <PuzzleState>[
           PuzzleState(
             puzzle: Puzzle(
@@ -233,12 +235,12 @@ void main() {
 
       blocTest<PuzzleBloc, PuzzleState>(
         'emits [moved] when mutiple tiles were able to move',
-        build: () => PuzzleBloc(size),
+        build: () => PuzzleBloc(),
         seed: () => PuzzleState(
           puzzle: puzzle,
           numberOfCorrectTiles: 7,
         ),
-        act: (bloc) => bloc.add(TileTapped(topCenterTile)),
+        act: (bloc) => bloc.add(TileTapped(topCenterTile, size: 5)),
         expect: () => <PuzzleState>[
           PuzzleState(
             puzzle: Puzzle(
@@ -277,12 +279,12 @@ void main() {
 
       blocTest<PuzzleBloc, PuzzleState>(
         'emits [cannotBeMoved] when tapped tile cannot move to whitespace',
-        build: () => PuzzleBloc(size),
+        build: () => PuzzleBloc(),
         seed: () => PuzzleState(
           puzzle: puzzle,
           numberOfCorrectTiles: 7,
         ),
-        act: (bloc) => bloc.add(TileTapped(topLeftTile)),
+        act: (bloc) => bloc.add(TileTapped(topLeftTile, size: 5)),
         expect: () => [
           isA<PuzzleState>().having(
             (state) => state.tileMovementStatus,
@@ -294,13 +296,13 @@ void main() {
 
       blocTest<PuzzleBloc, PuzzleState>(
         'emits [cannotBeMoved] when puzzle is complete',
-        build: () => PuzzleBloc(size),
+        build: () => PuzzleBloc(),
         seed: () => PuzzleState(
           puzzle: puzzle,
           puzzleStatus: PuzzleStatus.complete,
           numberOfCorrectTiles: 7,
         ),
-        act: (bloc) => bloc.add(TileTapped(topLeftTile)),
+        act: (bloc) => bloc.add(TileTapped(topLeftTile, size: 5)),
         expect: () => [
           isA<PuzzleState>().having(
             (state) => state.tileMovementStatus,
@@ -312,12 +314,12 @@ void main() {
 
       blocTest<PuzzleBloc, PuzzleState>(
         'emits [PuzzleComplete] when tapped tile completes the puzzle',
-        build: () => PuzzleBloc(size),
+        build: () => PuzzleBloc(),
         seed: () => PuzzleState(
           puzzle: puzzle,
           numberOfCorrectTiles: 7,
         ),
-        act: (bloc) => bloc.add(TileTapped(bottomRightTile)),
+        act: (bloc) => bloc.add(TileTapped(bottomRightTile, size: 5)),
         expect: () => [
           PuzzleState(
             puzzle: Puzzle(
@@ -379,13 +381,13 @@ void main() {
 
       blocTest<PuzzleBloc, PuzzleState>(
         'emits new solvable 3x3 puzzle with 0 moves when reset with size 3',
-        build: () => PuzzleBloc(3, random: random),
+        build: () => PuzzleBloc(random: random),
         seed: () => PuzzleState(
           puzzle: initialSize3Puzzle,
           numberOfCorrectTiles: 1,
           numberOfMoves: 10,
         ),
-        act: (bloc) => bloc.add(PuzzleReset()),
+        act: (bloc) => bloc.add(PuzzleReset(size: 5)),
         expect: () => [PuzzleState(puzzle: puzzleSize3)],
         verify: (bloc) => expect(bloc.state.puzzle.isSolvable(), isTrue),
       );

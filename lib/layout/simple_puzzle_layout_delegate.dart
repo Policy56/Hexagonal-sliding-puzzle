@@ -145,17 +145,20 @@ class SimplePuzzleLayoutDelegate extends PuzzleLayoutDelegate {
         key: Key('simple_puzzle_tile_${tile.value}_small'),
         tile: tile,
         tileFontSize: _TileFontSize.small,
+        boardSize: _BoardSize.small,
         state: state,
       ),
       medium: (_, __) => SimplePuzzleTile(
         key: Key('simple_puzzle_tile_${tile.value}_medium'),
         tile: tile,
+        boardSize: _BoardSize.medium,
         tileFontSize: _TileFontSize.medium, //CCL Change font
         state: state,
       ),
       large: (_, __) => SimplePuzzleTile(
         key: Key('simple_puzzle_tile_${tile.value}_large'),
         tile: tile,
+        boardSize: _BoardSize.large,
         tileFontSize: _TileFontSize.large, //CCL Change font
         state: state,
       ),
@@ -361,9 +364,10 @@ class SimplePuzzleBoard extends StatelessWidget {
 
   Widget _buildGrid(BuildContext context, HexagonType type) {
     var cpt = 0;
+    var depth = ((size - 1) / 2).round();
     return HexagonGrid(
       hexType: type,
-      depth: 3,
+      depth: depth,
       buildTile: (Coordinates coordinates) {
         Widget returnItem;
         do {
@@ -394,12 +398,12 @@ class SimplePuzzleBoard extends StatelessWidget {
         }
       },
       /* buildTile: (Coordinates coordinates) => HexagonWidgetBuilder(
-          padding: 2.0,
-          cornerRadius: 8.0,
-          child: Text(
-              '${coordinates.q + 3}, ${coordinates.r + 3}  \n ${testTiles[coordinates.r + 3][coordinates.q + 3]!.x} ${testTiles[coordinates.r + 3][coordinates.q + 3]!.y}'),
-          //Text('${coordinates.x}, ${coordinates.y}, ${coordinates.z}\n  ${coordinates.q}, ${coordinates.r}'),
-        ),*/
+        padding: 2.0,
+        cornerRadius: 8.0,
+        child: // Text('${coordinates.q + 3}, ${coordinates.r + 3}  \n ${testTiles[coordinates.r + 3][coordinates.q + 3]!.x} ${testTiles[coordinates.r + 3][coordinates.q + 3]!.y}'),
+            Text("${coordinates.q + depth}, ${coordinates.r + depth}"),
+        // Text(    '/${coordinates.x}, ${coordinates.y}, ${coordinates.z}\n  ${coordinates.q + 3}, ${coordinates.r + 3}'),
+      ),*/
     );
   }
 }
@@ -421,6 +425,7 @@ class SimplePuzzleTile extends StatelessWidget {
     Key? key,
     required this.tile,
     required this.tileFontSize,
+    required this.boardSize,
     required this.state,
   }) : super(key: key);
 
@@ -429,6 +434,9 @@ class SimplePuzzleTile extends StatelessWidget {
 
   /// The font size of the tile to be displayed.
   final double tileFontSize;
+
+  /// The font size of the tile to be displayed.
+  final double boardSize;
 
   /// The state of the puzzle.
   final PuzzleState state;
@@ -442,7 +450,7 @@ class SimplePuzzleTile extends StatelessWidget {
         primary: PuzzleColors.white,
         textStyle: //PuzzleTextStyle.bodySmall,
             PuzzleTextStyle.headline5.copyWith(
-          fontSize: tileFontSize,
+          fontSize: (boardSize / theme.size) / 3, //tileFontSize,
         ),
         // shape: const PolygonBorder(sides: 6, borderRadius: 5),
         //const PolygonBorder(sides: 6, borderRadius: 5),
@@ -454,7 +462,10 @@ class SimplePuzzleTile extends StatelessWidget {
         ),
       ).copyWith(
         fixedSize: MaterialStateProperty.resolveWith<Size?>((states) {
-          return Size(100.toDouble(), 100.toDouble());
+          return Size(
+            boardSize / (0.9 * theme.size),
+            boardSize / (0.9 * theme.size),
+          );
         }),
         foregroundColor: MaterialStateProperty.all(
           PuzzleColors.white,
@@ -466,15 +477,15 @@ class SimplePuzzleTile extends StatelessWidget {
             } else if (states.contains(MaterialState.hovered)) {
               return theme.hoverColor;
             } else {
-              /*
-                  Color returnColor;
-                  if (state.puzzle.isTileMovable(tile)) {
-                    returnColor = Colors.green;
-                  } else {
-                    returnColor = Colors.red;
-                  }
-                  return returnColor;
-                  */
+              /*Color returnColor;
+              if (state.puzzle.isTileMovable(tile)) {
+                returnColor = Colors.green;
+              } else {
+                returnColor = Colors.red;
+              }
+              return returnColor;
+              */
+
               /*Color returnColor;
                   if (state.puzzle.isTileCorrect(tile)) {
                     returnColor = Colors.green;
@@ -488,7 +499,12 @@ class SimplePuzzleTile extends StatelessWidget {
         ),
       ),
       onPressed: state.puzzleStatus == PuzzleStatus.incomplete
-          ? () => context.read<PuzzleBloc>().add(TileTapped(tile))
+          ? () => context.read<PuzzleBloc>().add(
+                TileTapped(
+                  tile,
+                  size: theme.size,
+                ),
+              )
           : null,
       child: Text(tile.value.toString()),
       //" ${tile.value} \n ${tile.currentPosition.x} - ${tile.currentPosition.y} "),
@@ -520,7 +536,7 @@ class SimplePuzzleShuffleButton extends StatelessWidget {
         if (state.puzzleStatus == PuzzleStatus.notStarted) {
           context.read<TimerBloc>().add(const TimerStarted());
           context.read<PuzzleBloc>().add(
-                const PuzzleInitialized(shufflePuzzle: true),
+                PuzzleInitialized(shufflePuzzle: true, size: theme.size),
               );
           /* emit(
           state.copyWith(
@@ -530,7 +546,7 @@ class SimplePuzzleShuffleButton extends StatelessWidget {
           );*/
         } else {
           context.read<TimerBloc>().add(const TimerReset());
-          context.read<PuzzleBloc>().add(const PuzzleReset());
+          context.read<PuzzleBloc>().add(PuzzleReset(size: theme.size));
         }
       },
       child: Row(

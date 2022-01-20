@@ -16,6 +16,9 @@ class HexagonalThemeEasy extends PuzzleTheme {
   String get name => 'Easy';
 
   @override
+  int get size => 5;
+
+  @override
   bool get hasTimer => false;
 
   @override

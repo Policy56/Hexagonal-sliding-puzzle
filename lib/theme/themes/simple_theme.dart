@@ -16,6 +16,9 @@ class SimpleTheme extends PuzzleTheme {
   String get name => 'Simple';
 
   @override
+  int get size => 7;
+
+  @override
   bool get hasTimer => false;
 
   @override

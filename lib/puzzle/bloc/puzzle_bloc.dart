@@ -11,13 +11,11 @@ part 'puzzle_event.dart';
 part 'puzzle_state.dart';
 
 class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
-  PuzzleBloc(this._size, {this.random}) : super(const PuzzleState()) {
+  PuzzleBloc({this.random}) : super(const PuzzleState()) {
     on<PuzzleInitialized>(_onPuzzleInitialized);
     on<TileTapped>(_onTileTapped);
     on<PuzzleReset>(_onPuzzleReset);
   }
-
-  final int _size;
 
   final Random? random;
 
@@ -25,7 +23,8 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     PuzzleInitialized event,
     Emitter<PuzzleState> emit,
   ) {
-    final puzzle = _generateHexagonPuzzle(_size, shuffle: event.shufflePuzzle);
+    final puzzle =
+        _generateHexagonPuzzle(event.size, shuffle: event.shufflePuzzle);
 
     emit(
       PuzzleState(
@@ -79,7 +78,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
   }
 
   void _onPuzzleReset(PuzzleReset event, Emitter<PuzzleState> emit) {
-    final puzzle = _generateHexagonPuzzle(_size);
+    final puzzle = _generateHexagonPuzzle(event.size);
     emit(
       PuzzleState(
         puzzle: puzzle.sort(),
@@ -94,156 +93,152 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     final List<Position?> correctPositions = <Position?>[];
     final List<Position?> currentPositions = <Position?>[];
     final List<Position?> tempCurrentPositions = <Position?>[];
+    final List<Tile> tiles;
+    List<Position> listPosition;
 
-    int depth = 3;
+    int depth = ((size - 1) / 2).round();
 
-    /*final test =List.generate(
-                6,
-                (int mainIndex) {
-                  int currentDepth = mainIndex - depth;
-                 
-                      return List.generate(6, (crossIndex) {
-                        if (currentDepth <= 0)
-                          crossIndex = -depth - currentDepth + crossIndex;
-                        else
-                          crossIndex = -depth + crossIndex;
-
-                        final coordinates = Coordinates.axial(
-                          crossIndex,// : currentDepth,
-                           currentDepth,// : crossIndex,
-                        );
-                        
-                        return coordinates;
-                        //return buildHex.call(coordinates);
-                      });
-                    
-                  
-                },
-              );*/
-    /* List<List<Position?>> testTiles = [
-      [
-        null,
-        null,
-        null,
+    if (depth == 3) {
+      listPosition = [
         const Position(x: 3, y: 0),
         const Position(x: 4, y: 0),
         const Position(x: 5, y: 0),
-        const Position(x: 6, y: 0)
-      ],
-      [
-        null,
-        null,
+        const Position(x: 6, y: 0),
         const Position(x: 2, y: 1),
         const Position(x: 3, y: 1),
         const Position(x: 4, y: 1),
         const Position(x: 5, y: 1),
-        const Position(x: 6, y: 1)
-      ],
-      [
-        null,
+        const Position(x: 6, y: 1),
         const Position(x: 1, y: 2),
         const Position(x: 2, y: 2),
         const Position(x: 3, y: 2),
         const Position(x: 4, y: 2),
         const Position(x: 5, y: 2),
-        const Position(x: 6, y: 2)
-      ],
-      [
+        const Position(x: 6, y: 2),
         const Position(x: 0, y: 3),
         const Position(x: 1, y: 3),
         const Position(x: 2, y: 3),
-        const Position(x: 3, y: 3),
+        //const Position(x: 3, y: 3),
         const Position(x: 4, y: 3),
         const Position(x: 5, y: 3),
-        const Position(x: 6, y: 3)
-      ],
-      [
+        const Position(x: 6, y: 3),
         const Position(x: 0, y: 4),
         const Position(x: 1, y: 4),
         const Position(x: 2, y: 4),
         const Position(x: 3, y: 4),
         const Position(x: 4, y: 4),
         const Position(x: 5, y: 4),
-        null
-      ],
-      [
         const Position(x: 0, y: 5),
         const Position(x: 1, y: 5),
         const Position(x: 2, y: 5),
         const Position(x: 3, y: 5),
         const Position(x: 4, y: 5),
-        null,
-        null
-      ],
-      [
         const Position(x: 0, y: 6),
         const Position(x: 1, y: 6),
         const Position(x: 2, y: 6),
         const Position(x: 3, y: 6),
-        null,
-        null,
-        null
-      ],
-    ];*/
+      ];
+    } else if (depth == 2) {
+      listPosition = [
+        const Position(x: 2, y: 0),
+        const Position(x: 3, y: 0),
+        const Position(x: 4, y: 0),
+        const Position(x: 1, y: 1),
+        const Position(x: 2, y: 1),
+        const Position(x: 3, y: 1),
+        const Position(x: 4, y: 1),
+        const Position(x: 0, y: 2),
+        const Position(x: 1, y: 2),
+        //   const Position(x: 2, y: 2),
+        const Position(x: 3, y: 2),
+        const Position(x: 4, y: 2),
+        const Position(x: 0, y: 3),
+        const Position(x: 1, y: 3),
+        const Position(x: 2, y: 3),
+        const Position(x: 3, y: 3),
+        const Position(x: 0, y: 4),
+        const Position(x: 1, y: 4),
+        const Position(x: 2, y: 4),
+      ];
+    } else {
+      listPosition = [
+        const Position(x: 4, y: 0),
+        const Position(x: 5, y: 0),
+        const Position(x: 6, y: 0),
+        const Position(x: 7, y: 0),
+        const Position(x: 8, y: 0),
 
-    List<Position> listPosition = [
-      const Position(x: 3, y: 0),
-      const Position(x: 4, y: 0),
-      const Position(x: 5, y: 0),
-      const Position(x: 6, y: 0),
-      const Position(x: 2, y: 1),
-      const Position(x: 3, y: 1),
-      const Position(x: 4, y: 1),
-      const Position(x: 5, y: 1),
-      const Position(x: 6, y: 1),
-      const Position(x: 1, y: 2),
-      const Position(x: 2, y: 2),
-      const Position(x: 3, y: 2),
-      const Position(x: 4, y: 2),
-      const Position(x: 5, y: 2),
-      const Position(x: 6, y: 2),
-      const Position(x: 0, y: 3),
-      const Position(x: 1, y: 3),
-      const Position(x: 2, y: 3),
-      //const Position(x: 3, y: 3),
-      const Position(x: 4, y: 3),
-      const Position(x: 5, y: 3),
-      const Position(x: 6, y: 3),
-      const Position(x: 0, y: 4),
-      const Position(x: 1, y: 4),
-      const Position(x: 2, y: 4),
-      const Position(x: 3, y: 4),
-      const Position(x: 4, y: 4),
-      const Position(x: 5, y: 4),
-      const Position(x: 0, y: 5),
-      const Position(x: 1, y: 5),
-      const Position(x: 2, y: 5),
-      const Position(x: 3, y: 5),
-      const Position(x: 4, y: 5),
-      const Position(x: 0, y: 6),
-      const Position(x: 1, y: 6),
-      const Position(x: 2, y: 6),
-      const Position(x: 3, y: 6),
-    ];
+        const Position(x: 3, y: 1),
+        const Position(x: 4, y: 1),
+        const Position(x: 5, y: 1),
+        const Position(x: 6, y: 1),
+        const Position(x: 7, y: 1),
+        const Position(x: 8, y: 1),
+
+        const Position(x: 2, y: 2),
+        const Position(x: 3, y: 2),
+        const Position(x: 4, y: 2),
+        const Position(x: 5, y: 2),
+        const Position(x: 6, y: 2),
+        const Position(x: 7, y: 2),
+        const Position(x: 8, y: 2),
+
+        const Position(x: 1, y: 1),
+        const Position(x: 2, y: 1),
+        const Position(x: 3, y: 1),
+        const Position(x: 4, y: 1),
+        const Position(x: 5, y: 1),
+        const Position(x: 6, y: 1),
+        const Position(x: 7, y: 1),
+        const Position(x: 8, y: 1),
+
+        const Position(x: 0, y: 4),
+        const Position(x: 1, y: 4),
+        const Position(x: 2, y: 4),
+        const Position(x: 3, y: 4),
+        //const Position(x: 4, y: 4),
+        const Position(x: 5, y: 4),
+        const Position(x: 6, y: 4),
+        const Position(x: 7, y: 4),
+        const Position(x: 8, y: 4),
+
+        const Position(x: 0, y: 5),
+        const Position(x: 1, y: 5),
+        const Position(x: 2, y: 5),
+        const Position(x: 3, y: 5),
+        const Position(x: 4, y: 5),
+        const Position(x: 5, y: 5),
+        const Position(x: 6, y: 5),
+        const Position(x: 7, y: 5),
+
+        const Position(x: 0, y: 6),
+        const Position(x: 1, y: 6),
+        const Position(x: 2, y: 6),
+        const Position(x: 3, y: 6),
+        const Position(x: 4, y: 6),
+        const Position(x: 5, y: 6),
+        const Position(x: 6, y: 6),
+
+        const Position(x: 0, y: 7),
+        const Position(x: 1, y: 7),
+        const Position(x: 2, y: 7),
+        const Position(x: 3, y: 7),
+        const Position(x: 4, y: 7),
+        const Position(x: 5, y: 7),
+
+        const Position(x: 0, y: 8),
+        const Position(x: 1, y: 8),
+        const Position(x: 2, y: 8),
+        const Position(x: 3, y: 8),
+        const Position(x: 4, y: 8),
+      ];
+    }
 
     for (var x = 0; x < listPosition.length; x++) {
       Position positions = listPosition[x];
       correctPositions.add(positions);
       currentPositions.add(positions);
     }
-
-    /*  for (var x = 0; x <= size; x++) {
-        if (x == size && y == size) {
-          correctPositions.add(whitespacePosition);
-          currentPositions.add(whitespacePosition);
-        } else {
-          final position = Position(x: x, y: y);
-          correctPositions.add(position);
-          currentPositions.add(position);
-        }
-      }
-    }
-*/
 
     if (shuffle) {
       // Randomize only the current tile posistions.
@@ -252,14 +247,14 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       currentPositions.shuffle(random);
     }
 
-    const itemWhitespace = Tile(
+    var itemWhitespace = Tile(
       value: 18,
-      correctPosition: Position(x: 3, y: 6),
-      currentPosition: Position(x: 3, y: 3), //CCL
+      correctPosition: Position(x: depth, y: depth),
+      currentPosition: Position(x: depth, y: depth), //CCL
       isWhitespace: true,
     );
 
-    final tiles = _getHexagonTileListFromPositions(
+    tiles = _getHexagonTileListFromPositions(
       size,
       correctPositions,
       currentPositions,
@@ -267,7 +262,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
 
     tiles.add(itemWhitespace);
 
-    for (var k = 0; k < 12; k++) {
+    for (var k = 0; k < (depth * depth) + depth; k++) {
       const itemTileVide = Tile(
         value: -1,
         correctPosition: Position(x: 0, y: 0),
@@ -275,6 +270,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       );
       tiles.add(itemTileVide);
     }
+
     return Puzzle(tiles: tiles);
   }
 
