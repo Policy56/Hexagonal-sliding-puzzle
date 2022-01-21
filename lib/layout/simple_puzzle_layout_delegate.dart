@@ -254,6 +254,7 @@ class SimpleStartSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -266,6 +267,7 @@ class SimpleStartSection extends StatelessWidget {
         const ResponsiveGap(large: 16),
         SimplePuzzleTitle(
           status: state.puzzleStatus,
+          color: theme.menuActiveColor,
         ),
         const ResponsiveGap(
           small: 12,
@@ -296,13 +298,14 @@ class SimpleStartSection extends StatelessWidget {
 @visibleForTesting
 class SimplePuzzleTitle extends StatelessWidget {
   /// {@macro simple_puzzle_title}
-  const SimplePuzzleTitle({
-    Key? key,
-    required this.status,
-  }) : super(key: key);
+  const SimplePuzzleTitle({Key? key, required this.status, required this.color})
+      : super(key: key);
 
   /// The state of the puzzle.
   final PuzzleStatus status;
+
+  /// The color of the title.
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -310,6 +313,7 @@ class SimplePuzzleTitle extends StatelessWidget {
       title: status == PuzzleStatus.complete
           ? context.l10n.puzzleCompleted
           : context.l10n.puzzleChallengeTitle,
+      color: color,
     );
   }
 }

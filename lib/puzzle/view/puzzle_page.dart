@@ -213,6 +213,7 @@ class _PuzzleSections extends StatelessWidget {
       small: (context, child) => Column(
         children: [
           theme.layoutDelegate.startSectionBuilder(state),
+          const PuzzleMenu(),
           const PuzzleBoard(),
           theme.layoutDelegate.endSectionBuilder(state),
         ],
