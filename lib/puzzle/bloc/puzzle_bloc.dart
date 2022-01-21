@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:hexagonal_sliding_puzzle/cmp/grid/help/coordinates.dart';
 import 'package:hexagonal_sliding_puzzle/models/models.dart';
 
@@ -43,7 +44,17 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       if (state.puzzle.isTileMovable(tappedTile)) {
         final mutablePuzzle = Puzzle(tiles: [...state.puzzle.tiles]);
         final puzzle = mutablePuzzle.moveTiles(tappedTile, []);
+
         if (puzzle.isComplete()) {
+          FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+          // ignore: cascade_invocations
+          analytics.logEvent(
+            name: 'level_complete',
+            parameters: <String, dynamic>{
+              'numberOfMoves': state.numberOfMoves,
+              'size': event.size
+            },
+          );
           emit(
             state.copyWith(
               puzzle: puzzle.sort(),
