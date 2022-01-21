@@ -110,6 +110,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     int depth = ((size - 1) / 2).round();
 
     if (depth == 3) {
+      //Medium
       listPosition = [
         const Position(x: 3, y: 0),
         const Position(x: 4, y: 0),
@@ -150,6 +151,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
         const Position(x: 3, y: 6),
       ];
     } else if (depth == 2) {
+      //Easy
       listPosition = [
         const Position(x: 2, y: 0),
         const Position(x: 3, y: 0),
@@ -172,6 +174,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
         const Position(x: 2, y: 4),
       ];
     } else {
+      //Hard
       listPosition = [
         const Position(x: 4, y: 0),
         const Position(x: 5, y: 0),
@@ -194,14 +197,14 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
         const Position(x: 7, y: 2),
         const Position(x: 8, y: 2),
 
-        const Position(x: 1, y: 1),
-        const Position(x: 2, y: 1),
-        const Position(x: 3, y: 1),
-        const Position(x: 4, y: 1),
-        const Position(x: 5, y: 1),
-        const Position(x: 6, y: 1),
-        const Position(x: 7, y: 1),
-        const Position(x: 8, y: 1),
+        const Position(x: 1, y: 3),
+        const Position(x: 2, y: 3),
+        const Position(x: 3, y: 3),
+        const Position(x: 4, y: 3),
+        const Position(x: 5, y: 3),
+        const Position(x: 6, y: 3),
+        const Position(x: 7, y: 3),
+        const Position(x: 8, y: 3),
 
         const Position(x: 0, y: 4),
         const Position(x: 1, y: 4),
@@ -259,7 +262,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     }
 
     var itemWhitespace = Tile(
-      value: 18,
+      value: 100, //(listPosition.length / 2).round(), // 9(2/3)/18(3/5)/30(4/7)
       correctPosition: Position(x: depth, y: depth),
       currentPosition: Position(x: depth, y: depth), //CCL
       isWhitespace: true,

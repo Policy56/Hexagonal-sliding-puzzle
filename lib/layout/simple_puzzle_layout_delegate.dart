@@ -382,7 +382,7 @@ class SimplePuzzleBoard extends StatelessWidget {
             cpt < tiles.length);
 
         if (cpt >= tiles.length) {
-          //print("2 $cpt");
+          print("2 $cpt");
         }
 
         if (returnItem.tile.isWhitespace) {
@@ -481,15 +481,14 @@ class SimplePuzzleTile extends StatelessWidget {
             } else if (states.contains(MaterialState.hovered)) {
               return theme.hoverColor;
             } else {
-              /*Color returnColor;
-              if (state.puzzle.isTileMovable(tile)) {
+              Color returnColor;
+              /*if (state.puzzle.isTileMovable(tile)) {
                 returnColor = Colors.green;
               } else {
                 returnColor = Colors.red;
               }
               return returnColor;
-              */
-
+*/
               /*Color returnColor;
                   if (state.puzzle.isTileCorrect(tile)) {
                     returnColor = Colors.green;
