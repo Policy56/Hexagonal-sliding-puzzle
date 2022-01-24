@@ -25,6 +25,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/simple_dash_small.png
   AssetGenImage get simpleDashSmall =>
       const AssetGenImage('assets/images/simple_dash_small.png');
+
+  /// File path: assets/images/timer_icon.png
+  AssetGenImage get timerIcon =>
+      const AssetGenImage('assets/images/timer_icon.png');
 }
 
 class Assets {

@@ -1,6 +1,10 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:hexagonal_sliding_puzzle/cmp/switch/puzzle_switch_button.dart';
+import 'package:hexagonal_sliding_puzzle/cmp/switch/switch_bloc.dart';
 import 'package:hexagonal_sliding_puzzle/layout/layout.dart';
 import 'package:hexagonal_sliding_puzzle/models/models.dart';
 import 'package:hexagonal_sliding_puzzle/puzzle/puzzle.dart';
@@ -36,6 +40,11 @@ class PuzzlePage extends StatelessWidget {
         BlocProvider(
           create: (_) => TimerBloc(
             ticker: const Ticker(),
+          ),
+        ),
+        BlocProvider(
+          create: (_) => SwitchBloc(
+            pIsSwitched: false,
           ),
         ),
       ],
@@ -120,6 +129,9 @@ class _Puzzle extends StatelessWidget {
                     _PuzzleSections(
                       key: Key('puzzle_sections'),
                     ),
+                    _PuzzleFooter(
+                      key: Key('puzzle_footer'),
+                    ),
                   ],
                 ),
               ),
@@ -141,19 +153,20 @@ class _PuzzleHeader extends StatelessWidget {
       child: ResponsiveLayoutBuilder(
         small: (context, child) => Stack(
           children: const [
-            Align(
+            SizedBox()
+            /*Align(
               child: _PuzzleLogo(),
-            ),
+            ),*/
           ],
         ),
         medium: (context, child) => Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: 50,
+            horizontal: 20,
           ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: const [
-              _PuzzleLogo(),
+              // _PuzzleLogo(),
               PuzzleMenu(),
             ],
           ),
@@ -163,11 +176,45 @@ class _PuzzleHeader extends StatelessWidget {
             horizontal: 50,
           ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: const [
-              _PuzzleLogo(),
+              //_PuzzleLogo(),
               PuzzleMenu(),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _PuzzleFooter extends StatelessWidget {
+  const _PuzzleFooter({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 30,
+      child: ResponsiveLayoutBuilder(
+        small: (context, child) => Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            PuzzleSwitchButton(),
+          ],
+        ),
+        medium: (context, child) => Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            PuzzleSwitchButton(),
+          ],
+        ),
+        large: (context, child) => Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 50,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: const [PuzzleSwitchButton()],
           ),
         ),
       ),
@@ -428,6 +475,10 @@ class PuzzleMenuItem extends StatelessWidget {
                         shufflePuzzle: theme
                             is SimpleTheme, //TODO(CCL) : ici on dis si on shuffle le puzzle
                       ),
+                    );
+
+                context.read<SwitchBloc>().add(
+                      const SwitchTap(isSwitched: false),
                     );
               },
               child: AnimatedDefaultTextStyle(

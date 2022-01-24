@@ -23,6 +23,11 @@ To run the project either use the launch configuration in VSCode/Android Studio 
 $ flutter run -d chrome
 ```
 
+```sh
+$ flutter packages pub run build_runner build
+```
+
+
 ---
 
 ## Running Tests 🧪

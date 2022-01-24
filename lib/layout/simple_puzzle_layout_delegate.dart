@@ -5,6 +5,8 @@ import 'package:hexagonal_sliding_puzzle/cmp/grid/help/coordinates.dart';
 import 'package:hexagonal_sliding_puzzle/cmp/grid/hexagon_grid.dart';
 import 'package:hexagonal_sliding_puzzle/cmp/grid/hexagon_type.dart';
 import 'package:hexagonal_sliding_puzzle/cmp/grid/hexagon_widget.dart';
+import 'package:hexagonal_sliding_puzzle/cmp/switch/puzzle_switch_button.dart';
+import 'package:hexagonal_sliding_puzzle/cmp/switch/switch_bloc.dart';
 import 'package:hexagonal_sliding_puzzle/colors/colors.dart';
 import 'package:hexagonal_sliding_puzzle/l10n/l10n.dart';
 import 'package:hexagonal_sliding_puzzle/layout/layout.dart';
@@ -287,15 +289,19 @@ class SimpleStartSection extends StatelessWidget {
           medium: 16,
           large: 32,
         ),
-        NumberOfMovesAndTilesLeft(
-          numberOfMoves: state.numberOfMoves,
-          numberOfTilesLeft: state.numberOfTilesLeft,
-        ),
-        const ResponsiveGap(small: 12, large: 32),
-        ResponsiveLayoutBuilder(
-          small: (_, __) => const SizedBox(),
-          medium: (_, __) => const SizedBox(),
-          large: (_, __) => SimplePuzzleShuffleButton(state),
+        Column(
+          children: [
+            NumberOfMovesAndTilesLeft(
+              numberOfMoves: state.numberOfMoves,
+              numberOfTilesLeft: state.numberOfTilesLeft,
+            ),
+            const ResponsiveGap(small: 12, large: 32),
+            ResponsiveLayoutBuilder(
+              small: (_, __) => const SizedBox(),
+              medium: (_, __) => const SizedBox(),
+              large: (_, __) => SimplePuzzleShuffleButton(state),
+            ),
+          ],
         ),
         ResponsiveLayoutBuilder(
           small: (_, __) => const TimerWidget(),
@@ -467,6 +473,8 @@ class SimplePuzzleTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
+    final isSwitchHelp =
+        context.select((SwitchBloc bloc) => bloc.state.isTapped);
 
     return TextButton(
       style: TextButton.styleFrom(
@@ -500,7 +508,14 @@ class SimplePuzzleTile extends StatelessWidget {
             } else if (states.contains(MaterialState.hovered)) {
               return theme.hoverColor;
             } else {
-              Color returnColor;
+              //Color returnColor;
+
+              if (isSwitchHelp && (state.puzzle.isTileCorrect(tile))) {
+                return theme.correctTileColor; //Colors.green;
+              } else {
+                return theme.defaultColor;
+              }
+
               /*if (state.puzzle.isTileMovable(tile)) {
                 returnColor = Colors.green;
               } else {
@@ -515,7 +530,7 @@ class SimplePuzzleTile extends StatelessWidget {
                     returnColor = Colors.red;
                   }
                   return returnColor;*/
-              return theme.defaultColor;
+
             }
           },
         ),

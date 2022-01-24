@@ -30,6 +30,11 @@ abstract class PuzzleTheme extends Equatable {
   /// Used for puzzle tiles and buttons.
   Color get defaultColor;
 
+  /// The default color of this theme.
+  ///
+  /// Used for puzzle tiles and buttons.
+  Color get correctTileColor;
+
   /// The hover color of this theme.
   ///
   /// Used for the puzzle tile that was hovered over.

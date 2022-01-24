@@ -30,6 +30,10 @@
             }
         }
     },
+    "puzzleSwitchTooltip": "Toggle on to highlight the correct positionned tiles.",
+    "@puzzleSwitchTooltip": {
+        "description": "Switch to hightlight correct tiles."
+    },
     "puzzleStart": "Start game",
     "@puzzleStart": {
         "description": "Shown on the button that start the puzzle"

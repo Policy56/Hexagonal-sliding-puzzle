@@ -31,6 +31,9 @@ class HexagonalThemeEasy extends PuzzleTheme {
   Color get defaultColor => const Color(0xFF00504C);
 
   @override
+  Color get correctTileColor => Colors.lightGreen.shade700;
+
+  @override
   Color get hoverColor => darker(defaultColor, 20);
 
   @override

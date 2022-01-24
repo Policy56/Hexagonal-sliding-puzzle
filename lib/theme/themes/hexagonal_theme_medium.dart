@@ -31,6 +31,9 @@ class HexagonalThemeMedium extends PuzzleTheme {
   Color get defaultColor => Colors.yellow.shade900;
 
   @override
+  Color get correctTileColor => Colors.green;
+
+  @override
   Color get hoverColor => darker(defaultColor, 20);
 
   @override

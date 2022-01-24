@@ -31,6 +31,9 @@ class SimpleTheme extends PuzzleTheme {
   Color get defaultColor => PuzzleColors.primary5;
 
   @override
+  Color get correctTileColor => Colors.green;
+
+  @override
   Color get hoverColor => PuzzleColors.primary3;
 
   @override
