@@ -33,6 +33,11 @@ class PuzzlePage extends StatelessWidget {
             ],
           ),
         ),
+        BlocProvider(
+          create: (_) => TimerBloc(
+            ticker: const Ticker(),
+          ),
+        ),
       ],
       child: const PuzzleView(),
     );
@@ -135,8 +140,8 @@ class _PuzzleHeader extends StatelessWidget {
       height: 96,
       child: ResponsiveLayoutBuilder(
         small: (context, child) => Stack(
-          children: [
-            const Align(
+          children: const [
+            Align(
               child: _PuzzleLogo(),
             ),
           ],
@@ -414,12 +419,7 @@ class PuzzleMenuItem extends StatelessWidget {
                     .add(ThemeChanged(themeIndex: themeIndex));
 
                 // Reset the timer of the currently running puzzle.
-                /*  context.read<TimerBloc>().add(const TimerReset());
-
-                // Stop the Dashatar countdown if it has been started.
-                context.read<PuzzleBloc>().add(
-                      const DashatarCountdownStopped(),
-                    );*/
+                context.read<TimerBloc>().add(const TimerReset());
 
                 // Initialize the puzzle board for the newly selected theme.
                 context.read<PuzzleBloc>().add(

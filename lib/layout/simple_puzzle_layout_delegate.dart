@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -14,6 +12,7 @@ import 'package:hexagonal_sliding_puzzle/models/models.dart';
 import 'package:hexagonal_sliding_puzzle/puzzle/puzzle.dart';
 import 'package:hexagonal_sliding_puzzle/theme/theme.dart';
 import 'package:hexagonal_sliding_puzzle/timer/bloc/timer_bloc.dart';
+import 'package:hexagonal_sliding_puzzle/timer/timer_widget.dart';
 import 'package:hexagonal_sliding_puzzle/typography/typography.dart';
 
 /// {@template simple_puzzle_layout_delegate}
@@ -97,42 +96,56 @@ class SimplePuzzleLayoutDelegate extends PuzzleLayoutDelegate {
 
   @override
   Widget boardBuilder(int size, List<Widget> tiles) {
-    return Column(
+    return Stack(
       children: [
-        const ResponsiveGap(
-          small: 32,
-          medium: 48,
-          large: 60,
-        ),
-        ResponsiveLayoutBuilder(
-          small: (_, __) => SizedBox.square(
-            dimension: _BoardSize.small,
-            child: SimplePuzzleBoard(
-              key: const Key('simple_puzzle_board_small'),
-              size: size,
-              tiles: tiles,
-              spacing: 5,
-            ),
-          ),
-          medium: (_, __) => SizedBox.square(
-            dimension: _BoardSize.medium,
-            child: SimplePuzzleBoard(
-              key: const Key('simple_puzzle_board_medium'),
-              size: size,
-              tiles: tiles,
-            ),
-          ),
-          large: (_, __) => SizedBox.square(
-            dimension: _BoardSize.large,
-            child: SimplePuzzleBoard(
-              key: const Key('simple_puzzle_board_large'),
-              size: size,
-              tiles: tiles,
-            ),
+        Positioned(
+          top: 24,
+          left: 0,
+          right: 0,
+          child: ResponsiveLayoutBuilder(
+            small: (_, child) => const SizedBox(),
+            medium: (_, child) => const SizedBox(),
+            large: (_, child) => const TimerWidget(),
           ),
         ),
-        const ResponsiveGap(
-          large: 0,
+        Column(
+          children: [
+            const ResponsiveGap(
+              small: 32,
+              medium: 48,
+              large: 60,
+            ),
+            ResponsiveLayoutBuilder(
+              small: (_, __) => SizedBox.square(
+                dimension: _BoardSize.small,
+                child: SimplePuzzleBoard(
+                  key: const Key('simple_puzzle_board_small'),
+                  size: size,
+                  tiles: tiles,
+                  spacing: 5,
+                ),
+              ),
+              medium: (_, __) => SizedBox.square(
+                dimension: _BoardSize.medium,
+                child: SimplePuzzleBoard(
+                  key: const Key('simple_puzzle_board_medium'),
+                  size: size,
+                  tiles: tiles,
+                ),
+              ),
+              large: (_, __) => SizedBox.square(
+                dimension: _BoardSize.large,
+                child: SimplePuzzleBoard(
+                  key: const Key('simple_puzzle_board_large'),
+                  size: size,
+                  tiles: tiles,
+                ),
+              ),
+            ),
+            const ResponsiveGap(
+              large: 0,
+            ),
+          ],
         ),
       ],
     );
@@ -278,12 +291,18 @@ class SimpleStartSection extends StatelessWidget {
           numberOfMoves: state.numberOfMoves,
           numberOfTilesLeft: state.numberOfTilesLeft,
         ),
-        const ResponsiveGap(large: 32),
+        const ResponsiveGap(small: 12, large: 32),
         ResponsiveLayoutBuilder(
           small: (_, __) => const SizedBox(),
           medium: (_, __) => const SizedBox(),
           large: (_, __) => SimplePuzzleShuffleButton(state),
         ),
+        ResponsiveLayoutBuilder(
+          small: (_, __) => const TimerWidget(),
+          medium: (_, __) => const TimerWidget(),
+          large: (_, __) => const SizedBox(),
+        ),
+        const ResponsiveGap(small: 12),
       ],
     );
   }
@@ -548,7 +567,7 @@ class SimplePuzzleShuffleButton extends StatelessWidget {
             ),
           );*/
         } else {
-          context.read<TimerBloc>().add(const TimerReset());
+          context.read<TimerBloc>().add(const TimerReset(restartGame: true));
           context.read<PuzzleBloc>().add(PuzzleReset(size: theme.size));
         }
       },

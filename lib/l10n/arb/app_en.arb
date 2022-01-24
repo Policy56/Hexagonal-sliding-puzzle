@@ -12,6 +12,24 @@
     "@puzzleNumberOfTilesLeft": {
         "description": "Indicates how many puzzle tiles are not in their correct position"
     },
+    "puzzleDurationLabelText": "{hours} hours {minutes} minutes {seconds} seconds",
+    "@puzzleDurationLabelText": {
+        "description": "Semantic label for the timer",
+        "placeholders": {
+            "hours": {
+                "type": "String",
+                "example": "2"
+            },
+            "minutes": {
+                "type": "String",
+                "example": "6"
+            },
+            "seconds": {
+                "type": "String",
+                "example": "24"
+            }
+        }
+    },
     "puzzleStart": "Start game",
     "@puzzleStart": {
         "description": "Shown on the button that start the puzzle"

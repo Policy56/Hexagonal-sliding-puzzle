@@ -49,5 +49,12 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   void _onTimerReset(TimerReset event, Emitter<TimerState> emit) {
     _tickerSubscription?.cancel();
     emit(state.copyWith(secondsElapsed: 0));
+
+    if (event.restartGame) {
+      _tickerSubscription = _ticker
+          .tick()
+          .listen((secondsElapsed) => add(TimerTicked(secondsElapsed)));
+      emit(state.copyWith(isRunning: true));
+    }
   }
 }

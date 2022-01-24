@@ -27,5 +27,7 @@ class TimerStopped extends TimerEvent {
 }
 
 class TimerReset extends TimerEvent {
-  const TimerReset();
+  const TimerReset({this.restartGame = false});
+
+  final bool restartGame;
 }
