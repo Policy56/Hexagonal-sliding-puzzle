@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -9,7 +7,6 @@ import 'package:hexagonal_sliding_puzzle/layout/layout.dart';
 import 'package:hexagonal_sliding_puzzle/models/models.dart';
 import 'package:hexagonal_sliding_puzzle/puzzle/puzzle.dart';
 import 'package:hexagonal_sliding_puzzle/theme/theme.dart';
-import 'package:hexagonal_sliding_puzzle/theme/themes/hexagonal_theme_medium.dart';
 import 'package:hexagonal_sliding_puzzle/timer/timer.dart';
 import 'package:hexagonal_sliding_puzzle/typography/text_styles.dart';
 

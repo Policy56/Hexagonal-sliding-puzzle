@@ -1,0 +1,6 @@
+package com.policy.hexagonalslidingpuzzle
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity() {
+}

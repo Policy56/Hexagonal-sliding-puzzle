@@ -19,7 +19,7 @@ class HexagonalThemeEasy extends PuzzleTheme {
   int get size => 5;
 
   @override
-  bool get hasTimer => false;
+  bool get hasTimer => true;
 
   @override
   bool get hasCountdown => false;
