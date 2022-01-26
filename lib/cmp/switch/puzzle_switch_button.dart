@@ -8,12 +8,9 @@ import 'package:hexagonal_sliding_puzzle/theme/theme.dart';
 import 'package:hexagonal_sliding_puzzle/l10n/l10n.dart';
 import 'package:hexagonal_sliding_puzzle/typography/text_styles.dart';
 
-/// {@template dashatar_puzzle_action_button}
 /// Displays the action button to start or shuffle the puzzle
 /// based on the current puzzle state.
-/// {@endtemplate}
 class PuzzleSwitchButton extends StatefulWidget {
-  /// {@macro dashatar_puzzle_action_button}
   const PuzzleSwitchButton({Key? key}) : super(key: key);
 
   @override

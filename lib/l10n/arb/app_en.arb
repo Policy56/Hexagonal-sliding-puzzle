@@ -1,6 +1,6 @@
 {
     "@@locale": "en",
-    "puzzleChallengeTitle": "Hexagonal Slide Game",
+    "puzzleChallengeTitle": "Hexagonal Slide Puzzle",
     "@puzzleChallengeTitle": {
         "description": "Shown as the title of the puzzle"
     },
@@ -11,6 +11,28 @@
     "puzzleNumberOfTilesLeft": "Tiles remaining",
     "@puzzleNumberOfTilesLeft": {
         "description": "Indicates how many puzzle tiles are not in their correct position"
+    },
+    "successCompleted": "Hexagonal Sliding Puzzle completed",
+    "@successCompleted": {
+        "description": "Shown as a title in the Hexagonal success state"
+    },
+    "successWellDone": "Well done.\nCongrats!",
+    "@successWellDone": {
+        "description": "Shown as a subtitle in the Hexagonal success state"
+    },
+    "successScore": "Score",
+    "@successScore": {
+        "description": "Shown as a score title in the Hexagonal success state"
+    },
+    "successNumberOfMoves": "{numberOfMoves} Moves",
+    "@successNumberOfMoves": {
+        "description": "Shown as a number of moves in the Hexagonal Sliding game success state",
+        "placeholders": {
+            "numberOfMoves": {
+                "type": "String",
+                "example": "5"
+            }
+        }
     },
     "puzzleDurationLabelText": "{hours} hours {minutes} minutes {seconds} seconds",
     "@puzzleDurationLabelText": {
@@ -45,5 +67,17 @@
     "puzzleCompleted": "Well done. Congrats!",
     "@puzzleCompleted": {
         "description": "Shown as the success state when the puzzle is completed"
+    },
+    "successShareYourScoreTitle": "Share your score!",
+    "@successShareYourScoreTitle": {
+        "description": "Shown as a share title in the Hexagonal success state"
+    },
+    "successShareYourScoreMessage": "Share this puzzle to challenge your friends and be sure to check out the Flutter Puzzle Hack.",
+    "@successShareYourScoreMessage": {
+        "description": "Shown as a share message in the Hexagonal success state"
+    },
+    "successShareText": "Just solved the #HexagonalSlidingPuzzle ! Check it out ↓",
+    "@successShareText": {
+        "description": "The text to share for this Flutter Puzzle challenge, shown in the Hexagonal success state"
     }
 }

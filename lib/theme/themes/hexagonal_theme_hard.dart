@@ -59,8 +59,12 @@ class HexagonalThemeHard extends PuzzleTheme {
 
   @override
   Color get menuActiveColor => lighter(defaultColor, 30);
+
   @override
   Color get menuInactiveColor => defaultColor;
+
+  @override
+  String get successThemeAsset => 'images/success/success_rotate_hard.png';
 
   @override
   Color get menuUnderlineColor => defaultColor;

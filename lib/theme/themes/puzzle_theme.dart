@@ -63,6 +63,11 @@ abstract class PuzzleTheme extends Equatable {
   /// theme in menu.
   Color get menuInactiveColor;
 
+  /// The path to the success image asset of this theme.
+  ///
+  /// This asset is shown in the success state of the puzzle.
+  String get successThemeAsset;
+
   /// The puzzle layout delegate of this theme.
   ///
   /// Used for building sections of the puzzle UI.

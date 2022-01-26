@@ -1,12 +1,16 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:hexagonal_sliding_puzzle/cmp/switch/puzzle_switch_button.dart';
 import 'package:hexagonal_sliding_puzzle/cmp/switch/switch_bloc.dart';
 import 'package:hexagonal_sliding_puzzle/layout/layout.dart';
+import 'package:hexagonal_sliding_puzzle/layout/modal_helper.dart';
 import 'package:hexagonal_sliding_puzzle/models/models.dart';
 import 'package:hexagonal_sliding_puzzle/puzzle/puzzle.dart';
 import 'package:hexagonal_sliding_puzzle/theme/theme.dart';
+import 'package:hexagonal_sliding_puzzle/theme/widgets/share_dialog.dart';
 import 'package:hexagonal_sliding_puzzle/timer/timer.dart';
 import 'package:hexagonal_sliding_puzzle/typography/text_styles.dart';
 
@@ -293,9 +297,22 @@ class _PuzzleSections extends StatelessWidget {
 /// {@template puzzle_board}
 /// Displays the board of the puzzle.
 /// {@endtemplate}
-class PuzzleBoard extends StatelessWidget {
+class PuzzleBoard extends StatefulWidget {
   /// {@macro puzzle_board}
   const PuzzleBoard({Key? key}) : super(key: key);
+
+  @override
+  State<PuzzleBoard> createState() => _PuzzleBoardState();
+}
+
+class _PuzzleBoardState extends State<PuzzleBoard> {
+  Timer? _completePuzzleTimer;
+
+  @override
+  void dispose() {
+    _completePuzzleTimer?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -307,8 +324,28 @@ class PuzzleBoard extends StatelessWidget {
 
     return BlocListener<PuzzleBloc, PuzzleState>(
       listener: (context, state) {
-        if (theme.hasTimer && state.puzzleStatus == PuzzleStatus.complete) {
+        if (theme.hasTimer && state.puzzleStatus == PuzzleStatus.notStarted) {
           context.read<TimerBloc>().add(const TimerStopped());
+          _completePuzzleTimer =
+              Timer(const Duration(milliseconds: 370), () async {
+            await showAppDialog<void>(
+              context: context,
+              child: MultiBlocProvider(
+                providers: [
+                  BlocProvider.value(
+                    value: context.read<ThemeBloc>(),
+                  ),
+                  BlocProvider.value(
+                    value: context.read<PuzzleBloc>(),
+                  ),
+                  BlocProvider.value(
+                    value: context.read<TimerBloc>(),
+                  ),
+                ],
+                child: const ShareDialog(),
+              ),
+            );
+          });
         }
       },
       child: theme.layoutDelegate.boardBuilder(

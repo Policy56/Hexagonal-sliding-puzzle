@@ -6,11 +6,9 @@ import 'package:hexagonal_sliding_puzzle/layout/layout.dart';
 import 'package:hexagonal_sliding_puzzle/timer/bloc/timer_bloc.dart';
 import 'package:hexagonal_sliding_puzzle/typography/text_styles.dart';
 
-/// {@template dashatar_timer}
 /// Displays how many seconds elapsed since starting the puzzle.
-/// {@endtemplate}
 class TimerWidget extends StatelessWidget {
-  /// {@macro dashatar_timer}
+  /// ctor
   const TimerWidget({
     Key? key,
     this.textStyle,

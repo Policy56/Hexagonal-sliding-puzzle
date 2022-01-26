@@ -59,8 +59,12 @@ class SimpleTheme extends PuzzleTheme {
 
   @override
   Color get menuActiveColor => Colors.orange;
+
   @override
   Color get menuInactiveColor => Colors.orange;
+
+  @override
+  String get successThemeAsset => '';
 
   @override
   Color get menuUnderlineColor => Colors.orange;

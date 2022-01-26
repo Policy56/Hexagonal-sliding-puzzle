@@ -59,8 +59,12 @@ class HexagonalThemeMedium extends PuzzleTheme {
 
   @override
   Color get menuActiveColor => darker(defaultColor, 30);
+
   @override
   Color get menuInactiveColor => defaultColor;
+
+  @override
+  String get successThemeAsset => 'images/success/success_rotate_medium.png';
 
   @override
   Color get menuUnderlineColor => defaultColor;
