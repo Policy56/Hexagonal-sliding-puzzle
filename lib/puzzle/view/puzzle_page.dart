@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:hexagonal_sliding_puzzle/cmp/app_download_button.dart';
 import 'package:hexagonal_sliding_puzzle/cmp/switch/puzzle_switch_button.dart';
 import 'package:hexagonal_sliding_puzzle/cmp/switch/switch_bloc.dart';
 import 'package:hexagonal_sliding_puzzle/layout/layout.dart';
@@ -214,8 +215,8 @@ class _PuzzleFooter extends StatelessWidget {
             horizontal: 50,
           ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: const [PuzzleSwitchButton()],
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [AppDownloadButton(), PuzzleSwitchButton()],
           ),
         ),
       ),

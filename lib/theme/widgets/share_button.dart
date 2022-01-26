@@ -72,13 +72,14 @@ class FacebookButton extends StatelessWidget {
 @visibleForTesting
 class ShareButton extends StatefulWidget {
   /// {@macro share_button}
-  const ShareButton({
-    Key? key,
-    required this.onPressed,
-    required this.title,
-    required this.icon,
-    required this.color,
-  }) : super(key: key);
+  const ShareButton(
+      {Key? key,
+      required this.onPressed,
+      required this.title,
+      required this.icon,
+      required this.color,
+      this.colorTitle})
+      : super(key: key);
 
   /// Called when the button is tapped or otherwise activated.
   final VoidCallback onPressed;
@@ -91,6 +92,9 @@ class ShareButton extends StatefulWidget {
 
   /// The color of this button.
   final Color color;
+
+  /// The color of this button.
+  final Color? colorTitle;
 
   @override
   State<ShareButton> createState() => _ShareButtonState();
@@ -139,7 +143,7 @@ class _ShareButtonState extends State<ShareButton> {
             Text(
               widget.title,
               style: PuzzleTextStyle.headline5.copyWith(
-                color: widget.color,
+                color: widget.colorTitle ?? widget.color,
               ),
             ),
             const Gap(24),
