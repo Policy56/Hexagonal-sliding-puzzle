@@ -1,17 +1,17 @@
 {
-    "name": "Slide Puzzle",
-    "short_name": "Slide Puzzle",
+    "name": "Hexagonal Sliding Puzzle",
+    "short_name": "Hexagonal Sliding Puzzle",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A slide puzzle built for Flutter Challenge",
+    "description": "A Hexagonal sliding puzzle built for Flutter Challenge",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
         {
-            "src": "icons/Icon-192.png",
-            "sizes": "192x192",
+            "src": "icons/Icon-180.png",
+            "sizes": "180x180",
             "type": "image/png"
         },
         {
