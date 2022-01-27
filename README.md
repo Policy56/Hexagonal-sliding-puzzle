@@ -1,4 +1,4 @@
-# Slide Puzzle
+# Hexagonal sliding puzzle
 
 ![Photo Booth Header][logo]
 
