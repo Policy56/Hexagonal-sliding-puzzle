@@ -26,7 +26,7 @@ class TwitterButton extends StatelessWidget {
     return ShareButton(
       title: 'Twitter',
       icon: Image.asset(
-        'images/twitter_icon.png',
+        'assets/images/twitter_icon.png',
         width: 13.13,
         height: 10.67,
       ),
@@ -55,7 +55,7 @@ class FacebookButton extends StatelessWidget {
     return ShareButton(
       title: 'Facebook',
       icon: Image.asset(
-        'images/facebook_icon.png',
+        'assets/images/facebook_icon.png',
         width: 6.56,
         height: 13.13,
       ),

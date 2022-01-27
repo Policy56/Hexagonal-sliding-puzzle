@@ -35,7 +35,7 @@ class _AppDownloadButtonState extends State<AppDownloadButton> {
           child: ShareButton(
             title: 'Ios app',
             icon: Image.asset(
-              'images/facebook_icon.png',
+              'assets/images/facebook_icon.png',
               width: 6.56,
               height: 19.30,
             ),
@@ -52,7 +52,7 @@ class _AppDownloadButtonState extends State<AppDownloadButton> {
           child: ShareButton(
             title: 'Android app',
             icon: Image.asset(
-              'images/facebook_icon.png',
+              'assets/images/facebook_icon.png',
               width: 6.56,
               height: 19.30,
             ),

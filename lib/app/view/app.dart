@@ -41,6 +41,18 @@ class _AppState extends State<App> {
         Image.asset('assets/images/simple_dash_small.png').image,
         context,
       );
+      precacheImage(
+        Image.asset('assets/images/success/success_rotate_easy.png').image,
+        context,
+      );
+      precacheImage(
+        Image.asset('assets/images/success/success_rotate_medium.png').image,
+        context,
+      );
+      precacheImage(
+        Image.asset('assets/images/success/success_rotate_hard.png').image,
+        context,
+      );
     });
   }
 

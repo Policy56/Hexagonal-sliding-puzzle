@@ -1,0 +1,119 @@
+name: Flutter Deploy
+
+on:
+  #push:
+  # branches:
+  #   - master
+  #   - integration-continue
+  workflow_dispatch:
+    inputs:
+      name:
+        description: "Lancement !"
+        required: true
+        default: "YES"
+      version:
+        description: "Version "
+        required: true
+        default: ""
+
+jobs:
+  release:
+    name: Test, build and release
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+
+      - name: Setup Java
+        uses: actions/setup-java@v2.1.0
+        with:
+          java-version: "12.x"
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v1
+      #  with:
+      #    flutter-version: '1.22.6'
+      #    channel: stable
+
+      - name: Flutter version
+        run: flutter --version
+
+      - name: Cache pub dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.FLUTTER_HOME }}/.pub-cache
+          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: ${{ runner.os }}-pub-
+
+      - name: Download pub dependencies
+        run: flutter pub get
+
+      - name: Run build_runner
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+
+      #- name: Run analyzer
+      # run: flutter analyze
+
+      # - name: Run tests
+      #   run: flutter test
+
+      - name: Download Android keystore
+        id: android_keystore
+        uses: timheuer/base64-to-file@v1.0.3
+        with:
+          fileName: releaseKey.jks
+          encodedString: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+
+      - name: Create key.properties
+        run: |
+          echo "storeFile=${{ steps.android_keystore.outputs.filePath }}" > android/key.properties
+          echo "storePassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" >> android/key.properties
+          echo "keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}" >> android/key.properties
+          echo "keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}" >> android/key.properties
+
+      - name: Build Android App Bundle
+        run: flutter build appbundle
+
+      - name: Setup Ruby
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: "2.6"
+
+      - name: Cache bundle dependencies
+        uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: ${{ runner.os }}-gems-
+
+      - name: Download bundle dependencies
+        run: |
+          gem install bundler:2.2.2
+          bundle config path vendor/bundle
+          bundle install
+
+      - name: Decode Google Cloud API
+        id: google_cloud_keystore
+        uses: timheuer/base64-to-file@v1.0.3
+        with:
+          fileName: google_cloud.json
+          encodedString: ${{ secrets.CLOUD_PLATFORM_JSON }}
+
+      #   - name: Echo cloud.json
+      #     run: |
+      #       cat ${{ steps.google_cloud_keystore.outputs.filePath }}
+
+      - name: Test connection to cloud platform
+        run: |
+          bundle exec fastlane run validate_play_store_json_key json_key:${{ steps.google_cloud_keystore.outputs.filePath }}
+
+      - name: Release to Google Play (beta)
+        env:
+          SUPPLY_PACKAGE_NAME: ${{ secrets.ANDROID_PACKAGE_NAME }}
+          SUPPLY_JSON_KEY_DATA: ${{ secrets.SUPPLY_JSON_KEY_DATA }}
+        run: |
+          bundle exec fastlane supply \
+          --aab build/app/outputs/bundle/release/app-release.aab \
+          --track production

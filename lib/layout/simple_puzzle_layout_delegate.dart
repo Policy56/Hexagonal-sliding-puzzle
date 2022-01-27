@@ -274,7 +274,7 @@ class SimpleStartSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const ResponsiveGap(
-          small: 20,
+          small: 5,
           medium: 83,
           large: 151,
         ),

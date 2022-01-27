@@ -10,6 +10,10 @@ import 'package:flutter/widgets.dart';
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/facebook_icon.png
+  AssetGenImage get facebookIcon =>
+      const AssetGenImage('assets/images/facebook_icon.png');
+
   /// File path: assets/images/shuffle_icon.png
   AssetGenImage get shuffleIcon =>
       const AssetGenImage('assets/images/shuffle_icon.png');
@@ -29,6 +33,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/timer_icon.png
   AssetGenImage get timerIcon =>
       const AssetGenImage('assets/images/timer_icon.png');
+
+  /// File path: assets/images/twitter_icon.png
+  AssetGenImage get twitterIcon =>
+      const AssetGenImage('assets/images/twitter_icon.png');
 }
 
 class Assets {

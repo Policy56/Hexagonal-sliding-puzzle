@@ -64,7 +64,8 @@ class HexagonalThemeEasy extends PuzzleTheme {
   Color get menuInactiveColor => defaultColor;
 
   @override
-  String get successThemeAsset => 'images/success/success_rotate_easy.png';
+  String get successThemeAsset =>
+      'assets/images/success/success_rotate_easy.png';
 
   @override
   Color get menuUnderlineColor => defaultColor;
