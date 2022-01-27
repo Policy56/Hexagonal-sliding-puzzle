@@ -4,5 +4,5 @@
     <item android:drawable="?android:colorBackground" />
 
     <!-- You can insert your own image assets here -->
-    <item android:gravity="center" android:drawable="@drawable/ic_launch_image" />
+    <item android:gravity="center" android:left="@android:dimen/app_icon_size" android:right="@android:dimen/app_icon_size" android:drawable="@drawable/ic_launch_image" />
 </layer-list>
