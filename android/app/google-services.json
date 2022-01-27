@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "607615760022",
+    "project_id": "hexagonal-sliding-puzzle",
+    "storage_bucket": "hexagonal-sliding-puzzle.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:607615760022:android:a6f095de6514b842a274b7",
+        "android_client_info": {
+          "package_name": "com.policy.hexagonalslidingpuzzle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "607615760022-ssk69k9prun1rjca01lom2j32jldp4hv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtqEUg2bA9QQ4jTrRhR_ED28I2fthg5I0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "607615760022-ssk69k9prun1rjca01lom2j32jldp4hv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "607615760022-iocn656vvli797qq6ktkguh3sm9a45rf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.policy.hexagonalslidin"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
