@@ -8,6 +8,7 @@ import 'package:hexagonal_sliding_puzzle/puzzle/bloc/puzzle_bloc.dart';
 import 'package:hexagonal_sliding_puzzle/theme/theme.dart';
 import 'package:hexagonal_sliding_puzzle/l10n/l10n.dart';
 import 'package:hexagonal_sliding_puzzle/theme/widgets/share_button.dart';
+import 'package:hexagonal_sliding_puzzle/layout/links_helper.dart';
 import 'package:hexagonal_sliding_puzzle/typography/text_styles.dart';
 
 /// Displays the action button to start or shuffle the puzzle
@@ -58,7 +59,7 @@ class _AppDownloadButtonState extends State<AppDownloadButton> {
             ),
             color: theme.defaultColor,
             colorTitle: Colors.white,
-            onPressed: () => print('Android'),
+            onPressed: () => openLink("https://play.google.com/store/apps/details?id=com.policy.hexagonalslidingpuzzle"),
           ),
         ),
       ],
