@@ -35,7 +35,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v1
         with:
-          flutter-version: "2.8.1"
+          flutter-version: "2.10.0"
           channel: stable
 
       - name: Flutter version
@@ -110,11 +110,11 @@ jobs:
         run: |
           bundle exec fastlane run validate_play_store_json_key json_key:${{ steps.google_cloud_keystore.outputs.filePath }}
 
-    #  - name: Release to Google Play (beta)
-    #    env:
-    #      SUPPLY_PACKAGE_NAME: ${{ secrets.ANDROID_PACKAGE_NAME }}
-    #      SUPPLY_JSON_KEY_DATA: ${{ secrets.SUPPLY_JSON_KEY_DATA }}
-    #    run: |
-    #      bundle exec fastlane supply \
-    #      --aab build/app/outputs/bundle/release/app-release.aab \
-    #      --track production
+      - name: Release to Google Play (beta)
+        env:
+          SUPPLY_PACKAGE_NAME: ${{ secrets.ANDROID_PACKAGE_NAME }}
+          SUPPLY_JSON_KEY_DATA: ${{ secrets.SUPPLY_JSON_KEY_DATA }}
+        run: |
+          bundle exec fastlane supply \
+          --aab build/app/outputs/bundle/release/app-release.aab \
+          --track production
