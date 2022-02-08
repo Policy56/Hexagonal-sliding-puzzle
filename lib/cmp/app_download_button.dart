@@ -53,13 +53,14 @@ class _AppDownloadButtonState extends State<AppDownloadButton> {
           child: ShareButton(
             title: 'Android app',
             icon: Image.asset(
-              'assets/images/facebook_icon.png',
+              'assets/images/android_icon.png',
               width: 6.56,
               height: 19.30,
             ),
             color: theme.defaultColor,
             colorTitle: Colors.white,
-            onPressed: () => openLink("https://play.google.com/store/apps/details?id=com.policy.hexagonalslidingpuzzle"),
+            onPressed: () => openLink(
+                'https://play.google.com/store/apps/details?id=com.policy.hexagonalslidingpuzzle'),
           ),
         ),
       ],
