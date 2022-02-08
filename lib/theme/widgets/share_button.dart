@@ -1,8 +1,13 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexagonal_sliding_puzzle/l10n/l10n.dart';
 import 'package:hexagonal_sliding_puzzle/layout/links_helper.dart';
+import 'package:hexagonal_sliding_puzzle/puzzle/bloc/puzzle_bloc.dart';
 import 'package:hexagonal_sliding_puzzle/typography/text_styles.dart';
+import 'package:twitter_intent/twitter_intent.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// The url to share for this Flutter Puzzle challenge.
 const _shareUrl = 'https://hexagonal-sliding-puzzle.web.app/';
@@ -15,14 +20,27 @@ class TwitterButton extends StatelessWidget {
   /// {@macro twitter_button}
   const TwitterButton({Key? key}) : super(key: key);
 
-  String _twitterShareUrl(BuildContext context) {
-    final shareText = context.l10n.successShareText;
+  String _twitterShareUrl(BuildContext context, String nbMoves) {
+    final shareText = context.l10n.successShareText(nbMoves);
     final encodedShareText = Uri.encodeComponent(shareText);
     return 'https://twitter.com/intent/tweet?url=$_shareUrl&text=$encodedShareText';
   }
 
+  TweetIntent _twitterShareIntent(BuildContext context, String nbMoves) {
+    final shareText = context.l10n.successShareText(nbMoves);
+
+    return TweetIntent(
+      hashtags: ['Hexagonal'],
+      text: shareText,
+      via: 'HexagonalSliding',
+      url: _shareUrl,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<PuzzleBloc>().state;
+    final l10n = context.l10n;
     return ShareButton(
       title: 'Twitter',
       icon: Image.asset(
@@ -31,7 +49,21 @@ class TwitterButton extends StatelessWidget {
         height: 10.67,
       ),
       color: const Color(0xFF13B9FD),
-      onPressed: () => openLink(_twitterShareUrl(context)),
+      onPressed: () {
+        if (kIsWeb) {
+          openLink(_twitterShareUrl(
+            context,
+            state.numberOfMoves.toString(),
+          ));
+        } else {
+          launch(
+            '${_twitterShareIntent(
+              context,
+              state.numberOfMoves.toString(),
+            )}',
+          );
+        }
+      },
     );
   }
 }
@@ -44,14 +76,17 @@ class FacebookButton extends StatelessWidget {
   /// {@macro facebook_button}
   const FacebookButton({Key? key}) : super(key: key);
 
-  String _facebookShareUrl(BuildContext context) {
-    final shareText = context.l10n.successShareText;
+  String _facebookShareUrl(BuildContext context, String nbMoves) {
+    final shareText = context.l10n.successShareText(nbMoves);
     final encodedShareText = Uri.encodeComponent(shareText);
     return 'https://www.facebook.com/sharer.php?u=$_shareUrl&quote=$encodedShareText';
   }
 
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<PuzzleBloc>().state;
+    final l10n = context.l10n;
+
     return ShareButton(
       title: 'Facebook',
       icon: Image.asset(
@@ -60,7 +95,12 @@ class FacebookButton extends StatelessWidget {
         height: 13.13,
       ),
       color: const Color(0xFF0468D7),
-      onPressed: () => openLink(_facebookShareUrl(context)),
+      onPressed: () => openLink(
+        _facebookShareUrl(
+          context,
+          state.numberOfMoves.toString(),
+        ),
+      ),
     );
   }
 }

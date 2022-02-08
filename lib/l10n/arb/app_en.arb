@@ -76,8 +76,14 @@
     "@successShareYourScoreMessage": {
         "description": "Shown as a share message in the Hexagonal success state"
     },
-    "successShareText": "Just solved the #HexagonalSlidingPuzzle ! Check it out ↓",
+    "successShareText": "Just solved the #HexagonalSlidingPuzzle in {numberOfMoves} Moves ! \n  \nCheck it out ↓ \n ",
     "@successShareText": {
-        "description": "The text to share for this Flutter Puzzle challenge, shown in the Hexagonal success state"
+        "description": "The text to share for this Flutter Puzzle challenge, shown in the Hexagonal success state",
+        "placeholders": {
+            "numberOfMoves": {
+                "type": "String",
+                "example": "5"
+            }
+        }
     }
 }

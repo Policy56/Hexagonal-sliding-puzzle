@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -117,7 +118,7 @@ class _Puzzle extends StatelessWidget {
       builder: (context, constraints) {
         return Stack(
           children: [
-            theme.layoutDelegate.backgroundBuilder(state),
+            //theme.layoutDelegate.backgroundBuilder(state),
             SingleChildScrollView(
               child: ConstrainedBox(
                 constraints: BoxConstraints(
@@ -195,28 +196,43 @@ class _PuzzleFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 30,
-      child: ResponsiveLayoutBuilder(
-        small: (context, child) => Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            PuzzleSwitchButton(),
+    return ResponsiveLayoutBuilder(
+      small: (context, child) => Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              PuzzleSwitchButton(),
+            ],
+          ),
+          if (kIsWeb) const AppDownloadButton() else const SizedBox(),
+        ],
+      ),
+      medium: (context, child) => SizedBox(
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                PuzzleSwitchButton(),
+              ],
+            ),
+            if (kIsWeb) const AppDownloadButton() else const SizedBox(),
           ],
         ),
-        medium: (context, child) => Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            PuzzleSwitchButton(),
-          ],
-        ),
-        large: (context, child) => Padding(
+      ),
+      large: (context, child) => SizedBox(
+        height: 30,
+        child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 50,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [AppDownloadButton(), PuzzleSwitchButton()],
+            children: const [
+              if (kIsWeb) AppDownloadButton() else SizedBox(),
+              PuzzleSwitchButton()
+            ],
           ),
         ),
       ),

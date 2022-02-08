@@ -29,8 +29,8 @@ class _PuzzleSwitchButtonState extends State<PuzzleSwitchButton> {
       child: Tooltip(
         key: ValueKey(status),
         message: context.l10n.puzzleSwitchTooltip,
-        verticalOffset: 40,
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               'Correct tiles',

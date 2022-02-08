@@ -747,6 +747,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  twitter_intent:
+    dependency: "direct main"
+    description:
+      name: twitter_intent
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   typed_data:
     dependency: transitive
     description:

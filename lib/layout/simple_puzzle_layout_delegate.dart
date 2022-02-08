@@ -275,8 +275,8 @@ class SimpleStartSection extends StatelessWidget {
       children: [
         const ResponsiveGap(
           small: 5,
-          medium: 83,
-          large: 151,
+          medium: 30,
+          large: 111,
         ),
         const PuzzleName(),
         const ResponsiveGap(large: 16),
@@ -504,7 +504,11 @@ class SimplePuzzleTile extends StatelessWidget {
         backgroundColor: MaterialStateProperty.resolveWith<Color?>(
           (states) {
             if (tile.value == state.lastTappedTile?.value) {
-              return theme.pressedColor;
+              if (isSwitchHelp && (state.puzzle.isTileCorrect(tile))) {
+                return lighter(theme.correctTileColor, 20);
+              } else {
+                return theme.pressedColor;
+              }
             } else if (states.contains(MaterialState.hovered)) {
               return theme.hoverColor;
             } else {
