@@ -37,7 +37,9 @@ class _AppDownloadButtonState extends State<AppDownloadButton> {
             ),
             color: theme.defaultColor,
             colorTitle: Colors.white,
-            onPressed: () => print('Ios'),
+            onPressed: () => openLink(
+              'https://apps.apple.com/app/id1609083334',
+            ),
           ),
         ),
         const Gap(20),
@@ -55,7 +57,8 @@ class _AppDownloadButtonState extends State<AppDownloadButton> {
             color: theme.defaultColor,
             colorTitle: Colors.white,
             onPressed: () => openLink(
-                'https://play.google.com/store/apps/details?id=com.policy.hexagonalslidingpuzzle'),
+              'https://play.google.com/store/apps/details?id=com.policy.hexagonalslidingpuzzle',
+            ),
           ),
         ),
       ],
