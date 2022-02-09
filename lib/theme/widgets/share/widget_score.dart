@@ -86,11 +86,11 @@ class WidgetScore extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const FlutterLogo(
+                      /*const FlutterLogo(
                         size: 18,
                         //height: 18,
                         //isColored: false,
-                      ),
+                      ),*/
                       const ResponsiveGap(
                         small: 24,
                         medium: 32,

@@ -7,12 +7,14 @@ import 'package:gap/gap.dart';
 import 'package:hexagonal_sliding_puzzle/cmp/app_download_button.dart';
 import 'package:hexagonal_sliding_puzzle/cmp/switch/puzzle_switch_button.dart';
 import 'package:hexagonal_sliding_puzzle/cmp/switch/switch_bloc.dart';
+import 'package:hexagonal_sliding_puzzle/l10n/l10n.dart';
 import 'package:hexagonal_sliding_puzzle/layout/layout.dart';
 import 'package:hexagonal_sliding_puzzle/layout/modal_helper.dart';
 import 'package:hexagonal_sliding_puzzle/models/models.dart';
 import 'package:hexagonal_sliding_puzzle/puzzle/puzzle.dart';
 import 'package:hexagonal_sliding_puzzle/theme/theme.dart';
-import 'package:hexagonal_sliding_puzzle/theme/widgets/share_dialog.dart';
+import 'package:hexagonal_sliding_puzzle/theme/widgets/ranking/ranking_dialog.dart';
+import 'package:hexagonal_sliding_puzzle/theme/widgets/share/share_dialog.dart';
 import 'package:hexagonal_sliding_puzzle/timer/timer.dart';
 import 'package:hexagonal_sliding_puzzle/typography/text_styles.dart';
 
@@ -156,10 +158,11 @@ class _PuzzleHeader extends StatelessWidget {
       child: ResponsiveLayoutBuilder(
         small: (context, child) => Stack(
           children: const [
-            SizedBox()
-            /*Align(
-              child: _PuzzleLogo(),
-            ),*/
+            SizedBox(),
+            Align(
+              child: _PuzzleRanking(),
+              //_PuzzleLogo(),
+            ),
           ],
         ),
         medium: (context, child) => Padding(
@@ -167,9 +170,10 @@ class _PuzzleHeader extends StatelessWidget {
             horizontal: 20,
           ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const [
               // _PuzzleLogo(),
+              _PuzzleRanking(),
               PuzzleMenu(),
             ],
           ),
@@ -179,9 +183,10 @@ class _PuzzleHeader extends StatelessWidget {
             horizontal: 50,
           ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const [
               //_PuzzleLogo(),
+              _PuzzleRanking(),
               PuzzleMenu(),
             ],
           ),
@@ -267,6 +272,63 @@ class _PuzzleLogo extends StatelessWidget {
           size: 114,
         ),
       ),
+    );
+  }
+}
+
+class _PuzzleRanking extends StatelessWidget {
+  const _PuzzleRanking({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final currentTheme = context.select((ThemeBloc bloc) => bloc.state.theme);
+
+    return ResponsiveLayoutBuilder(
+      small: (_, child) => child!,
+      medium: (_, child) => child!,
+      large: (_, child) => child!,
+      child: (currentSize) {
+        final leftPadding =
+            currentSize != ResponsiveLayoutSize.small ? 40.0 : 0.0;
+
+        return Padding(
+          padding: EdgeInsets.only(left: leftPadding),
+          child: Tooltip(
+            message: context.l10n.rankingMenuToolTip,
+            child: TextButton(
+              style: TextButton.styleFrom(
+                padding: EdgeInsets.zero,
+              ).copyWith(
+                overlayColor: MaterialStateProperty.all(Colors.transparent),
+              ),
+              onPressed: () async {
+                // Stop the timer of the currently running puzzle.
+                //context.read<TimerBloc>().add(const TimerStopped());
+
+                //TODO(ccl): ici affichage du ranking
+                await showAppDialog<void>(
+                  context: context,
+                  child: MultiBlocProvider(
+                    providers: [
+                      BlocProvider.value(
+                        value: context.read<ThemeBloc>(),
+                      ),
+                    ],
+                    child: const RankingDialog(),
+                  ),
+                );
+              },
+              child: AnimatedDefaultTextStyle(
+                duration: const Duration(milliseconds: 400),
+                style: PuzzleTextStyle.headline5.copyWith(
+                  color: Colors.white, //currentTheme.menuInactiveColor,
+                ),
+                child: Text(context.l10n.rankingMenuMessage),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
@@ -497,8 +559,8 @@ class PuzzleMenuItem extends StatelessWidget {
         return Padding(
           padding: EdgeInsets.only(left: leftPadding),
           child: Tooltip(
-            message: theme != currentTheme
-                ? "Changing the theme will reset your score" /*context.l10n.puzzleChangeTooltip*/ : '',
+            message:
+                theme != currentTheme ? context.l10n.puzzleChangeTooltip : '',
             child: TextButton(
               style: TextButton.styleFrom(
                 padding: EdgeInsets.zero,

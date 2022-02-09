@@ -3,8 +3,8 @@ import 'package:gap/gap.dart';
 import 'package:hexagonal_sliding_puzzle/colors/colors.dart';
 import 'package:hexagonal_sliding_puzzle/l10n/l10n.dart';
 import 'package:hexagonal_sliding_puzzle/layout/layout.dart';
-import 'package:hexagonal_sliding_puzzle/theme/widgets/share_button.dart';
-import 'package:hexagonal_sliding_puzzle/theme/widgets/share_dialog_animated_builder.dart';
+import 'package:hexagonal_sliding_puzzle/theme/widgets/share/share_button.dart';
+import 'package:hexagonal_sliding_puzzle/theme/widgets/share/share_dialog_animated_builder.dart';
 import 'package:hexagonal_sliding_puzzle/typography/text_styles.dart';
 
 /// {@template share_your_score}

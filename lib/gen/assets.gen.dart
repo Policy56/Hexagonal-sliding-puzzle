@@ -22,6 +22,10 @@ class $AssetsImagesGen {
   AssetGenImage get iosIcon =>
       const AssetGenImage('assets/images/ios_icon.png');
 
+  /// File path: assets/images/logo_launch.png
+  AssetGenImage get logoLaunch =>
+      const AssetGenImage('assets/images/logo_launch.png');
+
   /// File path: assets/images/shuffle_icon.png
   AssetGenImage get shuffleIcon =>
       const AssetGenImage('assets/images/shuffle_icon.png');

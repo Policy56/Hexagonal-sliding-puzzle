@@ -1,6 +1,6 @@
 {
     "@@locale": "en",
-    "puzzleChallengeTitle": "Hexagonal Slide Puzzle",
+    "puzzleChallengeTitle": "Hexagonal Sliding Puzzle",
     "@puzzleChallengeTitle": {
         "description": "Shown as the title of the puzzle"
     },
@@ -60,6 +60,10 @@
     "@puzzleStart": {
         "description": "Shown on the button that start the puzzle"
     },
+    "puzzleChangeTooltip": "Changing the theme will reset your score",
+    "@puzzleChangeTooltip": {
+        "description": "On the menu, changing the theme will reset your score"
+    },
     "puzzleShuffle": "Shuffle",
     "@puzzleShuffle": {
         "description": "Shown on the button that shuffle the puzzle"
@@ -72,18 +76,26 @@
     "@successShareYourScoreTitle": {
         "description": "Shown as a share title in the Hexagonal success state"
     },
-    "successShareYourScoreMessage": "Share this puzzle to challenge your friends and be sure to check out the Flutter Puzzle Hack.",
+    "successShareYourScoreMessage": "Share this puzzle to challenge your friends and be sure to check out the Hexagonal Sliding Puzzle.",
     "@successShareYourScoreMessage": {
         "description": "Shown as a share message in the Hexagonal success state"
     },
     "successShareText": "Just solved the #HexagonalSlidingPuzzle in {numberOfMoves} Moves ! \n  \nCheck it out ↓ \n ",
     "@successShareText": {
-        "description": "The text to share for this Flutter Puzzle challenge, shown in the Hexagonal success state",
+        "description": "The text to share for this Hexagonal Sliding Puzzle challenge, shown in the Hexagonal success state",
         "placeholders": {
             "numberOfMoves": {
                 "type": "String",
                 "example": "5"
             }
         }
+    },
+    "rankingMenuMessage": "Leaderboard",
+    "@rankingMenuMessage": {
+        "description": "Show Top 100 player of the world in this difficulty"
+    },
+    "rankingMenuToolTip": "World Ranking of the game",
+    "@rankingMenuToolTip": {
+        "description": "Show Top 100 player of the world in this difficulty"
     }
 }

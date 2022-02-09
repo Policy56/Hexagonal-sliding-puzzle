@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hexagonal_sliding_puzzle/colors/colors.dart';
 import 'package:hexagonal_sliding_puzzle/layout/layout.dart';
-import 'package:hexagonal_sliding_puzzle/theme/widgets/share_dialog_animated_builder.dart';
-import 'package:hexagonal_sliding_puzzle/theme/widgets/share_your_score.dart';
-import 'package:hexagonal_sliding_puzzle/theme/widgets/widget_score.dart';
+import 'package:hexagonal_sliding_puzzle/theme/widgets/share/share_dialog_animated_builder.dart';
+import 'package:hexagonal_sliding_puzzle/theme/widgets/share/share_your_score.dart';
+import 'package:hexagonal_sliding_puzzle/theme/widgets/share/widget_score.dart';
 
 /// {@template share_dialog}
 /// Displays a share dialog with a score of the completed puzzle

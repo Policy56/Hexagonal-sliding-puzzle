@@ -21,6 +21,7 @@ dependencies:
   gap: ^2.0.0
   google_fonts: ^2.1.0
   intl: ^0.17.0
+  shimmer: ^2.0.0
   twitter_intent: ^1.0.0
   url_launcher: ^6.0.18
 

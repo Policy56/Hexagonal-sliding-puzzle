@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:hexagonal_sliding_puzzle/layout/links_helper.dart';
 import 'package:hexagonal_sliding_puzzle/puzzle/bloc/puzzle_bloc.dart';
 import 'package:hexagonal_sliding_puzzle/theme/theme.dart';
-import 'package:hexagonal_sliding_puzzle/theme/widgets/share_button.dart';
-import 'package:hexagonal_sliding_puzzle/layout/links_helper.dart';
+import 'package:hexagonal_sliding_puzzle/theme/widgets/share/share_button.dart';
 
 /// Displays the action button to start or shuffle the puzzle
 /// based on the current puzzle state.

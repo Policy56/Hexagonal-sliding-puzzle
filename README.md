@@ -7,7 +7,7 @@
 [![Deploy to Firebase Hosting on merge](https://github.com/Policy56/Hexagonal-sliding-puzzle/actions/workflows/firebase-hosting-merge.yml/badge.svg?branch=master)](https://github.com/Policy56/Hexagonal-sliding-puzzle/actions/workflows/firebase-hosting-merge.yml)
 [![License: MIT][license_badge]][license_link]
 
-A slide puzzle built for [Flutter Challenge](https://flutterhack.devpost.com/).
+A sliding puzzle built for [Flutter Challenge](https://flutterhack.devpost.com/).
 
 *Built by [Very Good Ventures][very_good_ventures_link] in partnership with Google.*
 
