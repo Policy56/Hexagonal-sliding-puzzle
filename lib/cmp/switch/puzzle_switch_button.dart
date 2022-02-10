@@ -35,7 +35,7 @@ class _PuzzleSwitchButtonState extends State<PuzzleSwitchButton> {
             Text(
               'Correct tiles',
               style: PuzzleTextStyle.headline5.copyWith(
-                color: theme.defaultColor,
+                color: Colors.white, //theme.defaultColor,
               ),
             ),
             Switch(

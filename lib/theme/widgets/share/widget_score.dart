@@ -5,6 +5,7 @@ import 'package:hexagonal_sliding_puzzle/l10n/l10n.dart';
 import 'package:hexagonal_sliding_puzzle/layout/layout.dart';
 import 'package:hexagonal_sliding_puzzle/puzzle/bloc/puzzle_bloc.dart';
 import 'package:hexagonal_sliding_puzzle/theme/bloc/theme_bloc.dart';
+import 'package:hexagonal_sliding_puzzle/timer/bloc/timer_bloc.dart';
 import 'package:hexagonal_sliding_puzzle/timer/timer_widget.dart';
 import 'package:hexagonal_sliding_puzzle/typography/text_styles.dart';
 
@@ -24,6 +25,8 @@ class WidgetScore extends StatelessWidget {
     final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
     final state = context.watch<PuzzleBloc>().state;
     final l10n = context.l10n;
+    final secondsElapsed =
+        context.select((TimerBloc bloc) => bloc.state.secondsElapsed);
 
     return ResponsiveLayoutBuilder(
       small: (_, child) => child!,
@@ -63,6 +66,9 @@ class WidgetScore extends StatelessWidget {
         final numberOfMovesTextStyle = currentSize == ResponsiveLayoutSize.small
             ? PuzzleTextStyle.headline5
             : PuzzleTextStyle.headline4;
+
+        var playingScore = 1000 - state.numberOfMoves - secondsElapsed;
+        playingScore = playingScore > 0 ? playingScore : 0;
 
         return ClipRRect(
           key: const Key('score'),
@@ -160,6 +166,19 @@ class WidgetScore extends StatelessWidget {
                             state.numberOfMoves.toString(),
                           ),
                         ),
+                      ),
+                      const ResponsiveGap(
+                        small: 2,
+                        medium: 8,
+                        large: 8,
+                      ),
+                      AnimatedDefaultTextStyle(
+                        key: const Key('score_points'),
+                        style: numberOfMovesTextStyle.copyWith(
+                          color: PuzzleColors.white,
+                        ),
+                        duration: const Duration(milliseconds: 400),
+                        child: Text('$playingScore Pts'),
                       ),
                     ],
                   ),

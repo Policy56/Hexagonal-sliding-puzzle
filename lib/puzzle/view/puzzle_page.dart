@@ -302,9 +302,6 @@ class _PuzzleRanking extends StatelessWidget {
                 overlayColor: MaterialStateProperty.all(Colors.transparent),
               ),
               onPressed: () async {
-                // Stop the timer of the currently running puzzle.
-                //context.read<TimerBloc>().add(const TimerStopped());
-
                 //TODO(ccl): ici affichage du ranking
                 await showAppDialog<void>(
                   context: context,
@@ -314,7 +311,7 @@ class _PuzzleRanking extends StatelessWidget {
                         value: context.read<ThemeBloc>(),
                       ),
                     ],
-                    child: const RankingDialog(),
+                    child: RankingDialog(),
                   ),
                 );
               },

@@ -86,13 +86,4 @@ class TimerWidget extends StatelessWidget {
     final twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
     return '${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds';
   }
-
-  /* String _getDurationLabel(Duration duration, BuildContext context) {
-    return "LOL ICI TEST";
-    return context.l10n.puzzleDurationLabelText(
-      duration.inHours.toString(),
-      duration.inMinutes.remainder(60).toString(),
-      duration.inSeconds.remainder(60).toString(),
-    );
-  }*/
 }

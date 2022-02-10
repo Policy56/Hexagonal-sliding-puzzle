@@ -12,6 +12,8 @@ dependencies:
   equatable: ^2.0.3
   fake_async: ^1.2.0
   firebase_analytics: ^9.0.5
+  firebase_core: 1.12.0
+  firebase_database: 9.0.6
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.0
@@ -24,6 +26,7 @@ dependencies:
   shimmer: ^2.0.0
   twitter_intent: ^1.0.0
   url_launcher: ^6.0.18
+  valuable: ^0.1.0+1
 
 dev_dependencies:
   bloc_test: ^9.0.1

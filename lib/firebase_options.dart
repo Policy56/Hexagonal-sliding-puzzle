@@ -41,6 +41,8 @@ class DefaultFirebaseOptions {
     apiKey: 'AIzaSyBU7p-bFdpRbMtWK6i9xWk4PNEItZ7zodk',
     appId: '1:607615760022:web:23c2c9186f8c9af9a274b7',
     messagingSenderId: '607615760022',
+    databaseURL:
+        'https://hexagonal-sliding-puzzle-default-rtdb.europe-west1.firebasedatabase.app/',
     projectId: 'hexagonal-sliding-puzzle',
     authDomain: 'hexagonal-sliding-puzzle.firebaseapp.com',
     storageBucket: 'hexagonal-sliding-puzzle.appspot.com',

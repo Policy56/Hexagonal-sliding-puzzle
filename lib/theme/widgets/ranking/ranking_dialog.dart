@@ -1,15 +1,22 @@
 import 'dart:async';
+import 'dart:math';
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexagonal_sliding_puzzle/colors/colors.dart';
 import 'package:hexagonal_sliding_puzzle/l10n/l10n.dart';
 import 'package:hexagonal_sliding_puzzle/layout/layout.dart';
+import 'package:hexagonal_sliding_puzzle/models/ranking.dart';
+import 'package:hexagonal_sliding_puzzle/models/rankings_dao.dart';
+import 'package:hexagonal_sliding_puzzle/puzzle/bloc/puzzle_bloc.dart';
 import 'package:hexagonal_sliding_puzzle/theme/bloc/theme_bloc.dart';
 import 'package:hexagonal_sliding_puzzle/theme/widgets/share/share_dialog_animated_builder.dart';
 import 'package:hexagonal_sliding_puzzle/theme/widgets/shimmer/shimmer_loading.dart';
 import 'package:hexagonal_sliding_puzzle/theme/widgets/shimmer/shimmer_widget.dart';
+import 'package:hexagonal_sliding_puzzle/timer/bloc/timer_bloc.dart';
 import 'package:hexagonal_sliding_puzzle/typography/text_styles.dart';
+import 'package:valuable/valuable.dart';
 
 /// {@template ranking_dialog}
 /// Displays a ranking dialog with the best score of the completed puzzle in
@@ -17,9 +24,14 @@ import 'package:hexagonal_sliding_puzzle/typography/text_styles.dart';
 /// {@endtemplate}
 class RankingDialog extends StatefulWidget {
   /// {@macro ranking_dialog}
-  const RankingDialog({
+  ///
+
+  RankingDialog({
     Key? key,
   }) : super(key: key);
+
+  /// Dao of rankings
+  final rankingsDao = RankingsDAO();
 
   @override
   State<RankingDialog> createState() => _RankingDialogState();
@@ -27,14 +39,8 @@ class RankingDialog extends StatefulWidget {
 
 class _RankingDialogState extends State<RankingDialog>
     with TickerProviderStateMixin {
-  bool _isLoading = true;
+  final StatefulValuable<bool> _isLoading = StatefulValuable<bool>(true);
   late final AnimationController _controller;
-
-  void _toggleLoading() {
-    setState(() {
-      _isLoading = !_isLoading;
-    });
-  }
 
   @override
   void initState() {
@@ -59,6 +65,9 @@ class _RankingDialogState extends State<RankingDialog>
   @override
   Widget build(BuildContext context) {
     final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
+    /*final stateBloc = context.watch<PuzzleBloc>().state;
+    final secondsElapsed =
+        context.select((TimerBloc bloc) => bloc.state.secondsElapsed);*/
 
     return ResponsiveLayoutBuilder(
       small: (_, child) => child!,
@@ -80,6 +89,13 @@ class _RankingDialogState extends State<RankingDialog>
         final crossAxisAlignment = currentSize == ResponsiveLayoutSize.large
             ? CrossAxisAlignment.start
             : CrossAxisAlignment.center;
+
+        var firedatabaseOnValue = widget.rankingsDao
+            .getRefOfInstance()
+            .child(theme.name.toLowerCase())
+            .orderByChild('score')
+            // .limitToFirst(10)
+            .onValue;
 
         return Stack(
           key: const Key('key_ranking_dialog'),
@@ -126,28 +142,108 @@ class _RankingDialogState extends State<RankingDialog>
                                       theme.backgroundColor,
                                       theme.defaultColor,
                                     ),
-                                    child: ListView(
-                                      shrinkWrap: true,
-                                      physics: _isLoading
-                                          ? const NeverScrollableScrollPhysics()
-                                          : const BouncingScrollPhysics(
-                                              parent:
-                                                  NeverScrollableScrollPhysics(),
-                                            ),
-                                      /* physics: _isLoading
-                                          ? const NeverScrollableScrollPhysics()
-                                          : null,*/
-                                      children: [
-                                        const SizedBox(height: 8),
-                                        _buildListItem(),
-                                        _buildListItem(),
-                                        _buildListItem(),
-                                        _buildListItem(),
-                                        _buildListItem(),
-                                        _buildListItem(),
-                                        _buildListItem(),
-                                        _buildListItem(),
-                                      ],
+                                    child: ValuableConsumer(
+                                      builder: (BuildContext context,
+                                          ValuableWatcher watch, _) {
+                                        return StreamBuilder<DatabaseEvent>(
+                                          stream: firedatabaseOnValue,
+                                          builder: (
+                                            context,
+                                            AsyncSnapshot<DatabaseEvent>
+                                                snapEvent,
+                                          ) {
+                                            if (snapEvent.hasData &&
+                                                !snapEvent.hasError &&
+                                                snapEvent.data != null) {
+                                              if (snapEvent.data!.snapshot
+                                                          .value !=
+                                                      null &&
+                                                  (snapEvent.data!.snapshot
+                                                          .value as Map)
+                                                      .isNotEmpty) {
+                                                List<Widget> _listWidget = [
+                                                  const SizedBox(height: 8)
+                                                ];
+                                                //taking the data snapshot.
+                                                final snapshot =
+                                                    snapEvent.data!.snapshot;
+
+                                                List<RankingItem> items =
+                                                    <RankingItem>[];
+                                                Map<String, dynamic> _list =
+                                                    (snapshot.value as Map<
+                                                        String, dynamic>);
+
+                                                _list.values
+                                                    .forEach((dynamic value) {
+                                                  //print(value.toString());
+                                                  RankingItem tempRankingItem =
+                                                      RankingItem.fromJson(value
+                                                          as Map<dynamic,
+                                                              dynamic>);
+                                                  items.add(tempRankingItem);
+                                                  _listWidget.add(
+                                                    _buildListItem(
+                                                      index: items.length,
+                                                      rankingItem:
+                                                          tempRankingItem,
+                                                      backgroundColor:
+                                                          theme.backgroundColor,
+                                                      l10n: context.l10n,
+                                                    ),
+                                                  );
+                                                });
+
+                                                _isLoading.setValue(false);
+                                                return ListView(
+                                                  shrinkWrap: true,
+                                                  physics: watch(_isLoading)
+                                                          as bool
+                                                      ? const NeverScrollableScrollPhysics()
+                                                      : const BouncingScrollPhysics(
+                                                          parent:
+                                                              NeverScrollableScrollPhysics(),
+                                                        ),
+                                                  children: _listWidget,
+                                                );
+                                              } else {
+                                                return Text(
+                                                  context.l10n.noRankingMessage,
+                                                  textAlign: TextAlign.center,
+                                                  style: PuzzleTextStyle
+                                                      .headline5
+                                                      .copyWith(
+                                                    color:
+                                                        theme.menuActiveColor,
+                                                  ),
+                                                );
+                                              }
+                                            } else {
+                                              return ListView(
+                                                shrinkWrap: true,
+                                                physics: watch(_isLoading)
+                                                        as bool
+                                                    ? const NeverScrollableScrollPhysics()
+                                                    : const BouncingScrollPhysics(
+                                                        parent:
+                                                            NeverScrollableScrollPhysics(),
+                                                      ),
+                                                children: [
+                                                  const SizedBox(height: 8),
+                                                  _buildListItem(),
+                                                  _buildListItem(),
+                                                  _buildListItem(),
+                                                  _buildListItem(),
+                                                  _buildListItem(),
+                                                  _buildListItem(),
+                                                  _buildListItem(),
+                                                  _buildListItem(),
+                                                ],
+                                              );
+                                            }
+                                          },
+                                        );
+                                      },
                                     ),
                                   ),
                                 ),
@@ -177,8 +273,7 @@ class _RankingDialogState extends State<RankingDialog>
                   color: PuzzleColors.black,
                 ),
                 onPressed: () {
-                  _toggleLoading();
-                  //Navigator.of(context).pop();
+                  Navigator.of(context).pop();
                 },
               ),
             ),
@@ -198,23 +293,35 @@ class _RankingDialogState extends State<RankingDialog>
         pColorHL,
         pColorBg,
       ],
-      stops: [
+      stops: const [
         0.1,
         0.3,
         0.4,
       ],
-      begin: Alignment(-1.0, -0.3),
-      end: Alignment(1.0, 0.3),
+      begin: const Alignment(-1.0, -0.3),
+      end: const Alignment(1.0, 0.3),
       tileMode: TileMode.clamp,
     );
   }
 
-  Widget _buildListItem() {
-    return ShimmerLoading(
-      isLoading: _isLoading,
-      child: PlayerRankItem(
-        isLoading: _isLoading,
-      ),
+  Widget _buildListItem(
+      {int? index,
+      RankingItem? rankingItem,
+      Color? backgroundColor,
+      AppLocalizations? l10n}) {
+    return ValuableConsumer(
+      builder: (BuildContext context, ValuableWatcher watch, _) {
+        return ShimmerLoading(
+          isLoading: watch(_isLoading) as bool,
+          child: PlayerRankItem(
+            index: index,
+            isLoading: watch(_isLoading) as bool,
+            rankingItem: rankingItem,
+            backgroundColor: backgroundColor,
+            l10n: l10n,
+          ),
+        );
+      },
     );
   }
 }
@@ -224,9 +331,21 @@ class PlayerRankItem extends StatelessWidget {
   const PlayerRankItem({
     Key? key,
     required this.isLoading,
+    required this.index,
+    required this.rankingItem,
+    required this.backgroundColor,
+    required this.l10n,
   }) : super(key: key);
 
   final bool isLoading;
+
+  final RankingItem? rankingItem;
+
+  final Color? backgroundColor;
+
+  final int? index;
+
+  final AppLocalizations? l10n;
 
   @override
   Widget build(BuildContext context) {
@@ -242,24 +361,98 @@ class PlayerRankItem extends StatelessWidget {
   }
 
   Widget _buildLine() {
+    var timeDuration = Duration(
+        seconds: (rankingItem != null) ? rankingItem!.nbSeconds.floor() : 0);
+
     return AspectRatio(
       aspectRatio: 16 / 2,
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Colors.black,
+          color: backgroundColor,
           borderRadius: BorderRadius.circular(16),
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(16),
-          child: Image.network(
-            'https://flutter'
-            '.dev/docs/cookbook/img-files/effects/split-check/Food1.jpg',
-            fit: BoxFit.cover,
+          child: ValuableConsumer(
+            builder: (BuildContext context, ValuableWatcher watch, _) {
+              return isLoading
+                  ? Image.network(
+                      'https://flutter'
+                      '.dev/docs/cookbook/img-files/effects/split-check/Food1.jpg',
+                      fit: BoxFit.cover,
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            index.toString(),
+                            textAlign: TextAlign.center,
+                            style: PuzzleTextStyle.headline3.copyWith(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 5,
+                          child: Text(
+                            rankingItem!.user,
+                            textAlign: TextAlign.center,
+                            style: PuzzleTextStyle.headline3.copyWith(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Row(
+                            children: [
+                              Text(
+                                rankingItem!.nbTilesMoved.toString(),
+                                textAlign: TextAlign.center,
+                                style: PuzzleTextStyle.headline5.copyWith(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Align(
+                                alignment: FractionalOffset.center,
+                                child: Text(
+                                  l10n!.puzzleNumberOfMoves,
+                                  textAlign: TextAlign.center,
+                                  style: PuzzleTextStyle.headline5.copyWith(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Text(
+                            _formatDuration(timeDuration),
+                            maxLines: 1,
+                            textAlign: TextAlign.center,
+                            style: PuzzleTextStyle.headline5.copyWith(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+            },
           ),
         ),
       ),
     );
+  }
+
+  String _formatDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    final twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    final twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    return '${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds';
   }
 }
 

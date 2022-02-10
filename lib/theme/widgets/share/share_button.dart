@@ -4,7 +4,10 @@ import 'package:gap/gap.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexagonal_sliding_puzzle/l10n/l10n.dart';
 import 'package:hexagonal_sliding_puzzle/layout/links_helper.dart';
+import 'package:hexagonal_sliding_puzzle/models/rankings_dao.dart';
 import 'package:hexagonal_sliding_puzzle/puzzle/bloc/puzzle_bloc.dart';
+import 'package:hexagonal_sliding_puzzle/theme/bloc/theme_bloc.dart';
+import 'package:hexagonal_sliding_puzzle/timer/bloc/timer_bloc.dart';
 import 'package:hexagonal_sliding_puzzle/typography/text_styles.dart';
 import 'package:twitter_intent/twitter_intent.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -51,10 +54,12 @@ class TwitterButton extends StatelessWidget {
       color: const Color(0xFF13B9FD),
       onPressed: () {
         if (kIsWeb) {
-          openLink(_twitterShareUrl(
-            context,
-            state.numberOfMoves.toString(),
-          ));
+          openLink(
+            _twitterShareUrl(
+              context,
+              state.numberOfMoves.toString(),
+            ),
+          );
         } else {
           launch(
             '${_twitterShareIntent(
@@ -102,6 +107,139 @@ class FacebookButton extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+/// {@template save_my_score_button}
+/// Save my Score button with Username Texfield
+/// {@endtemplate}
+class SaveScoreButton extends StatefulWidget {
+  /// {@macro save_my_score_button}
+  SaveScoreButton({Key? key}) : super(key: key);
+
+  @override
+  State<SaveScoreButton> createState() => _SaveScoreButtonState();
+}
+
+class _SaveScoreButtonState extends State<SaveScoreButton> {
+  TextEditingController usernameController = TextEditingController();
+
+  bool _validate = true;
+  bool _send = false;
+
+  /// Dao of rankings
+  final rankingsDao = RankingsDAO();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
+    final stateBloc = context.watch<PuzzleBloc>().state;
+    final secondsElapsed =
+        context.select((TimerBloc bloc) => bloc.state.secondsElapsed);
+
+    final l10n = context.l10n;
+
+    return Container(
+      height: 56,
+      decoration: BoxDecoration(
+        border: Border.all(color: const Color.fromARGB(255, 53, 215, 4)),
+        color: _send ? Color.fromARGB(121, 131, 131, 131) : null,
+        borderRadius: BorderRadius.circular(32),
+      ),
+      child: TextButton(
+        style: TextButton.styleFrom(
+          padding: EdgeInsets.zero,
+          primary: const Color.fromARGB(255, 53, 215, 4),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(32),
+          ),
+          backgroundColor: Colors.transparent,
+        ),
+        onPressed: _send
+            ? null
+            : () async {
+                if (usernameController.text == '' ||
+                    usernameController.text.length > 10) {
+                  setState(() {
+                    _validate = true;
+                  });
+                } else {
+                  rankingsDao.saveMyRank(
+                    usernameController.text,
+                    theme.name.toLowerCase(),
+                    stateBloc.numberOfMoves,
+                    secondsElapsed.toDouble(),
+                  );
+                  setState(() {
+                    _send = true;
+                  });
+                }
+              },
+        child: Row(
+          children: [
+            const Gap(12),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(32),
+              child: Container(
+                alignment: Alignment.center,
+                width: 32,
+                height: 32,
+                color: const Color.fromARGB(255, 53, 215, 4),
+                child: const Icon(
+                  Icons.save_rounded,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            const Gap(10),
+            /**/
+            Container(
+              height: 32,
+              width: 120,
+              child: TextFormField(
+                enabled: _send == false,
+                controller: usernameController,
+                textAlign: TextAlign.center,
+                maxLength: 10,
+                decoration: InputDecoration(
+                  hintText: 'Username',
+                  errorText: _validate ? null : 'Enter a valid username.',
+                  hintStyle: Theme.of(context).textTheme.caption!.copyWith(
+                        fontSize: 15,
+                        color: Colors.grey,
+                      ),
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  // errorBorder: InputBorder.none,
+                  disabledBorder: InputBorder.none,
+
+                  contentPadding:
+                      EdgeInsets.only(left: 15, bottom: 15, right: 15),
+                  counterText: "",
+                  fillColor: Colors.red,
+                ),
+              ),
+            ),
+            const Gap(24),
+            Text(
+              "Save",
+              style: PuzzleTextStyle.headline5.copyWith(
+                color: const Color.fromARGB(255, 53, 215, 4),
+              ),
+            ),
+            const Gap(24),
+          ],
+        ),
+      ),
+    );
+
+    /*return ShareButton(
+      title: 'Facebook',
+      icon: Icon(Icons.save_rounded),
+      color: const Color.fromARGB(255, 53, 215, 4),
+      onPressed: () => print("CCL SAVE")
+    );*/
   }
 }
 

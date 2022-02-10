@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "607615760022",
+    "firebase_url": "https://hexagonal-sliding-puzzle-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "hexagonal-sliding-puzzle",
     "storage_bucket": "hexagonal-sliding-puzzle.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "607615760022-mv7rlvogdmbrect3tloos8jk5tp71lc6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.policy.hexagonalslidingpuzzle",
+            "certificate_hash": "9f8ee46deedb3b553adec9586ec87be5edcde2ac"
+          }
+        },
         {
           "client_id": "607615760022-ssk69k9prun1rjca01lom2j32jldp4hv.apps.googleusercontent.com",
           "client_type": 3

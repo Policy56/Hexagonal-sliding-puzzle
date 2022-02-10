@@ -24,6 +24,8 @@ class ShareYourScore extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
+    var playerScore = 0;
+
     return ResponsiveLayoutBuilder(
       small: (_, child) => child!,
       medium: (_, child) => child!,
@@ -101,10 +103,12 @@ class ShareYourScore extends StatelessWidget {
                 opacity: animation.socialButtonsOpacity.value,
                 child: Row(
                   mainAxisAlignment: buttonsMainAxisAlignment,
-                  children: const [
-                    TwitterButton(),
-                    Gap(16),
-                    FacebookButton(),
+                  children: [
+                    const TwitterButton(),
+                    const Gap(16),
+                    const FacebookButton(),
+                    const Gap(16),
+                    SaveScoreButton(),
                   ],
                 ),
               ),

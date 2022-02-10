@@ -97,5 +97,9 @@
     "rankingMenuToolTip": "World Ranking of the game",
     "@rankingMenuToolTip": {
         "description": "Show Top 100 player of the world in this difficulty"
+    },
+    "noRankingMessage": "There are not any rank yet. Let's be the first one !",
+    "@noRankingMessage": {
+        "description": "When there are no record on leaderboard."
     }
 }
