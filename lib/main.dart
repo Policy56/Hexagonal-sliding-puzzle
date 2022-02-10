@@ -12,7 +12,7 @@ import 'package:hexagonal_sliding_puzzle/bootstrap.dart';
 
 import 'firebase_options.dart';
 
-void bmain() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (Firebase.apps.isEmpty) {
     await Firebase.initializeApp(
