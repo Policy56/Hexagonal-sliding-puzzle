@@ -19,6 +19,9 @@ class SimpleTheme extends PuzzleTheme {
   int get size => 7;
 
   @override
+  int get baseScore => 1000;
+
+  @override
   bool get hasTimer => false;
 
   @override

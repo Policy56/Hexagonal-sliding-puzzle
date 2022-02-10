@@ -170,9 +170,9 @@ class _RankingDialogState extends State<RankingDialog>
 
                                                 List<RankingItem> items =
                                                     <RankingItem>[];
-                                                Map<String, dynamic> _list =
+                                                Map<dynamic, dynamic> _list =
                                                     (snapshot.value as Map<
-                                                        String, dynamic>);
+                                                        dynamic, dynamic>);
 
                                                 _list.values
                                                     .forEach((dynamic value) {
@@ -386,6 +386,7 @@ class PlayerRankItem extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Expanded(
+                          flex: 1,
                           child: Text(
                             index.toString(),
                             textAlign: TextAlign.center,
@@ -395,48 +396,50 @@ class PlayerRankItem extends StatelessWidget {
                           ),
                         ),
                         Expanded(
-                          flex: 5,
+                          flex: 4,
                           child: Text(
                             rankingItem!.user,
+                            maxLines: 1,
                             textAlign: TextAlign.center,
-                            style: PuzzleTextStyle.headline3.copyWith(
+                            style: PuzzleTextStyle.headline4Soft.copyWith(
                               color: Colors.white,
                             ),
                           ),
                         ),
                         Expanded(
                           flex: 2,
-                          child: Row(
+                          child: Column(
                             children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    rankingItem!.nbTilesMoved.toString(),
+                                    textAlign: TextAlign.center,
+                                    style: PuzzleTextStyle.headline5.copyWith(
+                                      color: Colors.white,
+                                    ),
+                                    overflow: TextOverflow.fade,
+                                  ),
+                                  Text(
+                                    l10n!.puzzleNumberOfMoves,
+                                    textAlign: TextAlign.center,
+                                    style: PuzzleTextStyle.headline5.copyWith(
+                                      color: Colors.white,
+                                    ),
+                                    overflow: TextOverflow.fade,
+                                  ),
+                                ],
+                              ),
                               Text(
-                                rankingItem!.nbTilesMoved.toString(),
+                                _formatDuration(timeDuration),
+                                maxLines: 1,
                                 textAlign: TextAlign.center,
                                 style: PuzzleTextStyle.headline5.copyWith(
                                   color: Colors.white,
                                 ),
                               ),
-                              Align(
-                                alignment: FractionalOffset.center,
-                                child: Text(
-                                  l10n!.puzzleNumberOfMoves,
-                                  textAlign: TextAlign.center,
-                                  style: PuzzleTextStyle.headline5.copyWith(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
                             ],
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Text(
-                            _formatDuration(timeDuration),
-                            maxLines: 1,
-                            textAlign: TextAlign.center,
-                            style: PuzzleTextStyle.headline5.copyWith(
-                              color: Colors.white,
-                            ),
                           ),
                         ),
                       ],

@@ -9,9 +9,14 @@ class RankingsDAO {
       FirebaseDatabase.instance.ref().child('ranking');
 
   ///Save rankToBD
-  void saveMyRank(String user, String difficulty, int nbTilesMoved,
-      double secondsElapsed) async {
-    var playingScore = 1000 - nbTilesMoved - secondsElapsed;
+  void saveMyRank(
+    String user,
+    String difficulty,
+    int nbTilesMoved,
+    int secondsElapsed,
+    int baseScore,
+  ) async {
+    var playingScore = baseScore - nbTilesMoved - secondsElapsed;
     playingScore = (playingScore > 0) ? playingScore : 0;
 
     final rankingItem = RankingItem(user, nbTilesMoved, secondsElapsed,

@@ -14,9 +14,9 @@ class RankingItem {
   RankingItem.fromJson(Map<dynamic, dynamic> json)
       : user = json['user'] as String,
         nbTilesMoved = json['nbTilesMoved'] as int,
-        nbSeconds = json['nbSeconds'] as double,
+        nbSeconds = json['nbSeconds'] as int,
         difficulty = json['difficulty'] as String,
-        score = json['score'] as double,
+        score = json['score'] as int,
         date = DateTime.parse(json['date'] as String);
 
   ///Data to Json
@@ -36,13 +36,13 @@ class RankingItem {
   final int nbTilesMoved;
 
   /// Nb of seconds
-  final double nbSeconds;
+  final int nbSeconds;
 
   /// nb of Date
   final DateTime date;
 
   /// Score of the game
-  final double score;
+  final int score;
 
   /// nb of Date
   final String difficulty;

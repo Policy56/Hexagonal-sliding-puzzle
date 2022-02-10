@@ -159,10 +159,10 @@ class _PuzzleHeader extends StatelessWidget {
         small: (context, child) => Stack(
           children: const [
             SizedBox(),
-            Align(
+            /*Align(
               child: _PuzzleRanking(),
               //_PuzzleLogo(),
-            ),
+            ),*/
           ],
         ),
         medium: (context, child) => Padding(
@@ -210,6 +210,9 @@ class _PuzzleFooter extends StatelessWidget {
               PuzzleSwitchButton(),
             ],
           ),
+          Gap(5),
+          _PuzzleRanking(),
+          Gap(5),
           if (kIsWeb) const AppDownloadButton() else const SizedBox(),
         ],
       ),

@@ -19,6 +19,9 @@ class HexagonalThemeMedium extends PuzzleTheme {
   int get size => 7;
 
   @override
+  int get baseScore => 5000;
+
+  @override
   bool get hasTimer => true;
 
   @override

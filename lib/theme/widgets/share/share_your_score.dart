@@ -101,15 +101,18 @@ class ShareYourScore extends StatelessWidget {
               position: animation.socialButtonsOffset,
               child: Opacity(
                 opacity: animation.socialButtonsOpacity.value,
-                child: Row(
-                  mainAxisAlignment: buttonsMainAxisAlignment,
-                  children: [
-                    const TwitterButton(),
-                    const Gap(16),
-                    const FacebookButton(),
-                    const Gap(16),
-                    SaveScoreButton(),
-                  ],
+                child: Container(
+                  height: 32,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      const TwitterButton(),
+                      const Gap(16),
+                      const FacebookButton(),
+                      const Gap(16),
+                      SaveScoreButton(),
+                    ],
+                  ),
                 ),
               ),
             ),

@@ -67,7 +67,8 @@ class WidgetScore extends StatelessWidget {
             ? PuzzleTextStyle.headline5
             : PuzzleTextStyle.headline4;
 
-        var playingScore = 1000 - state.numberOfMoves - secondsElapsed;
+        var playingScore =
+            theme.baseScore - state.numberOfMoves - secondsElapsed;
         playingScore = playingScore > 0 ? playingScore : 0;
 
         return ClipRRect(

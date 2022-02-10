@@ -165,11 +165,11 @@ class _SaveScoreButtonState extends State<SaveScoreButton> {
                   });
                 } else {
                   rankingsDao.saveMyRank(
-                    usernameController.text,
-                    theme.name.toLowerCase(),
-                    stateBloc.numberOfMoves,
-                    secondsElapsed.toDouble(),
-                  );
+                      usernameController.text,
+                      theme.name.toLowerCase(),
+                      stateBloc.numberOfMoves,
+                      secondsElapsed,
+                      theme.baseScore);
                   setState(() {
                     _send = true;
                   });

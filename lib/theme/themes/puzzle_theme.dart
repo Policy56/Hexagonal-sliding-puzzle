@@ -15,6 +15,9 @@ abstract class PuzzleTheme extends Equatable {
   /// Size of the Puzzle
   int get size;
 
+  /// Base of score
+  int get baseScore;
+
   /// Whether this theme displays the puzzle timer.
   bool get hasTimer;
 
