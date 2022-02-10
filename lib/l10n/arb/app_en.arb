@@ -8,9 +8,17 @@
     "@puzzleNumberOfMoves": {
         "description": "Indicates how many moves have been made on the current puzzle"
     },
+    "puzzleNumberOfMovesShort": "Moves",
+    "@puzzleNumberOfMovesShort": {
+        "description": "puzzleNumberOfMoves in short (FR)"
+    },
     "puzzleNumberOfTilesLeft": "Tiles remaining",
     "@puzzleNumberOfTilesLeft": {
         "description": "Indicates how many puzzle tiles are not in their correct position"
+    },
+    "puzzleCorrectTiles": "Correct tiles",
+    "@puzzleCorrectTiles": {
+        "description": "Indicates the number of correct tiles"
     },
     "successCompleted": "Hexagonal Sliding Puzzle completed",
     "@successCompleted": {

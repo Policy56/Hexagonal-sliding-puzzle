@@ -33,7 +33,7 @@ class _PuzzleSwitchButtonState extends State<PuzzleSwitchButton> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Correct tiles',
+              context.l10n.puzzleCorrectTiles,
               style: PuzzleTextStyle.headline5.copyWith(
                 color: Colors.white, //theme.defaultColor,
               ),

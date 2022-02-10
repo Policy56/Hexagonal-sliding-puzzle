@@ -1,0 +1,113 @@
+{
+    "@@locale": "fr",
+    "puzzleChallengeTitle": "Hexagonal Sliding Puzzle",
+    "@puzzleChallengeTitle": {
+        "description": "Affiche comme titre du puzzle"
+    },
+    "puzzleNumberOfMoves": "Mouvements",
+    "@puzzleNumberOfMoves": {
+        "description": "Indique le nombre de mouvements effectué."
+    },
+    "puzzleNumberOfMovesShort": "Mvts",
+    "@puzzleNumberOfMovesShort": {
+        "description": "puzzleNumberOfMoves en plus court(FR)"
+    },
+    "puzzleNumberOfTilesLeft": "Blocs restants",
+    "@puzzleNumberOfTilesLeft": {
+        "description": "Indiques le nombre de bloc qui ne sont pas à la bonnes position"
+    },
+    "puzzleCorrectTiles": "Blocs bien placés",
+    "@puzzleCorrectTiles": {
+        "description": "Indiques les blocs bien placés"
+    },
+    "successCompleted": "Hexagonal Sliding Puzzle terminé",
+    "@successCompleted": {
+        "description": "Affiché comme titre de jeu complété"
+    },
+    "successWellDone": "Bien joué.\nFélicitations !",
+    "@successWellDone": {
+        "description": "Sous titre quand le puzzle est complété."
+    },
+    "successScore": "Score",
+    "@successScore": {
+        "description": "Affiché comme titre du score"
+    },
+    "successNumberOfMoves": "{numberOfMoves} Mouvements",
+    "@successNumberOfMoves": {
+        "description": "Affiché comme le nombre de mouvements",
+        "placeholders": {
+            "numberOfMoves": {
+                "type": "String",
+                "example": "5"
+            }
+        }
+    },
+    "puzzleDurationLabelText": "{hours} heures {minutes} minutes {seconds} seconds",
+    "@puzzleDurationLabelText": {
+        "description": "Libellé pour le compteur",
+        "placeholders": {
+            "hours": {
+                "type": "String",
+                "example": "2"
+            },
+            "minutes": {
+                "type": "String",
+                "example": "6"
+            },
+            "seconds": {
+                "type": "String",
+                "example": "24"
+            }
+        }
+    },
+    "puzzleSwitchTooltip": "Activer pour afficher les blocs bien placés.",
+    "@puzzleSwitchTooltip": {
+        "description": "Activer pour afficher les blocs bien placés."
+    },
+    "puzzleStart": "Commencer",
+    "@puzzleStart": {
+        "description": "Afficher pour commencer la partie"
+    },
+    "puzzleChangeTooltip": "Changer le theme va réinitialiser votre score.",
+    "@puzzleChangeTooltip": {
+        "description": "Sur le menu, changer le theme va réinitialiser votre score"
+    },
+    "puzzleShuffle": "Mélanger",
+    "@puzzleShuffle": {
+        "description": "Afficher sur le bouton pour mélanger le jeu"
+    },
+    "puzzleCompleted": "Bien joué. Félicitations!",
+    "@puzzleCompleted": {
+        "description": "Affiché a la fin quand la partie est terminé"
+    },
+    "successShareYourScoreTitle": "Partager votre score!",
+    "@successShareYourScoreTitle": {
+        "description": "Affiché a la fin pour partager son score"
+    },
+    "successShareYourScoreMessage": "Partager ce jeu pour challenger vos amis.",
+    "@successShareYourScoreMessage": {
+        "description": "Affiché a la fin pour partager son score"
+    },
+    "successShareText": "Je viens de terminer le #HexagonalSlidingPuzzle en {numberOfMoves} mouvements ! \n  \nJoue ici ↓ \n ",
+    "@successShareText": {
+        "description": "The text to share for this Hexagonal Sliding Puzzle challenge, shown in the Hexagonal success state",
+        "placeholders": {
+            "numberOfMoves": {
+                "type": "String",
+                "example": "5"
+            }
+        }
+    },
+    "rankingMenuMessage": "Classement",
+    "@rankingMenuMessage": {
+        "description": "Affiche les 100 premiers du jeu pour ce niveau."
+    },
+    "rankingMenuToolTip": "Classement mondial du jeu",
+    "@rankingMenuToolTip": {
+        "description": "Affiche les 100 premiers du jeu pour ce niveau."
+    },
+    "noRankingMessage": "Il n'y a pas encore de classement pour cette difficulté. Soit le premier !",
+    "@noRankingMessage": {
+        "description": "Quand il n'y a pas encore de joueurs classé."
+    }
+}

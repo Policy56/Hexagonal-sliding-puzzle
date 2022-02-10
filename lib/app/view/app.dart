@@ -69,7 +69,10 @@ class _AppState extends State<App> {
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
       ],
-      supportedLocales: AppLocalizations.supportedLocales,
+      supportedLocales: [
+        Locale('en', ''), // English, no country code
+        Locale('fr', ''), // French, no country code
+      ],
       home: const PuzzlePage(),
     );
   }

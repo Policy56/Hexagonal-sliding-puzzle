@@ -35,7 +35,7 @@ class TwitterButton extends StatelessWidget {
     return TweetIntent(
       hashtags: ['Hexagonal'],
       text: shareText,
-      via: 'HexagonalSliding',
+      via: 'HexagonalGame',
       url: _shareUrl,
     );
   }

@@ -417,14 +417,16 @@ class PlayerRankItem extends StatelessWidget {
                                     rankingItem!.nbTilesMoved.toString(),
                                     textAlign: TextAlign.center,
                                     style: PuzzleTextStyle.headline5.copyWith(
+                                      overflow: TextOverflow.fade,
                                       color: Colors.white,
                                     ),
                                     overflow: TextOverflow.fade,
                                   ),
                                   Text(
-                                    l10n!.puzzleNumberOfMoves,
+                                    l10n!.puzzleNumberOfMovesShort,
                                     textAlign: TextAlign.center,
                                     style: PuzzleTextStyle.headline5.copyWith(
+                                      overflow: TextOverflow.fade,
                                       color: Colors.white,
                                     ),
                                     overflow: TextOverflow.fade,
