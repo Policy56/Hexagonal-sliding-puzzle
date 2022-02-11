@@ -409,6 +409,8 @@ class PlayerRankItem extends StatelessWidget {
                         Expanded(
                           flex: 2,
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
