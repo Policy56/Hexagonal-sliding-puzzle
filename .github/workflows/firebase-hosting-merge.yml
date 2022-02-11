@@ -21,7 +21,7 @@ jobs:
         run: flutter packages get
 
       - name: Build for Web
-        run: flutter build web --target lib/main.dart --web-renderer html
+        run: flutter build web --target lib/main.dart --web-renderer canvaskit
 
       - name: Deploy
         uses: FirebaseExtended/action-hosting-deploy@v0
