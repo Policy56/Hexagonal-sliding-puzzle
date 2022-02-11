@@ -1,6 +1,6 @@
 name: hexagonal_sliding_puzzle
 description: A Hexagonal Sliding Puzzle for Flutter Challenge.
-version: 1.0.03+3
+version: 1.0.04+4
 publish_to: none
 
 environment:
@@ -23,6 +23,8 @@ dependencies:
   gap: ^2.0.0
   google_fonts: ^2.1.0
   intl: ^0.17.0
+  path_provider: ^2.0.9
+  share_extend: ^2.0.0
   shimmer: ^2.0.0
   twitter_intent: ^1.0.0
   url_launcher: ^6.0.18

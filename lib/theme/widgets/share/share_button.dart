@@ -176,6 +176,7 @@ class _SaveScoreButtonState extends State<SaveScoreButton> {
                 }
               },
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             const Gap(12),
             ClipRRect(
@@ -240,6 +241,31 @@ class _SaveScoreButtonState extends State<SaveScoreButton> {
       color: const Color.fromARGB(255, 53, 215, 4),
       onPressed: () => print("CCL SAVE")
     );*/
+  }
+}
+
+/// {@template shareMyScore_button}
+/// Displays a button that shares the Flutter Puzzle challenge
+/// {@endtemplate}
+class ShareMyScoreImage extends StatelessWidget {
+  /// {@macro shareMyScore_button}
+  ShareMyScoreImage({Key? key, required this.shareImage}) : super(key: key);
+
+  Function shareImage;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
+    final state = context.watch<PuzzleBloc>().state;
+    final l10n = context.l10n;
+
+    return ShareButton(
+        title: l10n.successShareYourScoreTitle,
+        icon: Icon(Icons.share, color: Colors.white),
+        color: theme.defaultColor,
+        onPressed: () async {
+          await shareImage();
+        });
   }
 }
 

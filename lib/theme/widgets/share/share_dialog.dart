@@ -1,11 +1,18 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:hexagonal_sliding_puzzle/colors/colors.dart';
 import 'package:hexagonal_sliding_puzzle/layout/layout.dart';
 import 'package:hexagonal_sliding_puzzle/theme/widgets/share/share_dialog_animated_builder.dart';
 import 'package:hexagonal_sliding_puzzle/theme/widgets/share/share_your_score.dart';
 import 'package:hexagonal_sliding_puzzle/theme/widgets/share/widget_score.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share_extend/share_extend.dart';
 
 /// {@template share_dialog}
 /// Displays a share dialog with a score of the completed puzzle
@@ -24,6 +31,8 @@ class ShareDialog extends StatefulWidget {
 class _ShareDialogState extends State<ShareDialog>
     with TickerProviderStateMixin {
   late final AnimationController _controller;
+
+  GlobalKey _globalKeyCard = new GlobalKey();
 
   @override
   void initState() {
@@ -89,7 +98,10 @@ class _ShareDialogState extends State<ShareDialog>
                                 position: animation.scoreOffset,
                                 child: Opacity(
                                   opacity: animation.scoreOpacity.value,
-                                  child: const WidgetScore(),
+                                  child: RepaintBoundary(
+                                    key: _globalKeyCard,
+                                    child: const WidgetScore(),
+                                  ),
                                 ),
                               ),
                               const ResponsiveGap(
@@ -99,6 +111,7 @@ class _ShareDialogState extends State<ShareDialog>
                               ),
                               ShareYourScore(
                                 animation: animation,
+                                shareImageFunction: _capturePng,
                               ),
                             ],
                           );
@@ -133,5 +146,41 @@ class _ShareDialogState extends State<ShareDialog>
         );
       },
     );
+  }
+
+  Future<Uint8List?> _capturePng() async {
+    try {
+      RenderRepaintBoundary? boundary = _globalKeyCard.currentContext!
+          .findRenderObject() as RenderRepaintBoundary?;
+      ui.Image image = await boundary!.toImage(pixelRatio: 3.0);
+      ByteData? byteData =
+          await image.toByteData(format: ui.ImageByteFormat.png);
+      var pngBytes = byteData!.buffer.asUint8List();
+      var bs64 = base64Encode(pngBytes);
+      // print(pngBytes);
+      //print(bs64);
+      String path = await _writeByteToImageFile(pngBytes);
+      ShareExtend.share(path, "image",
+          sharePanelTitle: "Hexagonal Sliding Puzzle",
+          subject: "Hexagonal Sliding Puzzle");
+
+      setState(() {});
+      return pngBytes;
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<String> _writeByteToImageFile(Uint8List uint8list) async {
+    Directory? dir = Platform.isAndroid
+        ? await getExternalStorageDirectory()
+        : await getApplicationDocumentsDirectory();
+    File imageFile = new File(
+        "${dir!.path}/flutter/${DateTime.now().millisecondsSinceEpoch}.png");
+
+    imageFile.createSync(recursive: true);
+    await imageFile.writeAsBytes(uint8list);
+
+    return imageFile.path;
   }
 }

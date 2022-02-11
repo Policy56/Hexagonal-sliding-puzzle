@@ -34,7 +34,7 @@
     },
     "successNumberOfMoves": "{numberOfMoves} Moves",
     "@successNumberOfMoves": {
-        "description": "Shown as a number of moves in the Hexagonal Sliding game success state",
+        "description": "Shown as a number of moves in the Hexagonal Sliding Puzzle success state",
         "placeholders": {
             "numberOfMoves": {
                 "type": "String",

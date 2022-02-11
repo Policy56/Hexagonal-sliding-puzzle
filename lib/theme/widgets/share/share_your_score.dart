@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:hexagonal_sliding_puzzle/colors/colors.dart';
@@ -15,16 +16,30 @@ class ShareYourScore extends StatelessWidget {
   const ShareYourScore({
     Key? key,
     required this.animation,
+    required this.shareImageFunction,
   }) : super(key: key);
 
   /// The entry animation of this widget.
   final ShareDialogEnterAnimation animation;
+
+  final Function shareImageFunction;
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
     var playerScore = 0;
+
+    List<Widget> shareButton = <Widget>[];
+    if (!kIsWeb) {
+      shareButton.add(Gap(32));
+      shareButton.add(Container(
+        height: 32,
+        child: ShareMyScoreImage(
+          shareImage: shareImageFunction,
+        ),
+      ));
+    }
 
     return ResponsiveLayoutBuilder(
       small: (_, child) => child!,
@@ -101,18 +116,26 @@ class ShareYourScore extends StatelessWidget {
               position: animation.socialButtonsOffset,
               child: Opacity(
                 opacity: animation.socialButtonsOpacity.value,
-                child: Container(
-                  height: 32,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      const TwitterButton(),
-                      const Gap(16),
-                      const FacebookButton(),
-                      const Gap(16),
-                      SaveScoreButton(),
-                    ],
-                  ),
+                child: Column(
+                  children: [
+                    Container(
+                      height: 32,
+                      child: SaveScoreButton(),
+                    ),
+                    shareButton.length > 0 ? shareButton[0] : SizedBox(),
+                    shareButton.length > 1 ? shareButton[1] : SizedBox(),
+                    const Gap(16),
+                    Container(
+                      height: 32,
+                      child: Row(
+                        children: [
+                          Expanded(child: const TwitterButton()),
+                          const Gap(16),
+                          Expanded(child: const FacebookButton()),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
