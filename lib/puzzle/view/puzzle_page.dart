@@ -403,7 +403,7 @@ class _PuzzleBoardState extends State<PuzzleBoard> {
 
     return BlocListener<PuzzleBloc, PuzzleState>(
       listener: (context, state) {
-        if (theme.hasTimer && state.puzzleStatus == PuzzleStatus.incomplete) {
+        if (theme.hasTimer && state.puzzleStatus == PuzzleStatus.complete) {
           context.read<TimerBloc>().add(const TimerStopped());
           _completePuzzleTimer =
               Timer(const Duration(milliseconds: 370), () async {
