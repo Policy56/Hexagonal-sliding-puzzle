@@ -13,6 +13,16 @@ A new way of sliding puzzle built for [Flutter Challenge](https://flutterhack.de
 
 ---
 
+## Link 🎮
+
+The game is multiplatform, play it here :
+
+🌍 Web : [Link](https://hexagonal-sliding-puzzle.web.app/#/)
+🤖 Android : [Link](https://play.google.com/store/apps/details?id=com.policy.hexagonalslidingpuzzle)
+🍎 Ios : [Link](https://apps.apple.com/app/id1609083334)
+
+---
+
 ## Getting Started 🚀
 
 To run the project either use the launch configuration in VSCode/Android Studio or use the following command with last flutter release :
