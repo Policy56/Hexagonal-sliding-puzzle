@@ -3,25 +3,25 @@
 ![Photo Booth Header][logo]
 
 ![coverage][coverage_badge]
-[![style: very good analysis][very_good_analysis_badge]][very_good_analysis_link]
 [![Deploy to Firebase Hosting on merge](https://github.com/Policy56/Hexagonal-sliding-puzzle/actions/workflows/firebase-hosting-merge.yml/badge.svg?branch=master)](https://github.com/Policy56/Hexagonal-sliding-puzzle/actions/workflows/firebase-hosting-merge.yml)
+[![Deploy to AppStore](https://github.com/Policy56/Hexagonal-sliding-puzzle/actions/workflows/flutter_deploy.yaml/badge.svg?branch=master)](https://github.com/Policy56/Hexagonal-sliding-puzzle/actions/workflows/flutter_deploy.yaml)
 [![License: MIT][license_badge]][license_link]
 
-A sliding puzzle built for [Flutter Challenge](https://flutterhack.devpost.com/).
+A new way of sliding puzzle built for [Flutter Challenge](https://flutterhack.devpost.com/).
 
-*Built by [Very Good Ventures][very_good_ventures_link] in partnership with Google.*
-
-*Created using [Very Good CLI][very_good_cli_link].*
+*Built by [Policy56][policy_link], a 25yo mobile developer*
 
 ---
 
 ## Getting Started 🚀
 
-To run the project either use the launch configuration in VSCode/Android Studio or use the following command:
+To run the project either use the launch configuration in VSCode/Android Studio or use the following command with last flutter release :
 
 ```sh
 $ flutter run -d chrome
 ```
+
+If error on build :
 
 ```sh
 $ flutter packages pub run build_runner build
@@ -53,6 +53,8 @@ $ open coverage/index.html
 ## Working with Translations 🌐
 
 This project relies on [flutter_localizations][flutter_localizations_link] and follows the [official internationalization guide for Flutter][internationalization_link].
+
+The app is translate in english and french.
 
 ### Adding Strings
 
@@ -154,8 +156,6 @@ Update the `CFBundleLocalizations` array in the `Info.plist` at `ios/Runner/Info
 [internationalization_link]: https://flutter.dev/docs/development/accessibility-and-localization/internationalization
 [license_badge]: https://img.shields.io/badge/license-MIT-blue.svg
 [license_link]: https://opensource.org/licenses/MIT
-[very_good_analysis_badge]: https://img.shields.io/badge/style-very_good_analysis-B22C89.svg
-[very_good_analysis_link]: https://pub.dev/packages/very_good_analysis
 [very_good_cli_link]: https://github.com/VeryGoodOpenSource/very_good_cli
-[very_good_ventures_link]: https://verygood.ventures/
+[policy_link]: https://www.christophecolineaux.fr/
 [logo]: art/header.png
