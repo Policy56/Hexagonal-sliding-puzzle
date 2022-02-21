@@ -3,6 +3,10 @@
 ![Photo Booth Header][logo]
 
 ![coverage][coverage_badge]
+[![Last Commits](https://img.shields.io/github/last-commit/Policy56/Hexagonal-sliding-puzzle?logo=git&logoColor=white)](https://github.com/Policy56/Hexagonal-sliding-puzzle/commits/master)
+[![Pull Requests](https://img.shields.io/github/issues-pr/Policy56/Hexagonal-sliding-puzzle?logo=github&logoColor=white)](https://github.com/Policy56/Hexagonal-sliding-puzzle/pulls)
+[![Code size](https://img.shields.io/github/languages/code-size/Policy56/Hexagonal-sliding-puzzle?logo=github&logoColor=white)](https://github.com/Policy56/Hexagonal-sliding-puzzle)
+
 [![Deploy to Firebase Hosting on merge](https://github.com/Policy56/Hexagonal-sliding-puzzle/actions/workflows/firebase-hosting-merge.yml/badge.svg?branch=master)](https://github.com/Policy56/Hexagonal-sliding-puzzle/actions/workflows/firebase-hosting-merge.yml)
 [![Deploy to AppStore](https://github.com/Policy56/Hexagonal-sliding-puzzle/actions/workflows/flutter_deploy.yaml/badge.svg?branch=master)](https://github.com/Policy56/Hexagonal-sliding-puzzle/actions/workflows/flutter_deploy.yaml)
 [![License: MIT][license_badge]][license_link]
@@ -18,7 +22,9 @@ A new way of sliding puzzle built for [Flutter Challenge](https://flutterhack.de
 The game is multiplatform, play it here :
 
 🌍 Web : [Link](https://hexagonal-sliding-puzzle.web.app/#/)
+
 🤖 Android : [Link](https://play.google.com/store/apps/details?id=com.policy.hexagonalslidingpuzzle)
+
 🍎 Ios : [Link](https://apps.apple.com/app/id1609083334)
 
 ---
