@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 import 'dart:math';
 
 import 'package:firebase_database/firebase_database.dart';
@@ -170,16 +171,30 @@ class _RankingDialogState extends State<RankingDialog>
 
                                                 List<RankingItem> items =
                                                     <RankingItem>[];
-                                                Map<dynamic, dynamic> _list =
+                                                Map<String, dynamic> _list =
                                                     (snapshot.value as Map<
-                                                        dynamic, dynamic>);
+                                                        String, dynamic>);
 
-                                                _list.values
+                                                var snapList =
+                                                    Map<String, dynamic>.from(
+                                                            snapshot.value
+                                                                as Map<String,
+                                                                    dynamic>)
+                                                        .values
+                                                        .toList()
+                                                      ..sort((dynamic a,
+                                                              dynamic b) =>
+                                                          (b['score'] as int)
+                                                              .compareTo(
+                                                                  (a['score']
+                                                                      as int)));
+
+                                                snapList
                                                     .forEach((dynamic value) {
                                                   //print(value.toString());
                                                   RankingItem tempRankingItem =
                                                       RankingItem.fromJson(value
-                                                          as Map<dynamic,
+                                                          as Map<String,
                                                               dynamic>);
                                                   items.add(tempRankingItem);
                                                   _listWidget.add(
