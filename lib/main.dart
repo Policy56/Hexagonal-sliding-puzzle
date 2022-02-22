@@ -9,8 +9,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hexagonal_sliding_puzzle/app/app.dart';
 import 'package:hexagonal_sliding_puzzle/bootstrap.dart';
-
-import 'firebase_options.dart';
+import 'package:hexagonal_sliding_puzzle/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:hexagonal_sliding_puzzle/cmp/grid/hexagon_clipper.dart';
 import 'package:hexagonal_sliding_puzzle/cmp/grid/hexagon_painter.dart';
 import 'package:hexagonal_sliding_puzzle/cmp/grid/hexagon_path_builder.dart';
+import 'package:hexagonal_sliding_puzzle/cmp/grid/hexagon_type.dart';
 import 'package:hexagonal_sliding_puzzle/puzzle/bloc/puzzle_bloc.dart';
 import 'package:provider/src/provider.dart';
-import 'hexagon_type.dart';
 
+///Class of HexagonWidget
 class HexagonWidget extends StatefulWidget {
-  /// Preferably provide one dimension ([width] or [height]) and the other will be calculated accordingly to hexagon aspect ratio
+  /// Preferably provide one dimension ([width] or [height])
+  /// and the other will be calculated accordingly to hexagon aspect ratio
   ///
   /// [elevation] - Mustn't be negative. Default = 0
   ///
@@ -19,11 +21,13 @@ class HexagonWidget extends StatefulWidget {
   ///
   /// [cornerRadius] - Radius of hexagon corners. Values <= 0 have no effect.
   ///
-  /// [inBounds] - Set to false if you want to overlap hexagon corners outside it's space.
+  /// [inBounds] - Set to false if you want to overlap
+  ///  hexagon corners outside it's space.
   ///
   /// [child] - You content. Keep in mind that it will be clipped.
   ///
-  /// [type] - A type of hexagon has to be either [HexagonType.FLAT] or [HexagonType.POINTY]
+  /// [type] - A type of hexagon has to be either
+  ///  [HexagonType.flat] or [HexagonType.pointy]
   const HexagonWidget({
     Key? key,
     this.width,
@@ -35,11 +39,15 @@ class HexagonWidget extends StatefulWidget {
     this.elevation = 0,
     this.inBounds = true,
     required this.type,
-  })  : assert(width != null || height != null),
-        assert(elevation >= 0),
+  })  : assert(
+          width != null || height != null,
+          'need width != null && height != null',
+        ),
+        assert(elevation >= 0, 'need elevation >=0'),
         super(key: key);
 
-  /// Preferably provide one dimension ([width] or [height]) and the other will be calculated accordingly to hexagon aspect ratio
+  /// Preferably provide one dimension ([width] or [height]) and the
+  ///  other will be calculated accordingly to hexagon aspect ratio
   ///
   /// [elevation] - Mustn't be negative. Default = 0
   ///
@@ -47,9 +55,11 @@ class HexagonWidget extends StatefulWidget {
   ///
   /// [color] - Color used to fill hexagon. Use transparency with 0 elevation
   ///
-  /// [cornerRadius] - Border radius of hexagon corners. Values <= 0 have no effect.
+  /// [cornerRadius] - Border radius of hexagon corners.
+  ///  Values <= 0 have no effect.
   ///
-  /// [inBounds] - Set to false if you want to overlap hexagon corners outside it's space.
+  /// [inBounds] - Set to false if you want to overlap hexagon
+  ///  corners outside it's space.
   ///
   /// [child] - You content. Keep in mind that it will be clipped.
   const HexagonWidget.flat({
@@ -62,12 +72,16 @@ class HexagonWidget extends StatefulWidget {
     this.elevation = 0,
     this.cornerRadius = 0.0,
     this.inBounds = true,
-  })  : assert(width != null || height != null),
-        assert(elevation >= 0),
-        type = HexagonType.FLAT,
+  })  : assert(
+          width != null || height != null,
+          'need width != null && height != null',
+        ),
+        assert(elevation >= 0, 'need elevation >=0'),
+        type = HexagonType.flat,
         super(key: key);
 
-  /// Preferably provide one dimension ([width] or [height]) and the other will be calculated accordingly to hexagon aspect ratio
+  /// Preferably provide one dimension ([width] or [height]) and
+  ///  the other will be calculated accordingly to hexagon aspect ratio
   ///
   /// [elevation] - Mustn't be negative. Default = 0
   ///
@@ -75,9 +89,11 @@ class HexagonWidget extends StatefulWidget {
   ///
   /// [color] - Color used to fill hexagon. Use transparency with 0 elevation
   ///
-  /// [cornerRadius] - Border radius of hexagon corners. Values <= 0 have no effect.
+  /// [cornerRadius] - Border radius of hexagon corners.
+  ///  Values <= 0 have no effect.
   ///
-  /// [inBounds] - Set to false if you want to overlap hexagon corners outside it's space.
+  /// [inBounds] - Set to false if you want to overlap hexagon
+  /// corners outside it's space.
   ///
   /// [child] - You content. Keep in mind that it will be clipped.
   const HexagonWidget.pointy({
@@ -90,19 +106,39 @@ class HexagonWidget extends StatefulWidget {
     this.elevation = 0,
     this.cornerRadius = 0.0,
     this.inBounds = true,
-  })  : assert(width != null || height != null),
-        assert(elevation >= 0),
-        type = HexagonType.POINTY,
+  })  : assert(
+          width != null || height != null,
+          'need width != null && height != null',
+        ),
+        assert(elevation >= 0, 'need elevation >=0'),
+        type = HexagonType.pointy,
         super(key: key);
 
+  ///type of HexagonWidget
   final HexagonType type;
+
+  ///width of HexagonWidget
   final double? width;
+
+  ///height of HexagonWidget
   final double? height;
+
+  ///elevation of HexagonWidget
   final double elevation;
+
+  ///inbounds of HexagonWidget
   final bool inBounds;
+
+  ///child of HexagonWidget
   final Widget? child;
+
+  ///color of HexagonWidget
   final Color? color;
+
+  ///padding of HexagonWidget
   final double padding;
+
+  ///radius corner of HexagonWidget
   final double cornerRadius;
 
   @override
@@ -122,8 +158,8 @@ class _HexagonWidgetState extends State<HexagonWidget>
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(
-          milliseconds:
-              200,), // TODO(CCL):scaleTIle PuzzleThemeAnimationDuration.puzzleTileScale,
+        milliseconds: 200,
+      ),
     );
 
     _scale = Tween<double>(begin: 1, end: 0.9).animate(
@@ -143,12 +179,15 @@ class _HexagonWidgetState extends State<HexagonWidget>
     }
     if (widget.height != null) {
       return Size(
-          (widget.height! * widget.type.ratio) * flatFactor / pointyFactor,
-          widget.height!,);
+        (widget.height! * widget.type.ratio) * flatFactor / pointyFactor,
+        widget.height!,
+      );
     }
     if (widget.width != null) {
-      return Size(widget.width!,
-          (widget.width! / widget.type.ratio) / flatFactor * pointyFactor,);
+      return Size(
+        widget.width!,
+        (widget.width! / widget.type.ratio) / flatFactor * pointyFactor,
+      );
     }
     return Size.zero; //dead path
   }
@@ -161,12 +200,16 @@ class _HexagonWidgetState extends State<HexagonWidget>
       return Size(widget.width!, widget.height!);
     }
     if (widget.height != null) {
-      return Size((widget.height! * widget.type.ratio) / pointyFactor,
-          widget.height! / pointyFactor,);
+      return Size(
+        (widget.height! * widget.type.ratio) / pointyFactor,
+        widget.height! / pointyFactor,
+      );
     }
     if (widget.width != null) {
-      return Size(widget.width! / flatFactor,
-          (widget.width! / widget.type.ratio) / flatFactor,);
+      return Size(
+        widget.width! / flatFactor,
+        (widget.width! / widget.type.ratio) / flatFactor,
+      );
     }
     return Size.zero; //dead path
   }
@@ -182,9 +225,12 @@ class _HexagonWidgetState extends State<HexagonWidget>
 
     final canPress = /*hasStarted && */ puzzleIncomplete;
 
-    final pathBuilder = HexagonPathBuilder(widget.type,
-        inBounds: widget.inBounds, borderRadius: widget.cornerRadius,);
-//TODO(CCL):modif size ici
+    final pathBuilder = HexagonPathBuilder(
+      widget.type,
+      inBounds: widget.inBounds,
+      borderRadius: widget.cornerRadius,
+    );
+
     return AnimatedAlign(
       alignment: Alignment.center,
       duration: const Duration(milliseconds: 500),
@@ -215,14 +261,13 @@ class _HexagonWidgetState extends State<HexagonWidget>
               child: ClipPath(
                 clipper: HexagonClipper(pathBuilder),
                 child: OverflowBox(
-                  maxHeight: contentSize.height *
-                      2, //TODO(CCL): augmentation de la hauteur du overflow
+                  maxHeight: contentSize.height * 2,
                   maxWidth: contentSize.width,
-                  child: Container(
-                    //color: Colors.orange,
-                    child: Align(
-                      child: widget.child,
-                    ),
+                  child: //Container(
+                      //color: Colors.orange,
+                      /*child:*/ Align(
+                    child: widget.child,
+                    //),
                   ),
                 ),
               ),
@@ -234,14 +279,9 @@ class _HexagonWidgetState extends State<HexagonWidget>
   }
 }
 
+/// class of HexagonWidgetBuilder
 class HexagonWidgetBuilder {
-  final Key? key;
-  final double? elevation;
-  final Color? color;
-  final double? padding;
-  final double? cornerRadius;
-  final Widget? child;
-
+  ///ctor
   HexagonWidgetBuilder({
     this.key,
     this.elevation,
@@ -251,6 +291,7 @@ class HexagonWidgetBuilder {
     this.child,
   });
 
+  /// ctor tranparent
   HexagonWidgetBuilder.transparent({
     this.key,
     this.padding,
@@ -259,6 +300,25 @@ class HexagonWidgetBuilder {
   })  : elevation = 0,
         color = Colors.transparent;
 
+  ///key of HexagonWidgetBuilder
+  final Key? key;
+
+  ///elevation of HexagonWidgetBuilder
+  final double? elevation;
+
+  ///color of HexagonWidgetBuilder
+  final Color? color;
+
+  ///padding of HexagonWidgetBuilder
+  final double? padding;
+
+  ///cordner Radius of HexagonWidgetBuilder
+  final double? cornerRadius;
+
+  ///child of HexagonWidgetBuilder
+  final Widget? child;
+
+  ///Builder of HexagonWidget
   HexagonWidget build({
     required HexagonType type,
     required bool inBounds,

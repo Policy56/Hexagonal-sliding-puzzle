@@ -140,8 +140,11 @@ class _RankingDialogState extends State<RankingDialog>
                                       theme.defaultColor,
                                     ),
                                     child: ValuableConsumer(
-                                      builder: (BuildContext context,
-                                          ValuableWatcher watch, _) {
+                                      builder: (
+                                        BuildContext context,
+                                        ValuableWatcher watch,
+                                        _,
+                                      ) {
                                         return StreamBuilder<DatabaseEvent>(
                                           stream: firedatabaseOnValue,
                                           builder: (
@@ -156,7 +159,7 @@ class _RankingDialogState extends State<RankingDialog>
                                                           .value !=
                                                       null &&
                                                   (snapEvent.data!.snapshot
-                                                          .value as Map)
+                                                          .value! as Map)
                                                       .isNotEmpty) {
                                                 final _listWidget = <Widget>[
                                                   const SizedBox(height: 8)
@@ -165,32 +168,30 @@ class _RankingDialogState extends State<RankingDialog>
                                                 final snapshot =
                                                     snapEvent.data!.snapshot;
 
-                                                final items =
-                                                    <RankingItem>[];
-                                                final _list =
-                                                    snapshot.value as Map<
-                                                        String, dynamic>;
-
+                                                final items = <RankingItem>[];
                                                 final snapList =
                                                     Map<String, dynamic>.from(
-                                                            snapshot.value
-                                                                as Map<String,
-                                                                    dynamic>,)
-                                                        .values
-                                                        .toList()
-                                                      ..sort((dynamic a,
-                                                              dynamic b) =>
-                                                          (b['score'] as int)
-                                                              .compareTo(
-                                                                  (a['score']
-                                                                      as int),),);
+                                                  snapshot.value!
+                                                      as Map<String, dynamic>,
+                                                ).values.toList()
+                                                      ..sort(
+                                                        (
+                                                          dynamic a,
+                                                          dynamic b,
+                                                        ) =>
+                                                            (b['score'] as int)
+                                                                .compareTo(
+                                                          (a['score'] as int),
+                                                        ),
+                                                      );
 
                                                 for (final value in snapList) {
                                                   //print(value.toString());
                                                   final tempRankingItem =
-                                                      RankingItem.fromJson(value
-                                                          as Map<String,
-                                                              dynamic>,);
+                                                      RankingItem.fromJson(
+                                                    value
+                                                        as Map<String, dynamic>,
+                                                  );
                                                   items.add(tempRankingItem);
                                                   _listWidget.add(
                                                     _buildListItem(
@@ -205,16 +206,9 @@ class _RankingDialogState extends State<RankingDialog>
                                                 }
 
                                                 _isLoading.setValue(false);
-                                                return ListView(
-                                                  shrinkWrap: true,
-                                                  physics: watch(_isLoading)
-                                                          as bool
-                                                      ? const NeverScrollableScrollPhysics()
-                                                      : const BouncingScrollPhysics(
-                                                          parent:
-                                                              NeverScrollableScrollPhysics(),
-                                                        ),
-                                                  children: _listWidget,
+                                                return _listViewBuilder(
+                                                  pChildren: _listWidget,
+                                                  pWatch: watch,
                                                 );
                                               } else {
                                                 return Text(
@@ -229,16 +223,8 @@ class _RankingDialogState extends State<RankingDialog>
                                                 );
                                               }
                                             } else {
-                                              return ListView(
-                                                shrinkWrap: true,
-                                                physics: watch(_isLoading)
-                                                        as bool
-                                                    ? const NeverScrollableScrollPhysics()
-                                                    : const BouncingScrollPhysics(
-                                                        parent:
-                                                            NeverScrollableScrollPhysics(),
-                                                      ),
-                                                children: [
+                                              return _listViewBuilder(
+                                                pChildren: [
                                                   const SizedBox(height: 8),
                                                   _buildListItem(),
                                                   _buildListItem(),
@@ -249,6 +235,7 @@ class _RankingDialogState extends State<RankingDialog>
                                                   _buildListItem(),
                                                   _buildListItem(),
                                                 ],
+                                                pWatch: watch,
                                               );
                                             }
                                           },
@@ -313,11 +300,27 @@ class _RankingDialogState extends State<RankingDialog>
     );
   }
 
-  Widget _buildListItem(
-      {int? index,
-      RankingItem? rankingItem,
-      Color? backgroundColor,
-      AppLocalizations? l10n}) {
+  ListView _listViewBuilder({
+    required List<Widget> pChildren,
+    required ValuableWatcher pWatch,
+  }) {
+    return ListView(
+      shrinkWrap: true,
+      physics: pWatch(_isLoading) as bool
+          ? const NeverScrollableScrollPhysics()
+          : const BouncingScrollPhysics(
+              parent: NeverScrollableScrollPhysics(),
+            ),
+      children: pChildren,
+    );
+  }
+
+  Widget _buildListItem({
+    int? index,
+    RankingItem? rankingItem,
+    Color? backgroundColor,
+    AppLocalizations? l10n,
+  }) {
     return ValuableConsumer(
       builder: (BuildContext context, ValuableWatcher watch, _) {
         return ShimmerLoading(
@@ -337,6 +340,7 @@ class _RankingDialogState extends State<RankingDialog>
 
 /// Ligne of the User
 class PlayerRankItem extends StatelessWidget {
+  ///Ctor
   const PlayerRankItem({
     Key? key,
     required this.isLoading,
@@ -346,14 +350,19 @@ class PlayerRankItem extends StatelessWidget {
     required this.l10n,
   }) : super(key: key);
 
+  /// isLoadingItem
   final bool isLoading;
 
+  ///RankingItem
   final RankingItem? rankingItem;
 
+  ///Color of background
   final Color? backgroundColor;
 
+  ///index of the item
   final int? index;
 
+  ///Language
   final AppLocalizations? l10n;
 
   @override
@@ -371,7 +380,8 @@ class PlayerRankItem extends StatelessWidget {
 
   Widget _buildLine() {
     final timeDuration = Duration(
-        seconds: (rankingItem != null) ? rankingItem!.nbSeconds.floor() : 0,);
+      seconds: (rankingItem != null) ? rankingItem!.nbSeconds : 0,
+    );
 
     return AspectRatio(
       aspectRatio: 16 / 2,
@@ -470,12 +480,15 @@ class PlayerRankItem extends StatelessWidget {
   }
 }
 
+///Class of Card list item
 class CardListItem extends StatelessWidget {
+  ///ctor
   const CardListItem({
     Key? key,
     required this.isLoading,
   }) : super(key: key);
 
+  ///If card is loading => true else false
   final bool isLoading;
 
   @override

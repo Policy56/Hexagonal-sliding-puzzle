@@ -9,6 +9,7 @@ import 'package:hexagonal_sliding_puzzle/theme/widgets/share/share_button.dart';
 /// Displays the action button to start or shuffle the puzzle
 /// based on the current puzzle state.
 class AppDownloadButton extends StatefulWidget {
+  ///ctor of appDownloadButton
   const AppDownloadButton({Key? key}) : super(key: key);
 
   @override

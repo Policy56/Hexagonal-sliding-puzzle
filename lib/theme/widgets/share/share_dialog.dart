@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
@@ -150,24 +149,26 @@ class _ShareDialogState extends State<ShareDialog>
 
   Future<Uint8List?> _capturePng() async {
     try {
-      final boundary = _globalKeyCard.currentContext!
-          .findRenderObject() as RenderRepaintBoundary?;
+      final boundary = _globalKeyCard.currentContext!.findRenderObject()
+          as RenderRepaintBoundary?;
       final image = await boundary!.toImage(pixelRatio: 3);
-      final byteData =
-          await image.toByteData(format: ui.ImageByteFormat.png);
+      final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
       final pngBytes = byteData!.buffer.asUint8List();
-      final bs64 = base64Encode(pngBytes);
+      //final bs64 = base64Encode(pngBytes);
       // print(pngBytes);
       //print(bs64);
       final path = await _writeByteToImageFile(pngBytes);
-      await ShareExtend.share(path, 'image',
-          sharePanelTitle: 'Hexagonal Sliding Puzzle',
-          subject: 'Hexagonal Sliding Puzzle',);
+      await ShareExtend.share(
+        path,
+        'image',
+        sharePanelTitle: 'Hexagonal Sliding Puzzle',
+        subject: 'Hexagonal Sliding Puzzle',
+      );
 
       setState(() {});
       return pngBytes;
     } catch (e) {
-      print(e);
+      //print(e);
     }
     return null;
   }
@@ -177,9 +178,8 @@ class _ShareDialogState extends State<ShareDialog>
         ? await getExternalStorageDirectory()
         : await getApplicationDocumentsDirectory();
     final imageFile = File(
-        '${dir!.path}/flutter/${DateTime.now().millisecondsSinceEpoch}.png',);
-
-    imageFile.createSync(recursive: true);
+      '${dir!.path}/flutter/${DateTime.now().millisecondsSinceEpoch}.png',
+    )..createSync(recursive: true);
     await imageFile.writeAsBytes(uint8list);
 
     return imageFile.path;

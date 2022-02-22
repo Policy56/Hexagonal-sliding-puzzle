@@ -143,9 +143,7 @@ class SimplePuzzleLayoutDelegate extends PuzzleLayoutDelegate {
                 ),
               ),
             ),
-            const ResponsiveGap(
-              
-            ),
+            const ResponsiveGap(),
           ],
         ),
       ],
@@ -373,7 +371,7 @@ class SimplePuzzleBoard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _buildGrid(context, HexagonType.POINTY);
+    return _buildGrid(context, HexagonType.pointy);
     /*return Stack(
       children: [
         Positioned.fill(child: _buildGrid(context, HexagonType.POINTY))
@@ -405,9 +403,9 @@ class SimplePuzzleBoard extends StatelessWidget {
             returnItem.tile.correctPosition.y == 0 &&
             cpt < tiles.length);
 
-        if (cpt >= tiles.length) {
+        /*if (cpt >= tiles.length) {
           print('2 $cpt');
-        }
+        }*/
 
         if (returnItem.tile.isWhitespace) {
           return HexagonWidgetBuilder(
@@ -499,7 +497,7 @@ class SimplePuzzleTile extends StatelessWidget {
         }),
         foregroundColor: MaterialStateProperty.all(
           PuzzleColors.white,
-        ), //TODO(CCL) change couleur de text + hover
+        ), //CCL change color text + hover
         backgroundColor: MaterialStateProperty.resolveWith<Color?>(
           (states) {
             if (tile.value == state.lastTappedTile?.value) {
@@ -511,10 +509,8 @@ class SimplePuzzleTile extends StatelessWidget {
             } else if (states.contains(MaterialState.hovered)) {
               return theme.hoverColor;
             } else {
-              //Color returnColor;
-
               if (isSwitchHelp && (state.puzzle.isTileCorrect(tile))) {
-                return theme.correctTileColor; //Colors.green;
+                return theme.correctTileColor;
               } else {
                 return theme.defaultColor;
               }
@@ -563,7 +559,7 @@ class SimplePuzzleShuffleButton extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-//State du puzzle
+  ///State du puzzle
   final PuzzleState state;
 
   @override

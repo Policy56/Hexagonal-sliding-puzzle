@@ -122,7 +122,7 @@ void main() {
     });
 
     group('TileTapped', () {
-      const size = 3;
+      //const size = 3;
       final topLeft = Position(x: 1, y: 1);
       final topCenter = Position(x: 2, y: 1);
       final topRight = Position(x: 3, y: 1);

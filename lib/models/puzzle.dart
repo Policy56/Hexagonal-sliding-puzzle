@@ -61,8 +61,6 @@ class Puzzle extends Equatable {
         }
       }
     }
-
-    //TODO(CCL):A faire nb de ok correct
     return numberOfCorrectTiles;
   }
 
@@ -88,12 +86,13 @@ class Puzzle extends Equatable {
 
   /// Determines if the tapped tile can move in the direction of the whitespace
   /// tile.
+  /// more info Here
+  ///https://www.redblobgames.com/grids/hexagons/
   bool isTileMovable(Tile tile) {
     final whitespaceTile = getWhitespaceTile();
     if (tile == whitespaceTile) {
       return false;
     }
-    //TODO(CCL): Detection si bougeable ici
     // A tile must be in the same row or column as the whitespace to move.
     if (whitespaceTile.currentPosition.x == tile.currentPosition.x ||
         whitespaceTile.currentPosition.y == tile.currentPosition.y) {

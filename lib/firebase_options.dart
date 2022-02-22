@@ -15,6 +15,7 @@ import 'package:flutter/foundation.dart'
 /// );
 /// ```
 class DefaultFirebaseOptions {
+  ///Return currentPlatform
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
       return web;
@@ -37,6 +38,7 @@ class DefaultFirebaseOptions {
     );
   }
 
+  ///Options for web platform
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyBU7p-bFdpRbMtWK6i9xWk4PNEItZ7zodk',
     appId: '1:607615760022:web:23c2c9186f8c9af9a274b7',
@@ -49,6 +51,7 @@ class DefaultFirebaseOptions {
     measurementId: 'G-XXV8ZBW9WM',
   );
 
+  ///Options for android platform
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDtqEUg2bA9QQ4jTrRhR_ED28I2fthg5I0',
     appId: '1:607615760022:android:a6f095de6514b842a274b7',
@@ -57,6 +60,7 @@ class DefaultFirebaseOptions {
     storageBucket: 'hexagonal-sliding-puzzle.appspot.com',
   );
 
+  ///Options for iod platform
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyAoMHBwFXvzAXFg8lZT120nTKBbqcaMjOk',
     appId: '1:607615760022:ios:0ad8732ae7458ee8a274b7',

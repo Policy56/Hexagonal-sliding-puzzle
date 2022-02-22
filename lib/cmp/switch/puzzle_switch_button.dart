@@ -9,6 +9,7 @@ import 'package:hexagonal_sliding_puzzle/typography/text_styles.dart';
 /// Displays the action button to start or shuffle the puzzle
 /// based on the current puzzle state.
 class PuzzleSwitchButton extends StatefulWidget {
+  ///ctor
   const PuzzleSwitchButton({Key? key}) : super(key: key);
 
   @override

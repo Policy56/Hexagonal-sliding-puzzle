@@ -22,23 +22,27 @@ class ShareYourScore extends StatelessWidget {
   /// The entry animation of this widget.
   final ShareDialogEnterAnimation animation;
 
+  ///final function to shareimage
   final Function shareImageFunction;
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    const playerScore = 0;
+    // const playerScore = 0;
 
     final shareButton = <Widget>[];
     if (!kIsWeb) {
       shareButton.add(const Gap(32));
-      shareButton.add(SizedBox(
-        height: 32,
-        child: ShareMyScoreImage(
-          shareImage: shareImageFunction,
+      // ignore: cascade_invocations
+      shareButton.add(
+        SizedBox(
+          height: 32,
+          child: ShareMyScoreImage(
+            shareImage: shareImageFunction,
+          ),
         ),
-      ),);
+      );
     }
 
     return ResponsiveLayoutBuilder(
@@ -67,10 +71,10 @@ class ShareYourScore extends StatelessWidget {
             ? double.infinity
             : (currentSize == ResponsiveLayoutSize.medium ? 434.0 : 307.0);
 
-        final buttonsMainAxisAlignment =
+        /*final buttonsMainAxisAlignment =
             currentSize == ResponsiveLayoutSize.large
                 ? MainAxisAlignment.start
-                : MainAxisAlignment.center;
+                : MainAxisAlignment.center;*/
 
         return Column(
           key: const Key('share_your_score'),
@@ -122,8 +126,14 @@ class ShareYourScore extends StatelessWidget {
                       height: 32,
                       child: SaveScoreButton(),
                     ),
-                    if (shareButton.isNotEmpty) shareButton[0] else const SizedBox(),
-                    if (shareButton.length > 1) shareButton[1] else const SizedBox(),
+                    if (shareButton.isNotEmpty)
+                      shareButton[0]
+                    else
+                      const SizedBox(),
+                    if (shareButton.length > 1)
+                      shareButton[1]
+                    else
+                      const SizedBox(),
                     const Gap(16),
                     SizedBox(
                       height: 32,

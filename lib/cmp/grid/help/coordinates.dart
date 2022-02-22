@@ -9,34 +9,44 @@ class Coordinates {
   ///Axial constructor
   Coordinates.axial(int q, int r)
       : x = q,
-        y = (-q - r).toInt(),
+        y = -q - r,
         z = r;
 
+  ///value of coordinates
   final int x, y, z;
 
+  ///getter q of x coord
   int get q => x;
 
+  ///getter r of z coord
   int get r => z;
 
-  ///Distance measured in steps between tiles. A single step is only going over edge of neighbouring tiles.
+  ///Distance measured in steps between tiles. A single step is only going over
+  ///edge of neighbouring tiles.
   int distance(Coordinates other) {
     return max(
-        (x - other.x).abs(), max((y - other.y).abs(), (z - other.z).abs()),);
+      (x - other.x).abs(),
+      max((y - other.y).abs(), (z - other.z).abs()),
+    );
   }
 
+  ///Operator + for Coordinates.cube
   Coordinates operator +(Coordinates other) {
     return Coordinates.cube(x + other.x, y + other.y, z + other.z);
   }
 
+  ///Operator - for Coordinates.cube
   Coordinates operator -(Coordinates other) {
     return Coordinates.cube(x - other.x, y - other.y, z - other.z);
   }
 
   @override
+  // ignore: avoid_equals_and_hash_code_on_mutable_classes
   bool operator ==(Object other) =>
       other is Coordinates && other.x == x && other.y == y && other.z == z;
 
   @override
+  // ignore: avoid_equals_and_hash_code_on_mutable_classes
   int get hashCode => x ^ y ^ z;
 
   ///Constant value of space center
@@ -44,20 +54,4 @@ class Coordinates {
 
   @override
   String toString() => 'Coordinates[cube: ($x, $y, $z), axial: ($q, $r)]';
-}
-
-class HexDirections {
-  static Coordinates pointyRight = Coordinates.axial(1, 0);
-  static Coordinates pointyLeft = Coordinates.axial(-1, 0);
-  static Coordinates pointyTopRight = Coordinates.axial(1, -1);
-  static Coordinates pointyTopLeft = Coordinates.axial(0, -1);
-  static Coordinates pointyDownRight = Coordinates.axial(0, 1);
-  static Coordinates pointyDownLeft = Coordinates.axial(-1, 1);
-
-  static Coordinates flatTop = Coordinates.axial(0, -1);
-  static Coordinates flatDown = Coordinates.axial(0, 1);
-  static Coordinates flatRightTop = Coordinates.axial(1, -1);
-  static Coordinates flatRightDown = Coordinates.axial(1, 0);
-  static Coordinates flatLeftTop = Coordinates.axial(-1, 0);
-  static Coordinates flatLeftDown = Coordinates.axial(-1, 1);
 }

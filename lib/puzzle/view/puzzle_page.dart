@@ -70,7 +70,7 @@ class PuzzleView extends StatelessWidget {
     final size = theme.size;
 
     /// Shuffle only if the current theme is Simple.
-    final shufflePuzzle = theme is SimpleTheme; //TODO(CCL): shuffle ici ?
+    const shufflePuzzle = false; //theme is SimpleTheme;
 
     return Scaffold(
       body: AnimatedContainer(
@@ -113,8 +113,8 @@ class _Puzzle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
-    final state = context.select((PuzzleBloc bloc) => bloc.state);
+    //final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
+    //final state = context.select((PuzzleBloc bloc) => bloc.state);
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -130,7 +130,7 @@ class _Puzzle extends StatelessWidget {
                   children: const [
                     _PuzzleHeader(
                       key: Key('puzzle_header'),
-                    ), // TODO(CCL): Ici ajout du logo Flutter en haut -> Mettre logo auto
+                    ),
                     _PuzzleSections(
                       key: Key('puzzle_sections'),
                     ),
@@ -248,44 +248,11 @@ class _PuzzleFooter extends StatelessWidget {
   }
 }
 
-class _PuzzleLogo extends StatelessWidget {
-  const _PuzzleLogo({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ResponsiveLayoutBuilder(
-      small: (context, child) => const SizedBox(
-        height: 24,
-        child: FlutterLogo(
-          style: FlutterLogoStyle.horizontal,
-          size: 86,
-        ),
-      ),
-      medium: (context, child) => const SizedBox(
-        height: 29,
-        child: FlutterLogo(
-          style: FlutterLogoStyle.horizontal,
-          size: 104,
-        ),
-      ),
-      large: (context, child) => const SizedBox(
-        height: 32,
-        child: FlutterLogo(
-          style: FlutterLogoStyle.horizontal,
-          size: 114,
-        ),
-      ),
-    );
-  }
-}
-
 class _PuzzleRanking extends StatelessWidget {
   const _PuzzleRanking({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final currentTheme = context.select((ThemeBloc bloc) => bloc.state.theme);
-
     return ResponsiveLayoutBuilder(
       small: (_, child) => child!,
       medium: (_, child) => child!,
@@ -305,7 +272,6 @@ class _PuzzleRanking extends StatelessWidget {
                 overlayColor: MaterialStateProperty.all(Colors.transparent),
               ),
               onPressed: () async {
-                //TODO(ccl): ici affichage du ranking
                 await showAppDialog<void>(
                   context: context,
                   child: MultiBlocProvider(
@@ -442,6 +408,7 @@ class _PuzzleBoardState extends State<PuzzleBoard> {
   }
 }
 
+///Class PuzzleTile
 class PuzzleTile extends StatelessWidget {
   ///ctor
   const PuzzleTile({
@@ -585,8 +552,7 @@ class PuzzleMenuItem extends StatelessWidget {
                 context.read<PuzzleBloc>().add(
                       PuzzleInitialized(
                         size: theme.size,
-                        shufflePuzzle: theme
-                            is SimpleTheme, //TODO(CCL) : ici on dis si on shuffle le puzzle
+                        shufflePuzzle: false, //theme  is SimpleTheme,
                       ),
                     );
 

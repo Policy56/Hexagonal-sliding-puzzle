@@ -102,7 +102,6 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
   Puzzle _generateHexagonPuzzle(int size, {bool shuffle = true}) {
     final correctPositions = <Position?>[];
     final currentPositions = <Position?>[];
-    final tempCurrentPositions = <Position?>[];
     final List<Tile> tiles;
     List<Position> listPosition;
 
@@ -256,7 +255,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     if (shuffle) {
       // Randomize only the current tile posistions.
       //S'occuper du shuffle ici + gestion du truc si null ..
-      //TODO:shuffle ici
+      //CCL:shuffle ici
       currentPositions.shuffle(random);
     }
 
@@ -271,9 +270,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       size,
       correctPositions,
       currentPositions,
-    );
-
-    tiles.add(itemWhitespace);
+    )..add(itemWhitespace);
 
     for (var k = 0; k < (depth * depth) + depth; k++) {
       const itemTileVide = Tile(

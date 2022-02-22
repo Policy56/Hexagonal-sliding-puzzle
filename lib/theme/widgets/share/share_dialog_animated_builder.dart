@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:flutter/material.dart';
+import 'package:hexagonal_sliding_puzzle/theme/widgets/share/share_dialog.dart';
 
 /// The animation builder of [ShareDialog].
 class ShareDialogAnimatedBuilder extends StatelessWidget {

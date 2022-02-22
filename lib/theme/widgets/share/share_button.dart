@@ -43,7 +43,7 @@ class TwitterButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = context.watch<PuzzleBloc>().state;
-    final l10n = context.l10n;
+    //final l10n = context.l10n;
     return ShareButton(
       title: 'Twitter',
       icon: Image.asset(
@@ -90,7 +90,7 @@ class FacebookButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = context.watch<PuzzleBloc>().state;
-    final l10n = context.l10n;
+    //final l10n = context.l10n;
 
     return ShareButton(
       title: 'Facebook',
@@ -137,7 +137,7 @@ class _SaveScoreButtonState extends State<SaveScoreButton> {
     final secondsElapsed =
         context.select((TimerBloc bloc) => bloc.state.secondsElapsed);
 
-    final l10n = context.l10n;
+    //final l10n = context.l10n;
 
     return Container(
       height: 56,
@@ -164,12 +164,13 @@ class _SaveScoreButtonState extends State<SaveScoreButton> {
                     _validate = true;
                   });
                 } else {
-                  rankingsDao.saveMyRank(
-                      usernameController.text,
-                      theme.name.toLowerCase(),
-                      stateBloc.numberOfMoves,
-                      secondsElapsed,
-                      theme.baseScore,);
+                  await rankingsDao.saveMyRank(
+                    usernameController.text,
+                    theme.name.toLowerCase(),
+                    stateBloc.numberOfMoves,
+                    secondsElapsed,
+                    theme.baseScore,
+                  );
                   setState(() {
                     _send = true;
                   });
@@ -249,23 +250,26 @@ class _SaveScoreButtonState extends State<SaveScoreButton> {
 /// {@endtemplate}
 class ShareMyScoreImage extends StatelessWidget {
   /// {@macro shareMyScore_button}
-  ShareMyScoreImage({Key? key, required this.shareImage}) : super(key: key);
+  const ShareMyScoreImage({Key? key, required this.shareImage})
+      : super(key: key);
 
-  Function shareImage;
+  ///Function to shareImage
+  final Function shareImage;
 
   @override
   Widget build(BuildContext context) {
     final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
-    final state = context.watch<PuzzleBloc>().state;
+    //final state = context.watch<PuzzleBloc>().state;
     final l10n = context.l10n;
 
     return ShareButton(
-        title: l10n.successShareYourScoreTitle,
-        icon: const Icon(Icons.share, color: Colors.white),
-        color: theme.defaultColor,
-        onPressed: () async {
-          await shareImage();
-        },);
+      title: l10n.successShareYourScoreTitle,
+      icon: const Icon(Icons.share, color: Colors.white),
+      color: theme.defaultColor,
+      onPressed: () async {
+        await shareImage();
+      },
+    );
   }
 }
 
@@ -276,14 +280,14 @@ class ShareMyScoreImage extends StatelessWidget {
 @visibleForTesting
 class ShareButton extends StatefulWidget {
   /// {@macro share_button}
-  const ShareButton(
-      {Key? key,
-      required this.onPressed,
-      required this.title,
-      required this.icon,
-      required this.color,
-      this.colorTitle})
-      : super(key: key);
+  const ShareButton({
+    Key? key,
+    required this.onPressed,
+    required this.title,
+    required this.icon,
+    required this.color,
+    this.colorTitle,
+  }) : super(key: key);
 
   /// Called when the button is tapped or otherwise activated.
   final VoidCallback onPressed;

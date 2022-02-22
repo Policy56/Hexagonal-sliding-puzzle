@@ -1,18 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:hexagonal_sliding_puzzle/theme/widgets/shimmer/shimmer_widget.dart';
 
+///class of shimmer loading of ranking
 class ShimmerLoading extends StatefulWidget {
+  ///ctor
   const ShimmerLoading({
     Key? key,
     required this.isLoading,
     required this.child,
   }) : super(key: key);
 
+  ///true if loading else false
   final bool isLoading;
+
+  ///child to load
   final Widget child;
 
   @override
-  _ShimmerLoadingState createState() => _ShimmerLoadingState();
+  State<ShimmerLoading> createState() => _ShimmerLoadingState();
 }
 
 class _ShimmerLoadingState extends State<ShimmerLoading> {
@@ -60,7 +65,7 @@ class _ShimmerLoadingState extends State<ShimmerLoading> {
     final shimmerSize = shimmer.size;
     final gradient = shimmer.gradient;
     final offsetWithinShimmer = shimmer.getDescendantOffset(
-      descendant: context.findRenderObject() as RenderBox,
+      descendant: context.findRenderObject()! as RenderBox,
     );
 
     return ShaderMask(
