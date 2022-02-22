@@ -153,42 +153,43 @@ class _PuzzleHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 96,
-      child: ResponsiveLayoutBuilder(
-        small: (context, child) => Stack(
-          children: const [
-            SizedBox(),
-            /*Align(
-              child: _PuzzleRanking(),
-              //_PuzzleLogo(),
-            ),*/
-          ],
-        ),
-        medium: (context, child) => Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 20,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return ResponsiveLayoutBuilder(
+      small: (_, child) => child!,
+      medium: (_, child) => child!,
+      large: (_, child) => child!,
+      child: (currentSize) => SizedBox(
+        height: currentSize == ResponsiveLayoutSize.small ? 5.0 : 96.0,
+        child: ResponsiveLayoutBuilder(
+          small: (context, child) => Stack(
             children: const [
-              // _PuzzleLogo(),
-              _PuzzleRanking(),
-              PuzzleMenu(),
+              SizedBox(),
             ],
           ),
-        ),
-        large: (context, child) => Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 50,
+          medium: (context, child) => Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: const [
+                // _PuzzleLogo(),
+                _PuzzleRanking(),
+                PuzzleMenu(),
+              ],
+            ),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              //_PuzzleLogo(),
-              _PuzzleRanking(),
-              PuzzleMenu(),
-            ],
+          large: (context, child) => Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 50,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: const [
+                //_PuzzleLogo(),
+                _PuzzleRanking(),
+                PuzzleMenu(),
+              ],
+            ),
           ),
         ),
       ),

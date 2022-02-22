@@ -125,6 +125,20 @@ class _RankingDialogState extends State<RankingDialog>
                                   ),
                                 ),
                               ),
+                              SlideTransition(
+                                position: animation.scoreOffset,
+                                child: Opacity(
+                                  opacity: animation.scoreOpacity.value,
+                                  child: Text(
+                                    theme.name,
+                                    textAlign: TextAlign.center,
+                                    style:
+                                        PuzzleTextStyle.headline4Soft.copyWith(
+                                      color: theme.menuActiveColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
                               const ResponsiveGap(
                                 small: 10,
                                 medium: 20,
