@@ -16,17 +16,17 @@ class HexagonPathBuilder {
   Path build(Size size) => _hexagonPath(size);
 
   Point<double> _flatHexagonCorner(Offset center, double size, int i) {
-    var angleDeg = 60 * i;
-    var angleRad = pi / 180 * angleDeg;
+    final angleDeg = 60 * i;
+    final angleRad = pi / 180 * angleDeg;
     return Point(
-        center.dx + size * cos(angleRad), center.dy + size * sin(angleRad));
+        center.dx + size * cos(angleRad), center.dy + size * sin(angleRad),);
   }
 
   Point<double> _pointyHexagonCorner(Offset center, double size, int i) {
-    var angleDeg = 60 * i - 30;
-    var angleRad = pi / 180 * angleDeg;
+    final angleDeg = 60 * i - 30;
+    final angleRad = pi / 180 * angleDeg;
     return Point(
-        center.dx + size * cos(angleRad), center.dy + size * sin(angleRad));
+        center.dx + size * cos(angleRad), center.dy + size * sin(angleRad),);
   }
 
   /// Calculates hexagon corners for given size and center.
@@ -47,13 +47,13 @@ class HexagonPathBuilder {
 
   Point<double> _pointBetween(Point<double> start, Point<double> end,
       {double? distance, double? fraction}) {
-    double xLength = end.x - start.x;
-    double yLength = end.y - start.y;
+    final xLength = end.x - start.x;
+    final yLength = end.y - start.y;
     if (fraction == null) {
       if (distance == null) {
         throw Exception('Distance or fraction should be specified.');
       }
-      double length = sqrt(xLength * xLength + yLength * yLength);
+      final length = sqrt(xLength * xLength + yLength * yLength);
       fraction = distance / length;
     }
     return Point(start.x + xLength * fraction, start.y + yLength * fraction);
@@ -61,17 +61,17 @@ class HexagonPathBuilder {
 
   Point<double> _radiusStart(Point<double> corner, int index,
       List<Point<double>> cornerList, double radius) {
-    var prevCorner =
+    final prevCorner =
         index > 0 ? cornerList[index - 1] : cornerList[cornerList.length - 1];
-    double distance = radius * tan(pi / 6);
+    final distance = radius * tan(pi / 6);
     return _pointBetween(corner, prevCorner, distance: distance);
   }
 
   Point<double> _radiusEnd(Point<double> corner, int index,
       List<Point<double>> cornerList, double radius) {
-    var nextCorner =
+    final nextCorner =
         index < cornerList.length - 1 ? cornerList[index + 1] : cornerList[0];
-    double distance = radius * tan(pi / 6);
+    final distance = radius * tan(pi / 6);
     return _pointBetween(corner, nextCorner, distance: distance);
   }
 
@@ -82,10 +82,10 @@ class HexagonPathBuilder {
     List<Point<double>> cornerList;
     if (type == HexagonType.FLAT) {
       cornerList = _flatHexagonCornerList(
-          center, size.width / type.flatFactor(inBounds) / 2);
+          center, size.width / type.flatFactor(inBounds) / 2,);
     } else {
       cornerList = _pointyHexagonCornerList(
-          center, size.height / type.pointyFactor(inBounds) / 2);
+          center, size.height / type.pointyFactor(inBounds) / 2,);
     }
 
     final path = Path();
@@ -101,8 +101,8 @@ class HexagonPathBuilder {
           path.lineTo(rStart.x, rStart.y);
         }
         // rough approximation of an circular arc for 120 deg angle.
-        var control1 = _pointBetween(rStart, point, fraction: 0.7698);
-        var control2 = _pointBetween(rEnd, point, fraction: 0.7698);
+        final control1 = _pointBetween(rStart, point, fraction: 0.7698);
+        final control2 = _pointBetween(rEnd, point, fraction: 0.7698);
         path.cubicTo(
           control1.x,
           control1.y,

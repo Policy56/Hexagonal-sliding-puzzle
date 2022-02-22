@@ -32,7 +32,7 @@ class _ShareDialogState extends State<ShareDialog>
     with TickerProviderStateMixin {
   late final AnimationController _controller;
 
-  GlobalKey _globalKeyCard = new GlobalKey();
+  final GlobalKey _globalKeyCard = GlobalKey();
 
   @override
   void initState() {
@@ -150,33 +150,34 @@ class _ShareDialogState extends State<ShareDialog>
 
   Future<Uint8List?> _capturePng() async {
     try {
-      RenderRepaintBoundary? boundary = _globalKeyCard.currentContext!
+      final boundary = _globalKeyCard.currentContext!
           .findRenderObject() as RenderRepaintBoundary?;
-      ui.Image image = await boundary!.toImage(pixelRatio: 3.0);
-      ByteData? byteData =
+      final image = await boundary!.toImage(pixelRatio: 3);
+      final byteData =
           await image.toByteData(format: ui.ImageByteFormat.png);
-      var pngBytes = byteData!.buffer.asUint8List();
-      var bs64 = base64Encode(pngBytes);
+      final pngBytes = byteData!.buffer.asUint8List();
+      final bs64 = base64Encode(pngBytes);
       // print(pngBytes);
       //print(bs64);
-      String path = await _writeByteToImageFile(pngBytes);
-      ShareExtend.share(path, "image",
-          sharePanelTitle: "Hexagonal Sliding Puzzle",
-          subject: "Hexagonal Sliding Puzzle");
+      final path = await _writeByteToImageFile(pngBytes);
+      await ShareExtend.share(path, 'image',
+          sharePanelTitle: 'Hexagonal Sliding Puzzle',
+          subject: 'Hexagonal Sliding Puzzle',);
 
       setState(() {});
       return pngBytes;
     } catch (e) {
       print(e);
     }
+    return null;
   }
 
   Future<String> _writeByteToImageFile(Uint8List uint8list) async {
-    Directory? dir = Platform.isAndroid
+    final dir = Platform.isAndroid
         ? await getExternalStorageDirectory()
         : await getApplicationDocumentsDirectory();
-    File imageFile = new File(
-        "${dir!.path}/flutter/${DateTime.now().millisecondsSinceEpoch}.png");
+    final imageFile = File(
+        '${dir!.path}/flutter/${DateTime.now().millisecondsSinceEpoch}.png',);
 
     imageFile.createSync(recursive: true);
     await imageFile.writeAsBytes(uint8list);

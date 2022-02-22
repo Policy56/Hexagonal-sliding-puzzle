@@ -4,8 +4,8 @@ import 'dart:math';
 enum HexagonType { FLAT, POINTY }
 
 extension HexagonTypeExtension on HexagonType {
-  static double _ratioPointy = (sqrt(3) / 2);
-  static double _ratioFlat = 1 / _ratioPointy;
+  static final double _ratioPointy = sqrt(3) / 2;
+  static final double _ratioFlat = 1 / _ratioPointy;
 
   /// Hexagon width to height ratio
   double get ratio {

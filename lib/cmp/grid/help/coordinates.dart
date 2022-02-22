@@ -8,9 +8,9 @@ class Coordinates {
 
   ///Axial constructor
   Coordinates.axial(int q, int r)
-      : this.x = q,
-        this.y = (-q - r).toInt(),
-        this.z = r;
+      : x = q,
+        y = (-q - r).toInt(),
+        z = r;
 
   final int x, y, z;
 
@@ -21,7 +21,7 @@ class Coordinates {
   ///Distance measured in steps between tiles. A single step is only going over edge of neighbouring tiles.
   int distance(Coordinates other) {
     return max(
-        (x - other.x).abs(), max((y - other.y).abs(), (z - other.z).abs()));
+        (x - other.x).abs(), max((y - other.y).abs(), (z - other.z).abs()),);
   }
 
   Coordinates operator +(Coordinates other) {

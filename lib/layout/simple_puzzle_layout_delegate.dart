@@ -5,7 +5,6 @@ import 'package:hexagonal_sliding_puzzle/cmp/grid/help/coordinates.dart';
 import 'package:hexagonal_sliding_puzzle/cmp/grid/hexagon_grid.dart';
 import 'package:hexagonal_sliding_puzzle/cmp/grid/hexagon_type.dart';
 import 'package:hexagonal_sliding_puzzle/cmp/grid/hexagon_widget.dart';
-import 'package:hexagonal_sliding_puzzle/cmp/switch/puzzle_switch_button.dart';
 import 'package:hexagonal_sliding_puzzle/cmp/switch/switch_bloc.dart';
 import 'package:hexagonal_sliding_puzzle/colors/colors.dart';
 import 'package:hexagonal_sliding_puzzle/l10n/l10n.dart';
@@ -145,7 +144,7 @@ class SimplePuzzleLayoutDelegate extends PuzzleLayoutDelegate {
               ),
             ),
             const ResponsiveGap(
-              large: 0,
+              
             ),
           ],
         ),
@@ -393,7 +392,7 @@ class SimplePuzzleBoard extends StatelessWidget {
 
   Widget _buildGrid(BuildContext context, HexagonType type) {
     var cpt = 0;
-    var depth = ((size - 1) / 2).round();
+    final depth = ((size - 1) / 2).round();
     return HexagonGrid(
       hexType: type,
       depth: depth,
@@ -407,7 +406,7 @@ class SimplePuzzleBoard extends StatelessWidget {
             cpt < tiles.length);
 
         if (cpt >= tiles.length) {
-          print("2 $cpt");
+          print('2 $cpt');
         }
 
         if (returnItem.tile.isWhitespace) {

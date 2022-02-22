@@ -5,7 +5,6 @@ import 'dart:math';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:hexagonal_sliding_puzzle/cmp/grid/help/coordinates.dart';
 import 'package:hexagonal_sliding_puzzle/models/models.dart';
 
 part 'puzzle_event.dart';
@@ -46,7 +45,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
         final puzzle = mutablePuzzle.moveTiles(tappedTile, []);
 
         if (puzzle.isComplete()) {
-          FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+          final analytics = FirebaseAnalytics.instance;
           // ignore: cascade_invocations
           analytics.logEvent(
             name: 'level_complete',
@@ -101,13 +100,13 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
 
   /// Build a randomized, solvable puzzle of the given size.
   Puzzle _generateHexagonPuzzle(int size, {bool shuffle = true}) {
-    final List<Position?> correctPositions = <Position?>[];
-    final List<Position?> currentPositions = <Position?>[];
-    final List<Position?> tempCurrentPositions = <Position?>[];
+    final correctPositions = <Position?>[];
+    final currentPositions = <Position?>[];
+    final tempCurrentPositions = <Position?>[];
     final List<Tile> tiles;
     List<Position> listPosition;
 
-    int depth = ((size - 1) / 2).round();
+    final depth = ((size - 1) / 2).round();
 
     if (depth == 3) {
       //Medium
@@ -249,7 +248,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     }
 
     for (var x = 0; x < listPosition.length; x++) {
-      Position positions = listPosition[x];
+      final positions = listPosition[x];
       correctPositions.add(positions);
       currentPositions.add(positions);
     }
@@ -261,7 +260,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       currentPositions.shuffle(random);
     }
 
-    var itemWhitespace = Tile(
+    final itemWhitespace = Tile(
       value: 100, //(listPosition.length / 2).round(), // 9(2/3)/18(3/5)/30(4/7)
       correctPosition: Position(x: depth, y: depth),
       currentPosition: Position(x: depth, y: depth), //CCL
@@ -296,7 +295,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     List<Position?> currentPositions,
   ) {
     //final whitespacePosition = Position(x: 3, y: 3);
-    var list = [
+    final list = [
       for (int i = 0; i < correctPositions.length; i++)
         if (correctPositions[i] != null && currentPositions[i] != null)
           Tile(

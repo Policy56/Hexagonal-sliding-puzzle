@@ -1,7 +1,5 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:hexagonal_sliding_puzzle/colors/colors.dart';
 import 'package:hexagonal_sliding_puzzle/layout/layout.dart';
 import 'package:hexagonal_sliding_puzzle/theme/themes/themes.dart';
 
@@ -78,19 +76,19 @@ class HexagonalThemeMedium extends PuzzleTheme {
 // ........................................................
 Color darker(Color c, [int percent = 10]) {
   assert(1 <= percent && percent <= 100);
-  var f = 1 - percent / 100;
+  final f = 1 - percent / 100;
   return Color.fromARGB(c.alpha, (c.red * f).round(), (c.green * f).round(),
-      (c.blue * f).round());
+      (c.blue * f).round(),);
 }
 
 /// Lighten a color by [percent] amount (100 = white)
 // ........................................................
 Color lighter(Color c, [int percent = 10]) {
   assert(1 <= percent && percent <= 100);
-  var p = percent / 100;
+  final p = percent / 100;
   return Color.fromARGB(
       c.alpha,
       c.red + ((255 - c.red) * p).round(),
       c.green + ((255 - c.green) * p).round(),
-      c.blue + ((255 - c.blue) * p).round());
+      c.blue + ((255 - c.blue) * p).round(),);
 }

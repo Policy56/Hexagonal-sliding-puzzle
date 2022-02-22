@@ -1,10 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:bloc_test/bloc_test.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:hexagonal_sliding_puzzle/theme/theme.dart';
 
-import '../../helpers/helpers.dart';
 /*
 void main() {
   group('ThemeBloc', () {

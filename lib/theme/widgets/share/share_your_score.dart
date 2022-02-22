@@ -28,17 +28,17 @@ class ShareYourScore extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    var playerScore = 0;
+    const playerScore = 0;
 
-    List<Widget> shareButton = <Widget>[];
+    final shareButton = <Widget>[];
     if (!kIsWeb) {
-      shareButton.add(Gap(32));
-      shareButton.add(Container(
+      shareButton.add(const Gap(32));
+      shareButton.add(SizedBox(
         height: 32,
         child: ShareMyScoreImage(
           shareImage: shareImageFunction,
         ),
-      ));
+      ),);
     }
 
     return ResponsiveLayoutBuilder(
@@ -118,20 +118,20 @@ class ShareYourScore extends StatelessWidget {
                 opacity: animation.socialButtonsOpacity.value,
                 child: Column(
                   children: [
-                    Container(
+                    const SizedBox(
                       height: 32,
                       child: SaveScoreButton(),
                     ),
-                    shareButton.length > 0 ? shareButton[0] : SizedBox(),
-                    shareButton.length > 1 ? shareButton[1] : SizedBox(),
+                    if (shareButton.isNotEmpty) shareButton[0] else const SizedBox(),
+                    if (shareButton.length > 1) shareButton[1] else const SizedBox(),
                     const Gap(16),
-                    Container(
+                    SizedBox(
                       height: 32,
                       child: Row(
-                        children: [
-                          Expanded(child: const TwitterButton()),
-                          const Gap(16),
-                          Expanded(child: const FacebookButton()),
+                        children: const [
+                          Expanded(child: TwitterButton()),
+                          Gap(16),
+                          Expanded(child: FacebookButton()),
                         ],
                       ),
                     ),

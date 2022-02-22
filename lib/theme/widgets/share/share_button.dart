@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:hexagonal_sliding_puzzle/l10n/l10n.dart';
 import 'package:hexagonal_sliding_puzzle/layout/links_helper.dart';
 import 'package:hexagonal_sliding_puzzle/models/rankings_dao.dart';
@@ -115,7 +115,7 @@ class FacebookButton extends StatelessWidget {
 /// {@endtemplate}
 class SaveScoreButton extends StatefulWidget {
   /// {@macro save_my_score_button}
-  SaveScoreButton({Key? key}) : super(key: key);
+  const SaveScoreButton({Key? key}) : super(key: key);
 
   @override
   State<SaveScoreButton> createState() => _SaveScoreButtonState();
@@ -143,7 +143,7 @@ class _SaveScoreButtonState extends State<SaveScoreButton> {
       height: 56,
       decoration: BoxDecoration(
         border: Border.all(color: const Color.fromARGB(255, 53, 215, 4)),
-        color: _send ? Color.fromARGB(121, 131, 131, 131) : null,
+        color: _send ? const Color.fromARGB(121, 131, 131, 131) : null,
         borderRadius: BorderRadius.circular(32),
       ),
       child: TextButton(
@@ -169,7 +169,7 @@ class _SaveScoreButtonState extends State<SaveScoreButton> {
                       theme.name.toLowerCase(),
                       stateBloc.numberOfMoves,
                       secondsElapsed,
-                      theme.baseScore);
+                      theme.baseScore,);
                   setState(() {
                     _send = true;
                   });
@@ -194,7 +194,7 @@ class _SaveScoreButtonState extends State<SaveScoreButton> {
             ),
             const Gap(10),
             /**/
-            Container(
+            SizedBox(
               height: 32,
               width: 120,
               child: TextFormField(
@@ -216,15 +216,15 @@ class _SaveScoreButtonState extends State<SaveScoreButton> {
                   disabledBorder: InputBorder.none,
 
                   contentPadding:
-                      EdgeInsets.only(left: 15, bottom: 15, right: 15),
-                  counterText: "",
+                      const EdgeInsets.only(left: 15, bottom: 15, right: 15),
+                  counterText: '',
                   fillColor: Colors.red,
                 ),
               ),
             ),
             const Gap(24),
             Text(
-              "Save",
+              'Save',
               style: PuzzleTextStyle.headline5.copyWith(
                 color: const Color.fromARGB(255, 53, 215, 4),
               ),
@@ -261,11 +261,11 @@ class ShareMyScoreImage extends StatelessWidget {
 
     return ShareButton(
         title: l10n.successShareYourScoreTitle,
-        icon: Icon(Icons.share, color: Colors.white),
+        icon: const Icon(Icons.share, color: Colors.white),
         color: theme.defaultColor,
         onPressed: () async {
           await shareImage();
-        });
+        },);
   }
 }
 

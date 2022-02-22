@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'ranking.dart';
@@ -20,7 +19,7 @@ class RankingsDAO {
     playingScore = (playingScore > 0) ? playingScore : 0;
 
     final rankingItem = RankingItem(user, nbTilesMoved, secondsElapsed,
-        playingScore, difficulty, DateTime.now());
+        playingScore, difficulty, DateTime.now(),);
 
     //final once = await _rankingsRef.once();
 

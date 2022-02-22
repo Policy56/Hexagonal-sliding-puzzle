@@ -1,10 +1,10 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:mocktail/mocktail.dart';
 import 'package:hexagonal_sliding_puzzle/layout/layout.dart';
 import 'package:hexagonal_sliding_puzzle/models/models.dart';
 import 'package:hexagonal_sliding_puzzle/puzzle/puzzle.dart';
 import 'package:hexagonal_sliding_puzzle/theme/theme.dart';
 import 'package:hexagonal_sliding_puzzle/timer/timer.dart';
+import 'package:mocktail/mocktail.dart';
 
 class MockPuzzleTheme extends Mock implements PuzzleTheme {}
 

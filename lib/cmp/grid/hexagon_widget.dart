@@ -1,7 +1,6 @@
 library hexagon;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:hexagonal_sliding_puzzle/cmp/grid/hexagon_clipper.dart';
 import 'package:hexagonal_sliding_puzzle/cmp/grid/hexagon_painter.dart';
 import 'package:hexagonal_sliding_puzzle/cmp/grid/hexagon_path_builder.dart';
@@ -53,7 +52,7 @@ class HexagonWidget extends StatefulWidget {
   /// [inBounds] - Set to false if you want to overlap hexagon corners outside it's space.
   ///
   /// [child] - You content. Keep in mind that it will be clipped.
-  HexagonWidget.flat({
+  const HexagonWidget.flat({
     Key? key,
     this.width,
     this.height,
@@ -65,7 +64,7 @@ class HexagonWidget extends StatefulWidget {
     this.inBounds = true,
   })  : assert(width != null || height != null),
         assert(elevation >= 0),
-        this.type = HexagonType.FLAT,
+        type = HexagonType.FLAT,
         super(key: key);
 
   /// Preferably provide one dimension ([width] or [height]) and the other will be calculated accordingly to hexagon aspect ratio
@@ -81,7 +80,7 @@ class HexagonWidget extends StatefulWidget {
   /// [inBounds] - Set to false if you want to overlap hexagon corners outside it's space.
   ///
   /// [child] - You content. Keep in mind that it will be clipped.
-  HexagonWidget.pointy({
+  const HexagonWidget.pointy({
     Key? key,
     this.width,
     this.height,
@@ -93,7 +92,7 @@ class HexagonWidget extends StatefulWidget {
     this.inBounds = true,
   })  : assert(width != null || height != null),
         assert(elevation >= 0),
-        this.type = HexagonType.POINTY,
+        type = HexagonType.POINTY,
         super(key: key);
 
   final HexagonType type;
@@ -124,7 +123,7 @@ class _HexagonWidgetState extends State<HexagonWidget>
       vsync: this,
       duration: const Duration(
           milliseconds:
-              200), // TODO(CCL):scaleTIle PuzzleThemeAnimationDuration.puzzleTileScale,
+              200,), // TODO(CCL):scaleTIle PuzzleThemeAnimationDuration.puzzleTileScale,
     );
 
     _scale = Tween<double>(begin: 1, end: 0.9).animate(
@@ -136,40 +135,46 @@ class _HexagonWidgetState extends State<HexagonWidget>
   }
 
   Size _innerSize() {
-    var flatFactor = widget.type.flatFactor(widget.inBounds);
-    var pointyFactor = widget.type.pointyFactor(widget.inBounds);
+    final flatFactor = widget.type.flatFactor(widget.inBounds);
+    final pointyFactor = widget.type.pointyFactor(widget.inBounds);
 
-    if (widget.height != null && widget.width != null)
+    if (widget.height != null && widget.width != null) {
       return Size(widget.width!, widget.height!);
-    if (widget.height != null)
+    }
+    if (widget.height != null) {
       return Size(
           (widget.height! * widget.type.ratio) * flatFactor / pointyFactor,
-          widget.height!);
-    if (widget.width != null)
+          widget.height!,);
+    }
+    if (widget.width != null) {
       return Size(widget.width!,
-          (widget.width! / widget.type.ratio) / flatFactor * pointyFactor);
+          (widget.width! / widget.type.ratio) / flatFactor * pointyFactor,);
+    }
     return Size.zero; //dead path
   }
 
   Size _contentSize() {
-    var flatFactor = widget.type.flatFactor(widget.inBounds);
-    var pointyFactor = widget.type.pointyFactor(widget.inBounds);
+    final flatFactor = widget.type.flatFactor(widget.inBounds);
+    final pointyFactor = widget.type.pointyFactor(widget.inBounds);
 
-    if (widget.height != null && widget.width != null)
+    if (widget.height != null && widget.width != null) {
       return Size(widget.width!, widget.height!);
-    if (widget.height != null)
+    }
+    if (widget.height != null) {
       return Size((widget.height! * widget.type.ratio) / pointyFactor,
-          widget.height! / pointyFactor);
-    if (widget.width != null)
+          widget.height! / pointyFactor,);
+    }
+    if (widget.width != null) {
       return Size(widget.width! / flatFactor,
-          (widget.width! / widget.type.ratio) / flatFactor);
+          (widget.width! / widget.type.ratio) / flatFactor,);
+    }
     return Size.zero; //dead path
   }
 
   @override
   Widget build(BuildContext context) {
-    var innerSize = _innerSize();
-    var contentSize = _contentSize();
+    final innerSize = _innerSize();
+    final contentSize = _contentSize();
 
     final puzzleIncomplete =
         context.select((PuzzleBloc bloc) => bloc.state.puzzleStatus) ==
@@ -177,8 +182,8 @@ class _HexagonWidgetState extends State<HexagonWidget>
 
     final canPress = /*hasStarted && */ puzzleIncomplete;
 
-    HexagonPathBuilder pathBuilder = HexagonPathBuilder(widget.type,
-        inBounds: widget.inBounds, borderRadius: widget.cornerRadius);
+    final pathBuilder = HexagonPathBuilder(widget.type,
+        inBounds: widget.inBounds, borderRadius: widget.cornerRadius,);
 //TODO(CCL):modif size ici
     return AnimatedAlign(
       alignment: Alignment.center,
@@ -210,14 +215,12 @@ class _HexagonWidgetState extends State<HexagonWidget>
               child: ClipPath(
                 clipper: HexagonClipper(pathBuilder),
                 child: OverflowBox(
-                  alignment: Alignment.center,
                   maxHeight: contentSize.height *
                       2, //TODO(CCL): augmentation de la hauteur du overflow
                   maxWidth: contentSize.width,
                   child: Container(
                     //color: Colors.orange,
                     child: Align(
-                      alignment: Alignment.center,
                       child: widget.child,
                     ),
                   ),
@@ -253,8 +256,8 @@ class HexagonWidgetBuilder {
     this.padding,
     this.cornerRadius,
     this.child,
-  })  : this.elevation = 0,
-        this.color = Colors.transparent;
+  })  : elevation = 0,
+        color = Colors.transparent;
 
   HexagonWidget build({
     required HexagonType type,
@@ -270,11 +273,11 @@ class HexagonWidgetBuilder {
       inBounds: inBounds,
       width: width,
       height: height,
-      child: replaceChild ? child : this.child,
       color: color,
       padding: padding ?? 0.0,
       cornerRadius: cornerRadius ?? 0.0,
       elevation: elevation ?? 0,
+      child: replaceChild ? child : this.child,
     );
   }
 }

@@ -1,11 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexagonal_sliding_puzzle/cmp/switch/switch_bloc.dart';
+import 'package:hexagonal_sliding_puzzle/l10n/l10n.dart';
 import 'package:hexagonal_sliding_puzzle/puzzle/bloc/puzzle_bloc.dart';
 import 'package:hexagonal_sliding_puzzle/theme/theme.dart';
-import 'package:hexagonal_sliding_puzzle/l10n/l10n.dart';
 import 'package:hexagonal_sliding_puzzle/typography/text_styles.dart';
 
 /// Displays the action button to start or shuffle the puzzle

@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:collection';
-import 'dart:math';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -10,12 +8,10 @@ import 'package:hexagonal_sliding_puzzle/l10n/l10n.dart';
 import 'package:hexagonal_sliding_puzzle/layout/layout.dart';
 import 'package:hexagonal_sliding_puzzle/models/ranking.dart';
 import 'package:hexagonal_sliding_puzzle/models/rankings_dao.dart';
-import 'package:hexagonal_sliding_puzzle/puzzle/bloc/puzzle_bloc.dart';
 import 'package:hexagonal_sliding_puzzle/theme/bloc/theme_bloc.dart';
 import 'package:hexagonal_sliding_puzzle/theme/widgets/share/share_dialog_animated_builder.dart';
 import 'package:hexagonal_sliding_puzzle/theme/widgets/shimmer/shimmer_loading.dart';
 import 'package:hexagonal_sliding_puzzle/theme/widgets/shimmer/shimmer_widget.dart';
-import 'package:hexagonal_sliding_puzzle/timer/bloc/timer_bloc.dart';
 import 'package:hexagonal_sliding_puzzle/typography/text_styles.dart';
 import 'package:valuable/valuable.dart';
 
@@ -91,7 +87,7 @@ class _RankingDialogState extends State<RankingDialog>
             ? CrossAxisAlignment.start
             : CrossAxisAlignment.center;
 
-        var firedatabaseOnValue = widget.rankingsDao
+        final firedatabaseOnValue = widget.rankingsDao
             .getRefOfInstance()
             .child(theme.name.toLowerCase())
             .orderByChild('score')
@@ -162,24 +158,24 @@ class _RankingDialogState extends State<RankingDialog>
                                                   (snapEvent.data!.snapshot
                                                           .value as Map)
                                                       .isNotEmpty) {
-                                                List<Widget> _listWidget = [
+                                                final _listWidget = <Widget>[
                                                   const SizedBox(height: 8)
                                                 ];
                                                 //taking the data snapshot.
                                                 final snapshot =
                                                     snapEvent.data!.snapshot;
 
-                                                List<RankingItem> items =
+                                                final items =
                                                     <RankingItem>[];
-                                                Map<String, dynamic> _list =
-                                                    (snapshot.value as Map<
-                                                        String, dynamic>);
+                                                final _list =
+                                                    snapshot.value as Map<
+                                                        String, dynamic>;
 
-                                                var snapList =
+                                                final snapList =
                                                     Map<String, dynamic>.from(
                                                             snapshot.value
                                                                 as Map<String,
-                                                                    dynamic>)
+                                                                    dynamic>,)
                                                         .values
                                                         .toList()
                                                       ..sort((dynamic a,
@@ -187,15 +183,14 @@ class _RankingDialogState extends State<RankingDialog>
                                                           (b['score'] as int)
                                                               .compareTo(
                                                                   (a['score']
-                                                                      as int)));
+                                                                      as int),),);
 
-                                                snapList
-                                                    .forEach((dynamic value) {
+                                                for (final value in snapList) {
                                                   //print(value.toString());
-                                                  RankingItem tempRankingItem =
+                                                  final tempRankingItem =
                                                       RankingItem.fromJson(value
                                                           as Map<String,
-                                                              dynamic>);
+                                                              dynamic>,);
                                                   items.add(tempRankingItem);
                                                   _listWidget.add(
                                                     _buildListItem(
@@ -207,7 +202,7 @@ class _RankingDialogState extends State<RankingDialog>
                                                       l10n: context.l10n,
                                                     ),
                                                   );
-                                                });
+                                                }
 
                                                 _isLoading.setValue(false);
                                                 return ListView(
@@ -313,9 +308,8 @@ class _RankingDialogState extends State<RankingDialog>
         0.3,
         0.4,
       ],
-      begin: const Alignment(-1.0, -0.3),
-      end: const Alignment(1.0, 0.3),
-      tileMode: TileMode.clamp,
+      begin: const Alignment(-1, -0.3),
+      end: const Alignment(1, 0.3),
     );
   }
 
@@ -376,8 +370,8 @@ class PlayerRankItem extends StatelessWidget {
   }
 
   Widget _buildLine() {
-    var timeDuration = Duration(
-        seconds: (rankingItem != null) ? rankingItem!.nbSeconds.floor() : 0);
+    final timeDuration = Duration(
+        seconds: (rankingItem != null) ? rankingItem!.nbSeconds.floor() : 0,);
 
     return AspectRatio(
       aspectRatio: 16 / 2,
@@ -401,7 +395,6 @@ class PlayerRankItem extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Expanded(
-                          flex: 1,
                           child: Text(
                             index.toString(),
                             textAlign: TextAlign.center,
@@ -424,7 +417,6 @@ class PlayerRankItem extends StatelessWidget {
                         Expanded(
                           flex: 2,
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Row(
@@ -547,8 +539,8 @@ class CardListItem extends StatelessWidget {
         ],
       );
     } else {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      return const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 8),
         child: Text(
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do '
           'eiusmod tempor incididunt ut labore et dolore magna aliqua.',

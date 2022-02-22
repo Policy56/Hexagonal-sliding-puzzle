@@ -19,11 +19,12 @@ class HexagonPainter extends CustomPainter {
     _paint.isAntiAlias = true;
     _paint.style = PaintingStyle.fill;
 
-    Path path = pathBuilder.build(size);
+    final path = pathBuilder.build(size);
     _path = path;
 
-    if ((elevation) > 0)
+    if (elevation > 0) {
       canvas.drawShadow(path, Colors.black, elevation, false);
+    }
     canvas.drawPath(path, _paint);
   }
 
