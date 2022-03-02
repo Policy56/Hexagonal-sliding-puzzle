@@ -66,6 +66,10 @@ jobs:
         with:
           fileName: release.keystore
           encodedString: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          
+      - name: Displaying debug.keystore file
+        shell: pwsh
+        run: keytool -list -v -keystore ${{ steps.android_keystore.outputs.filePath }} -alias ${{ secrets.ANDROID_KEY_ALIAS }} -storepass ${{ secrets.ANDROID_KEYSTORE_PASSWORD }} -keypass ${{ secrets.ANDROID_KEY_PASSWORD }}
 
       - name: Create key.properties
         run: |
@@ -110,11 +114,11 @@ jobs:
         run: |
           bundle exec fastlane run validate_play_store_json_key json_key:${{ steps.google_cloud_keystore.outputs.filePath }}
 
-      - name: Release to Google Play (beta)
-        env:
-          SUPPLY_PACKAGE_NAME: ${{ secrets.ANDROID_PACKAGE_NAME }}
-          SUPPLY_JSON_KEY_DATA: ${{ secrets.SUPPLY_JSON_KEY_DATA }}
-        run: |
-          bundle exec fastlane supply \
-          --aab build/app/outputs/bundle/release/app-release.aab \
-          --track production
+     # - name: Release to Google Play (beta)
+    #    env:
+     #     SUPPLY_PACKAGE_NAME: ${{ secrets.ANDROID_PACKAGE_NAME }}
+    #      SUPPLY_JSON_KEY_DATA: ${{ secrets.SUPPLY_JSON_KEY_DATA }}
+     #   run: |
+     #     bundle exec fastlane supply \
+     #     --aab build/app/outputs/bundle/release/app-release.aab \
+     #     --track production
