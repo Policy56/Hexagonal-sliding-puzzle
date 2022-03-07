@@ -184,9 +184,9 @@ class _RankingDialogState extends State<RankingDialog>
 
                                                 final items = <RankingItem>[];
                                                 final snapList =
-                                                    Map<String, dynamic>.from(
+                                                    Map<dynamic, dynamic>.from(
                                                   snapshot.value!
-                                                      as Map<String, dynamic>,
+                                                      as Map<dynamic, dynamic>,
                                                 ).values.toList()
                                                       ..sort(
                                                         (
@@ -200,11 +200,10 @@ class _RankingDialogState extends State<RankingDialog>
                                                       );
 
                                                 for (final value in snapList) {
-                                                  //print(value.toString());
                                                   final tempRankingItem =
                                                       RankingItem.fromJson(
-                                                    value
-                                                        as Map<String, dynamic>,
+                                                    value as Map<dynamic,
+                                                        dynamic>,
                                                   );
                                                   items.add(tempRankingItem);
                                                   _listWidget.add(
