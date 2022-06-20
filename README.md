@@ -6,6 +6,7 @@
 [![Last Commits](https://img.shields.io/github/last-commit/Policy56/Hexagonal-sliding-puzzle?logo=git&logoColor=white)](https://github.com/Policy56/Hexagonal-sliding-puzzle/commits/master)
 [![Pull Requests](https://img.shields.io/github/issues-pr/Policy56/Hexagonal-sliding-puzzle?logo=github&logoColor=white)](https://github.com/Policy56/Hexagonal-sliding-puzzle/pulls)
 [![Code size](https://img.shields.io/github/languages/code-size/Policy56/Hexagonal-sliding-puzzle?logo=github&logoColor=white)](https://github.com/Policy56/Hexagonal-sliding-puzzle)
+[![wakatime](https://wakatime.com/badge/user/f8171f0c-de06-4c7b-954a-3f97ba58c2c4/project/a0c47554-0945-487b-b5ef-535a2bf67bd5.svg)](https://wakatime.com/badge/user/f8171f0c-de06-4c7b-954a-3f97ba58c2c4/project/a0c47554-0945-487b-b5ef-535a2bf67bd5)
 
 [![Deploy to Firebase Hosting on merge](https://github.com/Policy56/Hexagonal-sliding-puzzle/actions/workflows/firebase-hosting-merge.yml/badge.svg?branch=master)](https://github.com/Policy56/Hexagonal-sliding-puzzle/actions/workflows/firebase-hosting-merge.yml)
 [![Deploy to AppStore](https://github.com/Policy56/Hexagonal-sliding-puzzle/actions/workflows/flutter_deploy.yaml/badge.svg?branch=master)](https://github.com/Policy56/Hexagonal-sliding-puzzle/actions/workflows/flutter_deploy.yaml)
